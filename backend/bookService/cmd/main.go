@@ -3,10 +3,9 @@ package main
 import (
 	"bookService/src/config"
 	"bookService/src/database/initdb"
-	"bookService/src/database/models"
 	"bookService/src/lib/prettylog"
-	"bookService/src/lib/sl"
 	"log/slog"
+	"os"
 )
 
 func main() {
@@ -22,20 +21,12 @@ func main() {
 
 	db, err := initdb.Init(cfg.GetStorageDSN())
 	if err != nil {
-		log.Error("Failed to init db", sl.Err(err))
+		os.Exit(1)
 	}
-	book := &models.Book{
-		Title:  "Слово пацана",
-		Author: "Пальто",
-	}
-	db.CreateBook(book, log)
-	if err != nil {
-		log.Error("Failed to create book", sl.Err(err))
-		return
-	}
+	_ = db
 
-	// Init router
+	// TODO: Init router
 
-	// Run server
+	// TODO: Run server
 
 }
