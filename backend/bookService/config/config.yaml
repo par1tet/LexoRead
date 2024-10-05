@@ -1,0 +1,7 @@
+storage_url: postgresql://postgres:potgres@localhost:5432/lexoread?sslmode=disable
+
+
+http_server:
+  port: 8080
+  timeout: 10s
+  idle_timeout: 60s
