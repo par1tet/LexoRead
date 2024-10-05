@@ -1,12 +1,12 @@
-#Technology Stack
-##Frontend
+# Technology Stack
+## Frontend
 React js
 Mobx
 React router dom
 Tanstack query
 FSD
 
-##Backend
+## Backend
 Nest js
 Fastapi
 Sqlalchemy
