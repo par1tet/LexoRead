@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -9,12 +10,21 @@ import (
 )
 
 type Config struct {
-	Storage_url string `yaml:"storage_url" env-required:"true"`
-	HTTPServer  `yaml:"http_server"`
+	HTTPServer     `yaml:"http_server"`
+	DatabaseConfig `yaml:"database_config"`
+}
+
+type DatabaseConfig struct {
+	Host     string `yaml:"host" env-default:"localhost"`
+	User     string `yaml:"user" env-default:"postgres"`
+	Password string `yaml:"password" env-default:"potgres"`
+	DBName   string `yaml:"dbname" env-default:"lexoread"`
+	DBPort   string `yaml:"port" env-default:"5432"`
+	SSLMode  string `yaml:"sslmode" env-default:"disable"`
 }
 
 type HTTPServer struct {
-	Address     string        `yaml:"port" env-default:"8080"`
+	Port        string        `yaml:"port" env-default:"8080"`
 	Timeout     time.Duration `yaml:"timeout" env-default:"4s"`
 	IdleTimeout time.Duration `yaml:"idle_timeout" env-default:"60s"`
 }
@@ -25,7 +35,6 @@ func MustLoad() *Config {
 		log.Fatal("CONFIG_PATH is not set")
 	}
 
-	// check if file exists
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		log.Fatalf("config file does not exist: %s", configPath)
 	}
@@ -38,4 +47,10 @@ func MustLoad() *Config {
 		log.Fatalf("error reading config file: %s", err)
 	}
 	return &cfg
+}
+
+func (c *Config) GetStorageDSN() string {
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s",
+		c.Host, c.User, c.Password, c.DBName, c.DBPort, c.SSLMode)
+	return dsn
 }
