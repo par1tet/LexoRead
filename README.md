@@ -12,3 +12,4 @@ Fastapi
 Sqlalchemy
 Sequelize
 Postgresql
+Go
