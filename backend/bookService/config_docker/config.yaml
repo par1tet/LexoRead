@@ -1,0 +1,14 @@
+
+
+database_config:
+  host: postgresdb
+  user: postgres
+  password: postgres
+  dbname: bookservice
+  port: 5432
+  sslmode: disable
+
+http_server:
+  port: 8080
+  timeout: 10s
+  idle_timeout: 60s
