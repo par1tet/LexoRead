@@ -1,6 +1,12 @@
+import  styles from "../../inputs/sign-up/SignUpInputs.module.css";
 
-export default function signUp() {
+export default function SignUpInputs() {
 	return (
-		<div>signUp</div>
+		<>
+		<input type="text" placeholder="Ваше Имя" className={styles.input}/>
+		<input type="email" placeholder="Введите почту" className={styles.input}/>
+		<input type="password" placeholder="Пароль" className={styles.input}/>
+		<input type="password" placeholder="Повторите пароль" className={styles.input}/>
+		</>
 	)
 }
