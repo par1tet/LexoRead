@@ -11,7 +11,7 @@ import (
 )
 
 type DB struct {
-	db *gorm.DB
+	DB *gorm.DB
 }
 
 func Init(dsn string) (*DB, error) {
@@ -19,12 +19,20 @@ func Init(dsn string) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &DB{db: db}, nil
+	return &DB{DB: db}, nil
+}
+
+func (db *DB) Migrate(models ...interface{}) error {
+	err := db.DB.AutoMigrate(models...)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (db *DB) CreateBook(book *models.Book, log *slog.Logger) {
-	db.db.AutoMigrate(&models.Book{})
-	result := db.db.Create(&book)
+	db.DB.AutoMigrate(&models.Book{})
+	result := db.DB.Create(&book)
 	if result.Error != nil {
 		log.Error("Failed to create book", sl.Err(result.Error))
 		return

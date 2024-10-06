@@ -3,7 +3,10 @@ package main
 import (
 	"bookService/src/config"
 	"bookService/src/database/initdb"
+	"bookService/src/database/models"
 	"bookService/src/lib/prettylog"
+	"bookService/src/server/listen"
+	"bookService/src/server/router"
 	"log/slog"
 	"os"
 )
@@ -11,7 +14,7 @@ import (
 func main() {
 	cfg := config.MustLoad()
 
-	log := prettylog.NewLogger(slog.LevelDebug, false)
+	log := prettylog.NewLogger(slog.LevelInfo, false)
 
 	log.Info("Server started at cfg",
 		slog.String("port", cfg.Port),
@@ -23,10 +26,10 @@ func main() {
 	if err != nil {
 		os.Exit(1)
 	}
-	_ = db
+	db.Migrate(&models.Book{}, &models.Comment{}, &models.File{})
 
-	// TODO: Init router
+	Router := router.New(log, db)
 
-	// TODO: Run server
+	listen.ListenServer(Router, log, cfg)
 
 }
