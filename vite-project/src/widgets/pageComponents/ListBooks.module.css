@@ -1,0 +1,19 @@
+.listBooks__books {
+    display: flex;
+    gap: 12px;
+}
+
+.listBooks__books > img {
+    width: 340px;
+    height: 450px;
+    border-radius: 12px;
+}
+
+.listBooks__title {
+    display: flex;
+    width: 100%;
+
+    align-items: center;
+    justify-content: center;
+}
+

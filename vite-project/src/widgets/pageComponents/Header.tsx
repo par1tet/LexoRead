@@ -22,12 +22,12 @@ export function Header(){
                         Книги                     
                     </Link>
                 </div>
-                <div classname={cl['header__links-aboutus']}>
+                <div className={cl['header__links-aboutus']}>
                     <Link to="/">
                         О нас                     
                     </Link>
                 </div>
-                <div classname={cl['header__links-search']}>
+                <div className={cl['header__links-search']}>
                     <img src={search} />
                 </div>
             </div>
