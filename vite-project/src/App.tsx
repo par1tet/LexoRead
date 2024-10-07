@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { MainPage } from "./pages/MainPage/MainPage.tsx"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { SignIn } from "./pages/signInUpPage/SignIn.tsx";

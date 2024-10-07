@@ -1,9 +1,9 @@
-
 import OAuth from '../../widgets/pagesComponents/oAuth/oAuth'
 import SignInButtons from '../../widgets/UI/buttons/signInUp/SignInButtons'
 import SignInInputs from '../../widgets/UI/inputs/signInUp/SignInInputs'
 import styles from '../signInUpPage/SignIn.module.css'
-export default function SignIn() {
+
+export function SignIn() {
 	
 	return (
 		<>

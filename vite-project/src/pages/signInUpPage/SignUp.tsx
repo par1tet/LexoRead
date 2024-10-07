@@ -1,10 +1,10 @@
 import SignUpButton from "../../widgets/UI/buttons/signInUp/SignUpButtons.tsx";
 import SignUpInputs from "../../widgets/UI/inputs/signInUp/SignUpInputs.tsx";
-import styles from  "../signInUpPage/SignUp.module.css";
+import styles from  "./SignUp.module.css";
 import OAuth from "../../widgets/pagesComponents/oAuth/oAuth.tsx";
 import { Link } from "react-router-dom";
-export default function SignUp() {
 
+export function SignUp() {
   return (
     <>
       <h1 className={styles.h1}>LexoRead</h1>
