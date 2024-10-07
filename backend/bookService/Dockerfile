@@ -25,8 +25,5 @@ COPY --from=build /app/main main
 # Копируем конфигурационный файл в финальное изображение
 COPY --from=build /app/config_docker/config.yaml config/config.yaml
 
-# Открываем порт приложения
-EXPOSE 8080
 
-# Запускаем приложение
 CMD ["./main"]
