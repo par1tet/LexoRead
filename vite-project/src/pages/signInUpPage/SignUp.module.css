@@ -23,3 +23,10 @@ body {
 	justify-content: center;
 	width: 100%;
 }
+.backToAuth {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
