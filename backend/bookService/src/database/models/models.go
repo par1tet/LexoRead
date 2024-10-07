@@ -14,11 +14,11 @@ type Book struct {
 }
 
 type File struct {
-	ID         int    `gorm:"primaryKey"`
-	UploaderID uint   `gorm:"default:0"`
-	FileURL    string `gorm:"not null"`
-	ForID      int    `gorm:"not null"`
-	For        string `gorm:"default:book"`
+	ID         uint   `gorm:"primaryKey" json:"id,omitempty"`
+	UploaderID string `gorm:"not null" json:"uploader_id"`
+	FileURL    string `gorm:"not null" json:"file_url,onitempty"`
+	ForID      int    `gorm:"not null" json:"for_id"`
+	ForType    string `gorm:"default:book" json:"for_type"`
 }
 
 type Comment struct {
@@ -26,8 +26,8 @@ type Comment struct {
 	BookID   int    `gorm:"not null" json:"book_id"` // Внешний ключ на книгу
 	Content  string `gorm:"size:256" json:"content"`
 	UserID   int    `gorm:"default:0" json:"user_id"` // Внешний ключ на пользователя
-	Likes    uint   `gorm:"default:0" json:"likes,omitempty"`
-	DisLikes uint   `gorm:"default:0" json:"dislikes,omitempty"`
+	Likes    uint64 `gorm:"default:0" json:"likes,omitempty"`
+	DisLikes uint64 `gorm:"default:0" json:"dislikes,omitempty"`
 
 	ReplyCommentID *int      `gorm:"default:null" json:"reply_comment_id,omitempty"`                          // Внешний ключ на родительский комментарий
 	ReplyComments  []Comment `gorm:"foreignKey:ReplyCommentID;references:ID" json:"reply_comments,omitempty"` // Указываем связь и внешний ключ

@@ -6,11 +6,13 @@ import (
 	"bookService/src/database/repo/addcomment"
 	rs "bookService/src/lib/api/request"
 	"bookService/src/lib/sl"
+	"errors"
 	"log/slog"
 	"net/http"
 
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/render"
+	"gorm.io/gorm"
 )
 
 type Response struct {
@@ -19,8 +21,8 @@ type Response struct {
 	BookID   int    `json:"book_id,omitempty"`
 	Content  string `json:"content,omitempty"`
 	UserID   int    `json:"user_id,omitempty"`
-	Likes    uint   `json:"likes,omitempty"`
-	DisLikes uint   `json:"dislikes,omitempty"`
+	Likes    uint64 `json:"likes,omitempty"`
+	DisLikes uint64 `json:"dislikes,omitempty"`
 }
 
 func New(log *slog.Logger, db *initdb.DB) http.HandlerFunc {
@@ -41,13 +43,32 @@ func New(log *slog.Logger, db *initdb.DB) http.HandlerFunc {
 
 		comment, err := addcomment.Add(&req, db)
 		if err != nil {
+			if errors.Is(err, gorm.ErrForeignKeyViolated) {
+				log.Error("foreign key violated", sl.Err(err))
+				render.Status(r, http.StatusBadRequest)
+				render.JSON(w, r, rs.Response{
+					Status: rs.StatusError,
+					Error:  "Missing or wrong book_id or user_id",
+				})
+				return
+			}
+
 			log.Error("failed to create comment:", sl.Err(err))
-			render.Status(r, http.StatusInternalServerError)
-			render.JSON(w, r, rs.Error(err))
+			render.JSON(w, r, rs.Response{
+				Status: rs.StatusError,
+				Error:  err.Error(),
+			})
 			return
 		}
 
-		log.Info("Comment created successfully to db")
+		log.Info("Comment created successfully to db",
+			slog.Int("id", comment.ID),
+			slog.Int("book_id", comment.BookID),
+			slog.Int("user_id", comment.UserID),
+			slog.Uint64("likes", comment.Likes),
+			slog.Uint64("dislikes", comment.DisLikes),
+			slog.String("content", comment.Content),
+		)
 		render.Status(r, http.StatusOK)
 		render.JSON(w, r, Response{
 			Response: rs.Response{
