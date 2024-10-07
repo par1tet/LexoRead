@@ -3,7 +3,7 @@ body {
   display: grid;
   justify-content: center;
   align-items: center;
-	width: 100%;
+	width: 1005;
 	font-weight: 500;
 }
 .h1 {
@@ -29,4 +29,6 @@ body {
   justify-content: center;
   align-items: center;
   color: #fff;
+  font-size: 15px;
+  font-weight: 600;
 }

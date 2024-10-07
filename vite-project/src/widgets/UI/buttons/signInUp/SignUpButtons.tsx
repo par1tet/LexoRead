@@ -8,7 +8,7 @@ export default function SignUpButton({ children }: signUpProps) {
   return (
     <div>
       <form>
-        <Link to={"/reg"} className={styles.buttonstn}>{children}</Link>
+        <Link to={"/reg"} className={styles.buttonToReg}>{children}</Link>
       </form>
     </div>
   );

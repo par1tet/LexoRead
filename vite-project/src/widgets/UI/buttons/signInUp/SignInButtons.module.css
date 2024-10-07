@@ -12,11 +12,11 @@
 	font-size: 15px;
   font-weight: 600;
 	line-height: 18px;
-	width: 200px;
-	height: 50px;
+	width: 100%;
 	cursor: pointer;
 }
 .btn:hover {
+	transition: 0.4s all ease-out;
 	background: #dbd5d5 	75%;
 	cursor: pointer;
 }
