@@ -1,0 +1,11 @@
+.main__lexoRead {
+    display: flex;
+    justify-content:center;
+    margin-top: 100px;
+}
+
+.main__lexoRead > span {
+    font-weight: 600;
+    font-size: 100px;
+    color: #ADA2A2;
+}

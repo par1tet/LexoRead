@@ -1,0 +1,32 @@
+body {
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+	width: 100%;
+	font-weight: 500;
+}
+.h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 8%;
+  font-size: 33px;
+  line-height: 41.5px;
+}
+.h2 {
+	text-align: center;
+  display: flex;
+  padding-bottom: 4%;
+  font-size: 15px;
+  line-height: 18.8px;
+	justify-content: center;
+	width: 100%;
+}
+.backToAuth {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}

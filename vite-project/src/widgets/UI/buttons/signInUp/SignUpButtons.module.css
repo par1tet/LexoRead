@@ -1,0 +1,8 @@
+.btn {
+    font-size: 10px;
+}
+
+.btn:hover {
+	background: #6b6868bf 80%;
+	cursor: pointer;
+}
