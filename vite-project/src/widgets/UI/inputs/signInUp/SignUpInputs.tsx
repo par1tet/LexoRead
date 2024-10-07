@@ -1,4 +1,4 @@
-import  styles from "../../inputs/sign-up/SignUpInputs.module.css";
+import  styles from "../../inputs/signInUp/SignUpInputs.module.css";
 
 export default function SignUpInputs() {
 	return (
