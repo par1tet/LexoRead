@@ -13,6 +13,13 @@ type Book struct {
 	Comments []Comment `gorm:"foreignKey:BookID" json:"comments,omitempty"` // Добавили тег JSON
 }
 
+type User struct {
+  ID int `gorm:"primaryKey"`
+  Username string `gorm:"size:15"`
+  Real_name string  
+  AvatarURL string `gorm:"default:null"`
+}
+
 type File struct {
 	ID         uint   `gorm:"primaryKey" json:"id,omitempty"`
 	UploaderID string `gorm:"not null" json:"uploader_id"`
@@ -31,4 +38,20 @@ type Comment struct {
 
 	ReplyCommentID *int      `gorm:"default:null" json:"reply_comment_id,omitempty"`                          // Внешний ключ на родительский комментарий
 	ReplyComments  []Comment `gorm:"foreignKey:ReplyCommentID;references:ID" json:"reply_comments,omitempty"` // Указываем связь и внешний ключ
+}
+
+
+type forMigrate struct{
+  Book Book
+  User User
+  File File
+  Comment Comment
+}
+
+func (f *forMigrate) getModels() []*interface{
+  list := []*interface
+  for _, i := range(forMigrate){
+      list.append(i)
+}
+  return list
 }
