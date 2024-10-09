@@ -4,32 +4,46 @@ import (
 	"bookService/src/config"
 	"bookService/src/database/initdb"
 	"bookService/src/database/models"
+	"bookService/src/handler"
 	"bookService/src/lib/prettylog"
-	"bookService/src/server/listen"
-	"bookService/src/server/router"
+	"bookService/src/lib/sl"
+	"bookService/src/repository"
+	"bookService/src/server"
+	"bookService/src/service"
 	"log/slog"
 	"os"
 )
 
 func main() {
+
 	cfg := config.MustLoad()
-
-	log := prettylog.NewLogger(slog.LevelInfo, false)
-
-	log.Info("Server started at cfg",
-		slog.String("port", cfg.Port),
-		slog.String("timeout", cfg.Timeout.String()),
-		slog.String("idle_timeout", cfg.IdleTimeout.String()),
-	)
+	logger := prettylog.NewLogger(slog.LevelDebug, true)
 
 	db, err := initdb.Init(cfg.GetStorageDSN())
 	if err != nil {
+		logger.Error("Failed to connect to database", sl.Err(err))
 		os.Exit(1)
 	}
-	db.Migrate(&models.Book{}, &models.Comment{}, &models.File{})
 
-	Router := router.New(log, db)
+	err = db.Migrate(&models.Book{}, &models.User{}, &models.File{}, &models.Comment{})
+	if err != nil {
+		logger.Error("Failed to migrate database", sl.Err(err))
+		os.Exit(1)
+	}
 
-	listen.ListenServer(Router, log, cfg)
+	BookRepository := repository.NewBookRepository(db.DB)
+	CommentRepository := repository.NewCommentRepository(db.DB)
 
+	bookService := service.NewBookService(BookRepository, logger)  // Создание сервиса для книг
+	commentService := service.NewCommentService(CommentRepository) // Создание сервиса для комментариев
+
+	// Инициализация хендлеров
+	bookHandler := handler.NewBookHandler(bookService)          // Создание хендлера для книг
+	commentHandler := handler.NewCommentHandler(commentService) // Создание хендлера для комментариев
+
+	// Настройка маршрутизации
+	router := server.SetupRouter(bookHandler, commentHandler)
+
+	// Запуск сервера
+	server.ListenServer(router, logger, cfg) // Запуск сервера
 }

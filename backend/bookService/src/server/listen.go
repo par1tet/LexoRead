@@ -1,4 +1,5 @@
-package listen
+// src/server/listen.go
+package server
 
 import (
 	"bookService/src/config"
@@ -19,6 +20,7 @@ func ListenServer(router *chi.Mux, slogger *slog.Logger, cfg *config.Config) {
 		IdleTimeout:  cfg.IdleTimeout,
 	}
 
+	slogger.Info("Starting server on " + srv.Addr)
 	if err := srv.ListenAndServe(); err != nil {
 		slogger.Error("error on start server", sl.Err(err))
 		os.Exit(1)
