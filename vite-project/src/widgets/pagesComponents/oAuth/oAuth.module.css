@@ -1,0 +1,27 @@
+.subTitle {
+	text-align: center;
+	color: #fff;
+	font-weight: 600;
+	font-size: 15px;
+	margin-top: 19px;
+}
+.container {
+	margin-top: 21px;
+	display: grid;
+	grid-template-columns: 38% 40% 38%;
+}
+.googleImg {
+	cursor: pointer;
+	height: 40px;
+	width: 40px;
+}
+.vkImg {
+	cursor: pointer;
+	height: 40px;
+	width: 40px;
+}
+.gitHubImg {
+	cursor: pointer;
+	height: 40px;
+	width: 40px;
+}
