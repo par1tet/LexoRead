@@ -35,3 +35,7 @@
   font-size: 45px;
   font-weight: 600;
 }
+.about_us {
+	text-decoration: underline; 
+  color: #fff; 
+}
