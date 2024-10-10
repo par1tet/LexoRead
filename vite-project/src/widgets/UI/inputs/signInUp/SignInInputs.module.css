@@ -1,5 +1,4 @@
 .input {
-	width: 200px;
 	text-align: center;
 	display: flex;
 	padding: 15px 10px;
@@ -10,4 +9,5 @@
 	border: 3px solid #DCCBCB80;
 	font-size: 15px;
   font-weight: 600;
+	width: 200px;
 }
