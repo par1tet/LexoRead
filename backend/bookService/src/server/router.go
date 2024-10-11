@@ -15,8 +15,10 @@ func SetupRouter(bookHandler *handler.BookHandler, commentHandler *handler.Comme
 	r.Post("/add_book", bookHandler.CreateBook)
 	r.Get("/books", bookHandler.GetBooks)
 	r.Get("/books/{book_id}", bookHandler.GetBookByID)
-	r.Post("/comments", commentHandler.CreateComment)
-	r.Get("/comments/{bookID}", commentHandler.GetCommentsByBookID)
+	r.Post("/add_comments", commentHandler.CreateComment)
+	r.Get("/comments", commentHandler.GetCommentsByBookID)
+	r.Post("/like/{book_id}", bookHandler.LikeBook)
+	r.Post("/dislike/{book_id}", bookHandler.DislikeBook)
 
 	return r
 }

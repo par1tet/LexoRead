@@ -28,3 +28,11 @@ func (s *BookService) GetBookByID(book *models.Book, bookID int) error {
 func (s *BookService) GetBooks() ([]models.Book, error) {
 	return s.repo.GetBooks()
 }
+
+func (s *BookService) LikeBook(book *models.Book) error {
+	return s.repo.LikeBook(book)
+}
+
+func (s *BookService) DislikeBook(book *models.Book) error {
+	return s.repo.DislikeBook(book)
+}

@@ -21,7 +21,7 @@ func NewCommentHandler(commentService *service.CommentService) *CommentHandler {
 
 func (h *CommentHandler) CreateComment(w http.ResponseWriter, r *http.Request) {
 	var comment models.Comment
-	if err := render.DecodeJSON(r.Body, &comment); err != nil {
+	if err := render.Bind(r, &comment); err != nil {
 		status.Err(w, r, rs.Error(err))
 		return
 	}

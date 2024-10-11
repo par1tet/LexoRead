@@ -73,4 +73,73 @@ func (h *BookHandler) GetBookByID(w http.ResponseWriter, r *http.Request) {
 	status.Ok(w, r, book)
 }
 
-// func GetBookByID(w http)
+func (h *BookHandler) LikeBook(w http.ResponseWriter, r *http.Request) {
+	const op = "handlers.url.likebook"
+
+	log := h.bookService.Logger.With(slog.String("op", op),
+		slog.String("request_id", middleware.GetReqID(r.Context())),
+	)
+	bookidstr := chi.URLParam(r, "book_id")
+	bookid, err := strconv.Atoi(bookidstr)
+
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+
+	var book models.Book
+	err = h.bookService.GetBookByID(&book, bookid)
+	if err != nil {
+		log.Error("book not found:", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+
+	if err := h.bookService.LikeBook(&book); err != nil {
+		log.Error("failed to like book:", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+
+	status.Ok(w, r, rs.StatusLikes{
+		Likes:    book.Likes,
+		DisLikes: book.DisLikes,
+		Response: rs.OK(),
+	})
+
+}
+func (h *BookHandler) DislikeBook(w http.ResponseWriter, r *http.Request) {
+	const op = "handlers.url.likebook"
+
+	log := h.bookService.Logger.With(slog.String("op", op),
+		slog.String("request_id", middleware.GetReqID(r.Context())),
+	)
+	bookidstr := chi.URLParam(r, "book_id")
+	bookid, err := strconv.Atoi(bookidstr)
+
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+
+	var book models.Book
+	err = h.bookService.GetBookByID(&book, bookid)
+	if err != nil {
+		log.Error("book not found:", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+
+	if err := h.bookService.DislikeBook(&book); err != nil {
+		log.Error("failed to like book:", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+
+	status.Ok(w, r, rs.StatusLikes{
+		Likes:    book.Likes,
+		DisLikes: book.DisLikes,
+		Response: rs.OK(),
+	})
+
+}

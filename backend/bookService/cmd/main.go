@@ -25,7 +25,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = db.Migrate(&models.Book{}, &models.User{}, &models.File{}, &models.Comment{})
+	err = db.Migrate(&models.Book{}, &models.File{}, &models.Comment{})
 	if err != nil {
 		logger.Error("Failed to migrate database", sl.Err(err))
 		os.Exit(1)
@@ -34,16 +34,13 @@ func main() {
 	BookRepository := repository.NewBookRepository(db.DB)
 	CommentRepository := repository.NewCommentRepository(db.DB)
 
-	bookService := service.NewBookService(BookRepository, logger)  // Создание сервиса для книг
-	commentService := service.NewCommentService(CommentRepository) // Создание сервиса для комментариев
+	bookService := service.NewBookService(BookRepository, logger)
+	commentService := service.NewCommentService(CommentRepository)
 
-	// Инициализация хендлеров
-	bookHandler := handler.NewBookHandler(bookService)          // Создание хендлера для книг
-	commentHandler := handler.NewCommentHandler(commentService) // Создание хендлера для комментариев
+	bookHandler := handler.NewBookHandler(bookService)
+	commentHandler := handler.NewCommentHandler(commentService)
 
-	// Настройка маршрутизации
 	router := server.SetupRouter(bookHandler, commentHandler)
 
-	// Запуск сервера
-	server.ListenServer(router, logger, cfg) // Запуск сервера
+	server.ListenServer(router, logger, cfg)
 }

@@ -11,6 +11,8 @@ type BookRepository interface {
 	CreateBook(book *models.Book) error
 	GetBooks() ([]models.Book, error)
 	GetBookByID(book *models.Book, bookID int) error
+	LikeBook(book *models.Book) error
+	DislikeBook(book *models.Book) error
 }
 
 type bookRepo struct {
@@ -35,4 +37,10 @@ func (r *bookRepo) GetBooks() ([]models.Book, error) {
 	return books, err
 }
 
-// Добавьте реализацию других методов
+func (r *bookRepo) LikeBook(book *models.Book) error {
+	return r.db.Model(book).Where("id = ?", book.ID).Update("likes", book.Likes+1).Error
+}
+
+func (r *bookRepo) DislikeBook(book *models.Book) error {
+	return r.db.Model(book).Where("id = ?", book.ID).Update("dis_likes", book.DisLikes+1).Error
+}
