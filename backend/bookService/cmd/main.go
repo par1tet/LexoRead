@@ -33,14 +33,17 @@ func main() {
 
 	BookRepository := repository.NewBookRepository(db.DB)
 	CommentRepository := repository.NewCommentRepository(db.DB)
+	RedisRepository := repository.NewRedisRepository("localhost:6379")
 
 	bookService := service.NewBookService(BookRepository, logger)
 	commentService := service.NewCommentService(CommentRepository)
+	RedisService := service.NewRedisService(RedisRepository)
 
 	bookHandler := handler.NewBookHandler(bookService)
 	commentHandler := handler.NewCommentHandler(commentService)
+	redisHandler := handler.NewRedisHandler(RedisService)
 
-	router := server.SetupRouter(bookHandler, commentHandler)
+	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
 
 	server.ListenServer(router, logger, cfg)
 }
