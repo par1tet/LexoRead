@@ -5,6 +5,12 @@ type Response struct {
 	Error  string `json:"error,omitempty"`
 }
 
+type StatusLikes struct {
+	Likes    uint     `json:"likes"`
+	DisLikes uint     `json:"dislikes"`
+	Response Response `json:"response"`
+}
+
 const (
 	StatusOk    = "OK"
 	StatusError = "ERROR"

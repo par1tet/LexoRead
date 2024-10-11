@@ -5,7 +5,7 @@ services:
     tty: true
     build: .
     ports:
-      - 8000:8080
+      - 8080:8080
     restart: on-failure
     volumes:
       - .:/app
@@ -33,7 +33,7 @@ services:
 volumes:
   pg_data:
 
-# Networks to be created to facilitate communication between containers
+
 networks:
   deploy:
     driver: bridge
