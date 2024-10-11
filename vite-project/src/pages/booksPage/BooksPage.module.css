@@ -13,3 +13,7 @@
     border: 0px;
     text-align: center;
 }
+
+.filterPanel__filters {
+    width: 1040px
+}
