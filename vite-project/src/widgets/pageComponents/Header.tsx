@@ -18,8 +18,8 @@ export function Header(){
                     </Link>
                 </div>
                 <div className={cl['header__links-books']}>
-                    <Link to="/">
-                        Книги                     
+                    <Link to="/books">
+                        Книги                
                     </Link>
                 </div>
                 <div className={cl['header__links-aboutus']}>
