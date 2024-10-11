@@ -1,11 +1,4 @@
-body {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-	width: 100%;
-	font-weight: 600;
-}
+
 .input {
 	width: 200px;
 	text-align: center;

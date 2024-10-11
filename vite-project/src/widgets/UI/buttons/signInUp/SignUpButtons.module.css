@@ -8,12 +8,13 @@
   margin-bottom: 6%;
   color: #fff;
   background: #514d4dbf 75%;
-
+  
   border: 2px solid #dccbcb80;
   font-size: 15px;
   font-weight: 600;
   line-height: 18px;
   cursor: pointer;
+  width: 200px;
 }
 
 .buttonToReg:hover {
