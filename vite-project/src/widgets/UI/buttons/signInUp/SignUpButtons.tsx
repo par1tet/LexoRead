@@ -6,7 +6,7 @@ interface signUpProps {
 
 export default function SignUpButton({ children }: signUpProps) {
   return (
-    <div>
+    <div className={styles.container}>
       <form>
         <Link to={"/reg"} className={styles.buttonToReg}>{children}</Link>
       </form>

@@ -1,27 +1,24 @@
-body {
-  height: 100vh;
+.containerSignUp {
   display: grid;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-	width: 1005;
-	font-weight: 500;
+  font-weight: 500;
+  padding-top: 180px;
 }
 .h1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   padding-bottom: 8%;
   font-size: 33px;
   line-height: 41.5px;
 }
 .h2 {
-	text-align: center;
-  display: flex;
+  text-align: center;
   padding-bottom: 4%;
   font-size: 15px;
   line-height: 18.8px;
-	justify-content: center;
-	width: 100%;
+  justify-content: center;
+  width: 100%;
 }
 .backToAuth {
   display: flex;

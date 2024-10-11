@@ -1,0 +1,70 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+}
+.aboutUs {
+  color: #fff;
+  font-weight: 600;
+  font-size: 75px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-top: 100px;
+}
+.subtitle {
+  color: #fff;
+  font-weight: 600;
+  font-size: 30px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  line-height: 38px;
+  margin-bottom: 15px;
+}
+.hr {
+  max-width: 471px;
+  margin-left: 41%;
+}
+.designer {
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 62.65px;
+  text-align: center;
+  color: #fff;
+}
+.designer-nickname {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 37.59px;
+  text-align: center;
+  color: #f8abab;
+  margin-top: 12px;
+  margin-bottom: 15px;
+}
+.hr {
+  max-width: 471px;
+  margin-left: 41%;
+}
+.developers {
+  margin-top: 34px;
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 62.65px;
+  text-align: center;
+  color: #fff;
+}
+.developers-nickname {
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 37.59px;
+  text-align: center;
+  color: #f8abab;
+  margin-top: 12px;
+  margin-bottom: 15px;
+}
+.hr_last {
+	max-width: 680px;
+  margin-left: 38%;
+}
