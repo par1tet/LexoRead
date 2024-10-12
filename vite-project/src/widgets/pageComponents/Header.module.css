@@ -1,38 +1,41 @@
 .header {
-    display: flex;
+  display: flex;
 
-    width: 100%;
-    height: 99px;
-    background-color: #191818;
+  width: 100%;
+  height: 99px;
+  background-color: #191818;
 
-    border-bottom: 1px #7A6868 solid;
+  border-bottom: 1px #7a6868 solid;
 
-    justify-content: space-between;
-    padding: 0 50px;
-    box-sizing: border-box;
+  justify-content: space-between;
+  padding: 0 50px;
+  box-sizing: border-box;
 
-    align-items: center;
+  align-items: center;
 }
 
 .header__logo > img {
-    width: 65px;
-    border-radius: 50%;
+  width: 65px;
+  border-radius: 50%;
 }
 
 .header__links {
-    display: flex;
+  display: flex;
 
-    justify-position: column;
-    gap: 60px;
+  justify-position: column;
+  gap: 60px;
 }
 
 .header__links > div {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .header__links-lexoRead * {
-    font-size: 45px;
-    font-weight: 600;
+  font-size: 45px;
+  font-weight: 600;
 }
-
+.about_us {
+	text-decoration: underline; 
+  color: #fff; 
+}
