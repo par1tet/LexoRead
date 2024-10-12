@@ -11,10 +11,11 @@ export function Header() {
           <NavLink to="/">LexoRead</NavLink>
         </div>
         <div className={cl["header__links-main"]}>
-          <NavLink to="/">Главное</NavLink>
-        </div>
-        <div className={cl["header__links-books"]}>
-          <NavLink to="/books">Книги</NavLink>
+          <NavLink 
+            to="/"
+            className={({ isActive }) => (isActive ? cl["about_us"] : undefined)}
+            >
+            Главное</NavLink>
         </div>
         <div className={cl["header__links-aboutus"]}>
           <NavLink
@@ -23,9 +24,6 @@ export function Header() {
           >
             О нас
           </NavLink>
-        </div>
-        <div className={cl["header__links-search"]}>
-          <img src={search} />
         </div>
       </div>
       <div className={cl["header__logo"]}>

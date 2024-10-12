@@ -1,4 +1,4 @@
-import cl from './../BooksPage.module.css'
+import cl from './../MainPage.module.css'
 
 export function SearchPanel(){
     return (

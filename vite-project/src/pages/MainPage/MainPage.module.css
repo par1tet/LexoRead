@@ -9,3 +9,23 @@
     font-size: 100px;
     color: #ADA2A2;
 }
+
+.searchPanel {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 35px;
+}
+
+.searchPanel > input {
+    width: 1040px;
+    height: 78px;
+    background-color: #6C676780;
+    border-radius: 25px;
+    border: 0px;
+    text-align: center;
+}
+
+.filterPanel__filters {
+    width: 1040px
+}
