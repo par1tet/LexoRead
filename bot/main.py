@@ -12,10 +12,10 @@ class AdminFilter(BaseFilter):
     def __init__(self):
         self.admins = [1340572920]
 
-    async def __call__(self, message: types.CallbackQuery) -> bool:
-        admins = self.admins.copy()
-        if isinstance(message, types.Message) and message.chat.id in admins: # TODO: add getting admin list from db
-            return True
+    async def __call__(self, message: types.CallbackQuery | types.Message) -> bool:
+        admins = self.admins.copy() # TODO: add getting admin list from db
+        if isinstance(message, types.Message):
+            return message.chat.id in admins 
         if message.message.chat.id in admins:
             return True
         await message.answer("Нет прав.")
