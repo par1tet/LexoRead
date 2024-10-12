@@ -44,16 +44,16 @@ dp = Dispatcher()
 @dp.callback_query(AdminFilter())
 async def btn_handler(call: types.CallbackQuery):
     if "." in call.data:
-        page = str(int(call.data.split(".")[0]) + (1 if "+" in call.data else -1))
-        if page < 0:
+        page = str(int(call.data.split(".")[0]) + ((1 if "+" in call.data else -1) if ".0" not in call.data else 0))
+        if int(page) < 0:
             page = 0
         kb = [
             *[[
-                types.InlineKeyboardButton(text=id, callback_data=id)
+                types.InlineKeyboardButton(text=id, callback_data=f"{id}|{page}")
             ] for id in await get_questions(int(page))],
             [
                 types.InlineKeyboardButton(text="<", callback_data=f"{page}.-1"),
-                types.InlineKeyboardButton(text=int(page) + 1, callback_data="-"),
+                types.InlineKeyboardButton(text=str(int(page) + 1), callback_data="-"),
                 types.InlineKeyboardButton(text=">", callback_data=f"{page}.+1")
             ]
         ]
@@ -65,17 +65,22 @@ async def btn_handler(call: types.CallbackQuery):
     if call.data == "-":
         return
 
-    question = await get_question(call.data)
+    chat_id, page = call.data.split("|")
+
+    question = await get_question(chat_id)
     text = "Нажмите чтобы ответить:"
 
     kb = [[
         types.InlineKeyboardButton(
             text="Ответить", url=f"t.me/{(await bot.get_me()).username}?start={question.chat_id}")
+        ],[
+        types.InlineKeyboardButton(
+            text="Назад", callback_data=f"{page}.0")
     ]]
 
     markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
 
-    await call.message.answer(question.text + "\n\n" + text, reply_markup=markup)
+    await call.message.edit_text(text=(question.text + "\n\n" + text), reply_markup=markup)
 
 
 @dp.message(CommandStart(), AdminFilter(), ConnectionFilter(True))
@@ -119,7 +124,7 @@ async def cancel_answering(message: types.Message):
 async def check_questions(message: types.Message):
     kb = [
         *([
-            types.InlineKeyboardButton(text=id, callback_data=id)
+            types.InlineKeyboardButton(text=id, callback_data=f"{id}|{0}")
         ] for id in await get_questions(0)),
         [
             types.InlineKeyboardButton(text="<", callback_data="0.-1"),
