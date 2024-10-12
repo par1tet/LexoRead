@@ -45,6 +45,8 @@ dp = Dispatcher()
 async def btn_handler(call: types.CallbackQuery):
     if "." in call.data:
         page = str(int(call.data.split(".")[0]) + (1 if "+" in call.data else -1))
+        if page < 0:
+            page = 0
         kb = [
             *[[
                 types.InlineKeyboardButton(text=id, callback_data=id)
