@@ -18,7 +18,12 @@ async def create_question(text, chat_id):
 async def get_questions():
     async with async_session() as session:
         questions = select(Questions)
-        return [str(question.id) for question in questions.as_scalar().all_()]
+        result = await session.execute(questions)
+        print(result.one()[0].id)
+        answer = []
+        for question in list(result.one()):
+            answer.append(str(question.id))
+        return answer
 
 
 async def leave_from_question(chat_id):

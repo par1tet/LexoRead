@@ -1,3 +1,4 @@
+from typing import Optional
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from database.database import Base
@@ -12,7 +13,7 @@ class Questions(Base):
 
     chat_id: Mapped[int]
 
-    admin: Mapped["Admins" | None] = relationship(back_populates="question")
+    admin_id: Mapped[Optional[int]] = mapped_column(ForeignKey("admins.id"))
 
 
 class Admins(Base):
@@ -22,4 +23,4 @@ class Admins(Base):
 
     chat_id = Column(Integer)
 
-    quesiton: Mapped["Questions" | None] = relationship(back_populates="admin")
+    quesiton: Mapped[Optional[int]] = mapped_column(ForeignKey("questions.id"))

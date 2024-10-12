@@ -102,11 +102,11 @@ async def cancel_answering(message: types.Message):
 
 
 @dp.message(Command("check"), AdminFilter())
-async def get_questions(message: types.Message):
+async def check_questions(message: types.Message):
     kb = [
         [
             types.InlineKeyboardButton(text=id, callback_data=id)
-        ] for id in range(len(await get_questions()))
+        ] for id in await get_questions()
     ]
 
     markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
