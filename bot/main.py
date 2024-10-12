@@ -53,7 +53,7 @@ async def btn_handler(call: types.CallbackQuery):
             ] for id in await get_questions(int(page))],
             [
                 types.InlineKeyboardButton(text="<", callback_data=f"{page}.-1"),
-                types.InlineKeyboardButton(text=page, callback_data="-"),
+                types.InlineKeyboardButton(text=int(page) + 1, callback_data="-"),
                 types.InlineKeyboardButton(text=">", callback_data=f"{page}.+1")
             ]
         ]
@@ -122,7 +122,7 @@ async def check_questions(message: types.Message):
         ] for id in await get_questions(0)),
         [
             types.InlineKeyboardButton(text="<", callback_data="0.-1"),
-            types.InlineKeyboardButton(text="0", callback_data="-"),
+            types.InlineKeyboardButton(text="1", callback_data="-"),
             types.InlineKeyboardButton(text=">", callback_data="0.+1")
         ]
     ]
