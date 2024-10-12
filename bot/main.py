@@ -9,11 +9,8 @@ from database.core import create_tables, create_question, get_questions, leave_f
 
 
 class AdminFilter(BaseFilter):
-    def __init__(self):
-        self.admins = [1340572920]
-
     async def __call__(self, message: types.CallbackQuery | types.Message) -> bool:
-        admins = self.admins.copy() # TODO: add getting admin list from db
+        admins = [1340572920] # TODO: add getting admin list from db
         if isinstance(message, types.Message):
             return message.chat.id in admins 
         if message.message.chat.id in admins:
@@ -46,6 +43,26 @@ dp = Dispatcher()
 
 @dp.callback_query(AdminFilter())
 async def btn_handler(call: types.CallbackQuery):
+    if "." in call.data:
+        page = str(int(call.data.split(".")[0]) + (1 if "+" in call.data else -1))
+        kb = [
+            *[[
+                types.InlineKeyboardButton(text=id, callback_data=id)
+            ] for id in await get_questions(int(page))],
+            [
+                types.InlineKeyboardButton(text="<", callback_data=f"{page}.-1"),
+                types.InlineKeyboardButton(text=page, callback_data="-"),
+                types.InlineKeyboardButton(text=">", callback_data=f"{page}.+1")
+            ]
+        ]
+        markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
+        await call.message.edit_reply_markup(reply_markup=markup)
+        return
+
+
+    if call.data == "-":
+        return
+
     question = await get_question(call.data)
     text = "Нажмите чтобы ответить:"
 
@@ -98,9 +115,14 @@ async def cancel_answering(message: types.Message):
 @dp.message(Command("check"), AdminFilter())
 async def check_questions(message: types.Message):
     kb = [
-        [
+        *([
             types.InlineKeyboardButton(text=id, callback_data=id)
-        ] for id in await get_questions()
+        ] for id in await get_questions(0)),
+        [
+            types.InlineKeyboardButton(text="<", callback_data="0.-1"),
+            types.InlineKeyboardButton(text="0", callback_data="-"),
+            types.InlineKeyboardButton(text=">", callback_data="0.+1")
+        ]
     ]
 
     markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
@@ -110,10 +132,13 @@ async def check_questions(message: types.Message):
 
 @dp.message()
 async def send_question(message: types.Message):
-    await create_question(message.text, message.chat.id)
-    await message.answer("Вопрос успешно отправлен!")
-    print(f"НОВЫЙ ВОПРОС ОТ {message.from_user.username}: {message.text}")
-
+    if message.text or message.caption:
+        await create_question(message.text, message.chat.id)
+        await message.answer("Вопрос успешно отправлен!")
+        print(f"НОВЫЙ ВОПРОС ОТ {message.from_user.username}: {message.text}")
+        return
+    await message.answer("Отправьте текстовое сообщение.")
+    print(f"{message.from_user.username} попытался отправить стикер, гифку, или медиа контент")
 
 async def main():
     await create_tables()

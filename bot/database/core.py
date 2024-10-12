@@ -15,11 +15,11 @@ async def create_question(text, chat_id):
         await session.commit()
 
 
-async def get_questions():
+async def get_questions(page):
     async with async_session() as session:
-        questions = select(Questions)
+        questions = select(Questions).where(Questions.admin_id==None).limit(8).offset(page * 8 + 9)
         result = await session.execute(questions)
-        return (str(i[0].id) for i in result.all())
+        return [str(i[0].id) for i in result.all()]
 
 
 async def leave_from_question(chat_id):
