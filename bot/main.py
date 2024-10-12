@@ -63,6 +63,7 @@ async def btn_handler(call: types.CallbackQuery):
 
 
     if call.data == "-":
+        await call.answer("И чего ты этим добиваешься?")
         return
 
     chat_id, page = call.data.split("|")
