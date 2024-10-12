@@ -5,7 +5,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command, CommandStart, CommandObject, BaseFilter
 
 from config import TOKEN
-from database.core import create_tables, create_question, get_questions, leave_from_question
+from database.core import create_tables, create_question, get_questions, leave_from_question, get_question
 
 
 class AdminFilter(BaseFilter):
@@ -44,24 +44,20 @@ bot = Bot(TOKEN)
 dp = Dispatcher()
 
 
-questions = [
-    {"question": "How i can create the book?", "chat_id": 1340572920}
-]
 
 
 @dp.callback_query(AdminFilter())
 async def btn_handler(call: types.CallbackQuery):
-    data = questions[int(call.data)]
-    question = data["question"]
+    question = await get_question(call.data)
     text = "Нажмите чтобы ответить:"
 
     kb = [[types.InlineKeyboardButton(
-        text="Ответить", url=f"t.me/testttstesbot?start={data["chat_id"]}"
+        text="Ответить", url=f"t.me/testttstesbot?start={question.chat_id}"
     )]]
 
     markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
 
-    await call.message.answer(question + "\n\n" + text, reply_markup=markup)
+    await call.message.answer(question.text + "\n\n" + text, reply_markup=markup)
 
 
 @dp.message(CommandStart(), AdminFilter(), ConnectionFilter(True))

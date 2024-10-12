@@ -12,18 +12,14 @@ async def create_question(text, chat_id):
     async with async_session() as session:
         question = Questions(text=text, chat_id=chat_id)
         session.add(question)
-        session.commit()
+        await session.commit()
 
 
 async def get_questions():
     async with async_session() as session:
         questions = select(Questions)
         result = await session.execute(questions)
-        print(result.one()[0].id)
-        answer = []
-        for question in list(result.one()):
-            answer.append(str(question.id))
-        return answer
+        return (str(i[0].id) for i in result.all())
 
 
 async def leave_from_question(chat_id):
@@ -33,3 +29,10 @@ async def leave_from_question(chat_id):
         question = select(Questions).where(Questions.chat_id==admin.question.chat_id).as_scalar().all_()[0]
         question.admin = None
         return admin, question
+
+
+async def get_question(id):
+    async with async_session() as session:
+        question = await session.execute(select(Questions).where(Questions.id==int(id)))
+        data = question.one()[0]
+        return data
