@@ -68,9 +68,10 @@ async def btn_handler(call: types.CallbackQuery):
     question = await get_question(call.data)
     text = "Нажмите чтобы ответить:"
 
-    kb = [[types.InlineKeyboardButton(
-        text="Ответить", url=f"t.me/testttstesbot?start={question.chat_id}"
-    )]]
+    kb = [[
+        types.InlineKeyboardButton(
+            text="Ответить", url=f"t.me/{(await bot.get_me()).username}?start={question.chat_id}")
+    ]]
 
     markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
 
