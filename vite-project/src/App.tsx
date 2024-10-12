@@ -5,7 +5,6 @@ import { SignUp } from "./pages/signInUpPage/SignUp.tsx";
 import { AboutUs } from "./pages/AboutUsPage/AboutUs.tsx";
 
 export default function App() {
-
   return (
       <Routes>
           <Route path="/auth" index element={<SignIn />} />
