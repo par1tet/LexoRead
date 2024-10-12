@@ -3,6 +3,7 @@ package handler
 import (
 	"bookService/src/database/models"
 	rs "bookService/src/lib/api/request"
+	"bookService/src/lib/api/request/keyword"
 	"bookService/src/lib/api/status"
 	"bookService/src/lib/sl"
 	"bookService/src/service"
@@ -108,6 +109,7 @@ func (h *BookHandler) LikeBook(w http.ResponseWriter, r *http.Request) {
 	})
 
 }
+
 func (h *BookHandler) DislikeBook(w http.ResponseWriter, r *http.Request) {
 	const op = "handlers.url.likebook"
 
@@ -141,5 +143,25 @@ func (h *BookHandler) DislikeBook(w http.ResponseWriter, r *http.Request) {
 		DisLikes: book.DisLikes,
 		Response: rs.OK(),
 	})
+
+}
+
+func (h *BookHandler) SearchByKeyword(w http.ResponseWriter, r *http.Request) {
+	const op = "handlers.url.searchByKeyword"
+
+	log := h.bookService.Logger.With(slog.String("op", op))
+	var keywordJson keyword.Keyword
+	if err := render.Bind(r, &keywordJson); err != nil {
+		log.Error("failed decode json", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+	}
+
+	books, err := h.bookService.SearchByKeyword(keywordJson.Keyword)
+	if err != nil {
+		log.Error("failed to search by keyword:", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+	}
+
+	status.Ok(w, r, books)
 
 }

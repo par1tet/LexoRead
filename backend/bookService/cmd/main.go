@@ -17,6 +17,7 @@ import (
 func main() {
 
 	cfg := config.MustLoad()
+
 	logger := prettylog.NewLogger(slog.LevelDebug, true)
 
 	db, err := initdb.Init(cfg.GetStorageDSN())

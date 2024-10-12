@@ -1,4 +1,3 @@
-// src/server/router.go
 package server
 
 import (
@@ -16,8 +15,9 @@ func SetupRouter(bookHandler *handler.BookHandler,
 	r.Post("/add_book", bookHandler.CreateBook)
 	r.Get("/books", bookHandler.GetBooks)
 	r.Get("/books/{book_id}", bookHandler.GetBookByID)
+	r.Get("/books/search", bookHandler.SearchByKeyword)
 	r.Post("/add_comments", commentHandler.CreateComment)
-	r.Get("/comments", commentHandler.GetCommentsByBookID)
+	r.Get("/comments/{book_id}", commentHandler.GetCommentsByBookID)
 	r.Post("/like/{book_id}", bookHandler.LikeBook)
 	r.Post("/dislike/{book_id}", bookHandler.DislikeBook)
 	r.Post("/redis/add", redisHandler.AddBook)
