@@ -76,7 +76,14 @@ async def start(message: types.Message):
 @dp.message(Command("admin"), AdminFilter())
 async def admin(message: types.Message):
     await message.answer(
-        "/check\n/cancel\n/leave"
+"""
+Просмотреть вопросы:
+/check
+Закрыть вопрос:
+/cancel
+Выйти из вопроса:
+/leave
+"""
     )
 
 
