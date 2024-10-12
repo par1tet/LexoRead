@@ -44,8 +44,6 @@ bot = Bot(TOKEN)
 dp = Dispatcher()
 
 
-
-
 @dp.callback_query(AdminFilter())
 async def btn_handler(call: types.CallbackQuery):
     question = await get_question(call.data)
@@ -114,6 +112,7 @@ async def check_questions(message: types.Message):
 async def send_question(message: types.Message):
     await create_question(message.text, message.chat.id)
     await message.answer("Вопрос успешно отправлен!")
+    print(f"НОВЫЙ ВОПРОС ОТ {message.from_user.username}: {message.text}")
 
 
 async def main():

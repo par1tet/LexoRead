@@ -1,6 +1,6 @@
 from typing import Optional
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import mapped_column, Mapped, relationship
+from sqlalchemy import ForeignKey, BigInteger, Column
+from sqlalchemy.orm import mapped_column, Mapped
 from database.database import Base
 
 
@@ -11,7 +11,7 @@ class Questions(Base):
 
     text: Mapped[str]
 
-    chat_id: Mapped[int]
+    chat_id = Column(BigInteger)
 
     admin_id: Mapped[Optional[int]] = mapped_column(ForeignKey("admins.id"))
 
@@ -19,8 +19,8 @@ class Questions(Base):
 class Admins(Base):
     __tablename__ = "admins"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
 
-    chat_id = Column(Integer)
+    chat_id = Column(BigInteger)
 
     quesiton: Mapped[Optional[int]] = mapped_column(ForeignKey("questions.id"))
