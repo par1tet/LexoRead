@@ -3,7 +3,9 @@ import asyncio
 
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command, CommandStart, CommandObject, BaseFilter
+
 from config import TOKEN
+from database.core import create_tables, create_question, get_questions, leave_from_question
 
 
 class AdminFilter(BaseFilter):
@@ -95,7 +97,7 @@ async def cancel_answering(message: types.Message):
 
 @dp.message(Command("leave"), AdminFilter(), ConnectionFilter())
 async def cancel_answering(message: types.Message):
-    # TODO: stop connection with questioner
+    print(await leave_from_question(message.chat_id))
     await message.answer("Вы покинули чат с вопросом.")
 
 
@@ -103,8 +105,8 @@ async def cancel_answering(message: types.Message):
 async def get_questions(message: types.Message):
     kb = [
         [
-            types.InlineKeyboardButton(text=str(id_), callback_data=str(id_))
-        ] for id_ in range(len(questions))
+            types.InlineKeyboardButton(text=id, callback_data=id)
+        ] for id in range(len(await get_questions()))
     ]
 
     markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
@@ -114,14 +116,12 @@ async def get_questions(message: types.Message):
 
 @dp.message()
 async def send_question(message: types.Message):
-    # TODO: add question to db
-    questions.append({
-        "chat_id": message.chat.id,
-        "question": message.text or message.caption
-    })
+    await create_question(message.text, message.chat.id)
+    await message.answer("Вопрос успешно отправлен!")
 
 
 async def main():
+    await create_tables()
     await dp.start_polling(bot)
 
 
