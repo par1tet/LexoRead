@@ -34,7 +34,7 @@ func (r *bookRepo) GetBookByID(book *models.Book, bookID int) error {
 
 func (r *bookRepo) GetBooks() ([]models.Book, error) {
 	var books []models.Book
-	err := r.db.Find(&books).Error
+	err := r.db.Preload("Comments").Preload("Files").Find(&books).Error
 	return books, err
 }
 
@@ -50,7 +50,8 @@ func (r *bookRepo) SearchByKeyword(keyword string) ([]models.Book, error) {
 	var books []models.Book
 
 	keyword = "%" + keyword + "%"
-	result := r.db.Where("title ILIKE ?", keyword).Find(&books)
+	result := r.db.Preload("Comments").Preload("Files").Where("title ILIKE ?",
+		keyword).Find(&books)
 
 	if result.Error != nil {
 		return nil, result.Error

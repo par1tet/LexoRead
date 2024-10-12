@@ -2,15 +2,15 @@ package service
 
 import (
 	"bookService/src/database/models"
-	"bookService/src/repository"
+	"bookService/src/repository/redis"
 	"context"
 )
 
 type RedisService struct {
-	repo repository.RedisRepository
+	repo redis_repo.RedisRepository
 }
 
-func NewRedisService(repo repository.RedisRepository) *RedisService {
+func NewRedisService(repo redis_repo.RedisRepository) *RedisService {
 	return &RedisService{repo: repo}
 }
 

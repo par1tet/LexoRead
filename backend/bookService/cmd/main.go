@@ -8,6 +8,7 @@ import (
 	"bookService/src/lib/prettylog"
 	"bookService/src/lib/sl"
 	"bookService/src/repository"
+	"bookService/src/repository/redis"
 	"bookService/src/server"
 	"bookService/src/service"
 	"log/slog"
@@ -34,7 +35,7 @@ func main() {
 
 	BookRepository := repository.NewBookRepository(db.DB)
 	CommentRepository := repository.NewCommentRepository(db.DB)
-	RedisRepository := repository.NewRedisRepository("localhost:6379")
+	RedisRepository := redis_repo.NewRedisRepository("localhost:6379")
 
 	bookService := service.NewBookService(BookRepository, logger)
 	commentService := service.NewCommentService(CommentRepository)
