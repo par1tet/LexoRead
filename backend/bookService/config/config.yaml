@@ -1,9 +1,9 @@
 
 
 database_config:
-  host: 127.0.0.1 
+  host: localhost
   user: postgres
-  password: postgres
+  password: root
   dbname: bookservice
   port: 5432
   sslmode: disable
