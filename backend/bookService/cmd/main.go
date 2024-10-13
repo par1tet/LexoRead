@@ -4,32 +4,48 @@ import (
 	"bookService/src/config"
 	"bookService/src/database/initdb"
 	"bookService/src/database/models"
+	"bookService/src/handler"
 	"bookService/src/lib/prettylog"
-	"bookService/src/server/listen"
-	"bookService/src/server/router"
+	"bookService/src/lib/sl"
+	"bookService/src/repository"
+	"bookService/src/repository/redis"
+	"bookService/src/server"
+	"bookService/src/service"
 	"log/slog"
 	"os"
 )
 
 func main() {
+
 	cfg := config.MustLoad()
 
-	log := prettylog.NewLogger(slog.LevelInfo, false)
-
-	log.Info("Server started at cfg",
-		slog.String("port", cfg.Port),
-		slog.String("timeout", cfg.Timeout.String()),
-		slog.String("idle_timeout", cfg.IdleTimeout.String()),
-	)
+	logger := prettylog.NewLogger(slog.LevelDebug, true)
 
 	db, err := initdb.Init(cfg.GetStorageDSN())
 	if err != nil {
+		logger.Error("Failed to connect to database", sl.Err(err))
 		os.Exit(1)
 	}
-	db.Migrate(&models.Book{}, &models.Comment{}, &models.File{})
 
-	Router := router.New(log, db)
+	err = db.Migrate(&models.Book{}, &models.File{}, &models.Comment{})
+	if err != nil {
+		logger.Error("Failed to migrate database", sl.Err(err))
+		os.Exit(1)
+	}
 
-	listen.ListenServer(Router, log, cfg)
+	BookRepository := repository.NewBookRepository(db.DB)
+	CommentRepository := repository.NewCommentRepository(db.DB)
+	RedisRepository := redis_repo.NewRedisRepository("localhost:6379")
 
+	bookService := service.NewBookService(BookRepository, logger)
+	commentService := service.NewCommentService(CommentRepository)
+	RedisService := service.NewRedisService(RedisRepository)
+
+	bookHandler := handler.NewBookHandler(bookService)
+	commentHandler := handler.NewCommentHandler(commentService)
+	redisHandler := handler.NewRedisHandler(RedisService)
+
+	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
+
+	server.ListenServer(router, logger, cfg)
 }
