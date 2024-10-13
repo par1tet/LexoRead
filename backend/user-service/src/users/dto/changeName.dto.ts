@@ -1,4 +1,8 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class ChangeNameDto {
-	newUsername: string;
+	@ApiProperty({example: 1})
 	userId: number
+	@ApiProperty({example: 'Maxim'})
+	newUsername: string;
 }

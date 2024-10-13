@@ -22,6 +22,8 @@ const changeEmail_dto_1 = require("./dto/changeEmail.dto");
 const changeName_dto_1 = require("./dto/changeName.dto");
 const changeAvatarUrl_dto_1 = require("./dto/changeAvatarUrl.dto");
 const changeDescription_dto_1 = require("./dto/changeDescription.dto");
+const swagger_1 = require("@nestjs/swagger");
+const user_model_1 = require("./user.model");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -52,7 +54,13 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
+    (0, swagger_1.ApiCreatedResponse)({
+        description: 'The record has been successfully created.',
+        type: user_model_1.User,
+        status: 200,
+    }),
     (0, common_1.Put)('banUser'),
+    (0, swagger_1.ApiOperation)({ summary: 'забанить пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [banUser_dto_1.BanUserDto]),
@@ -60,6 +68,7 @@ __decorate([
 ], UsersController.prototype, "banUser", null);
 __decorate([
     (0, common_1.Post)('getUser'),
+    (0, swagger_1.ApiOperation)({ summary: 'получить пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [getUser_dto_1.GetUserDto]),
@@ -67,18 +76,26 @@ __decorate([
 ], UsersController.prototype, "getUser", null);
 __decorate([
     (0, common_1.Delete)('deleteBook'),
+    (0, swagger_1.ApiOperation)({ summary: 'удалить книгу пользователя' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "deleteBook", null);
 __decorate([
     (0, common_1.Put)('changeFavBooks'),
+    (0, swagger_1.ApiOperation)({ summary: 'изменить любимые книги пользователя' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changeFavouriteBooks", null);
 __decorate([
+    (0, swagger_1.ApiCreatedResponse)({
+        description: 'The record has been successfully created.',
+        type: user_model_1.User,
+        status: 200,
+    }),
     (0, common_1.Put)('changeEmail'),
+    (0, swagger_1.ApiOperation)({ summary: 'изменить почту пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [changeEmail_dto_1.ChangeEmailDto]),
@@ -86,6 +103,7 @@ __decorate([
 ], UsersController.prototype, "changeEmail", null);
 __decorate([
     (0, common_1.Put)('unBanUser'),
+    (0, swagger_1.ApiOperation)({ summary: 'разбанить пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [unBanUser_dto_1.UnBanUserDto]),
@@ -93,6 +111,7 @@ __decorate([
 ], UsersController.prototype, "unBanUser", null);
 __decorate([
     (0, common_1.Put)('changeName'),
+    (0, swagger_1.ApiOperation)({ summary: 'изменить имя пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [changeName_dto_1.ChangeNameDto]),
@@ -100,13 +119,20 @@ __decorate([
 ], UsersController.prototype, "changeName", null);
 __decorate([
     (0, common_1.Put)('changeDescription'),
+    (0, swagger_1.ApiOperation)({ summary: 'изменить описание пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [changeDescription_dto_1.changeDescriptionDto]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changeDescription", null);
 __decorate([
+    (0, swagger_1.ApiCreatedResponse)({
+        description: 'The record has been successfully created.',
+        type: user_model_1.User,
+        status: 200,
+    }),
     (0, common_1.Put)('changeAvatarUrl'),
+    (0, swagger_1.ApiOperation)({ summary: 'изменить аватарку пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [changeAvatarUrl_dto_1.changeAvatarUrlDto]),
@@ -114,6 +140,7 @@ __decorate([
 ], UsersController.prototype, "changeAvatarUrl", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
+    (0, swagger_1.ApiTags)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
 ], UsersController);
 //# sourceMappingURL=users.controller.js.map
