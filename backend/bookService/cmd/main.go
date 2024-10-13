@@ -1,3 +1,14 @@
+// @title LexoRead Book Service API
+// @version 1.0
+// @description API для работы с книгами в LexoRead.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name Support Team
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @host localhost:8080
+// @BasePath /
 package main
 
 import (
@@ -5,12 +16,14 @@ import (
 	"bookService/src/database/initdb"
 	"bookService/src/database/models"
 	"bookService/src/handler"
+	"bookService/src/handler/redis"
 	"bookService/src/lib/prettylog"
 	"bookService/src/lib/sl"
 	"bookService/src/repository"
 	"bookService/src/repository/redis"
 	"bookService/src/server"
 	"bookService/src/service"
+	"bookService/src/service/redis"
 	"log/slog"
 	"os"
 )
@@ -20,7 +33,6 @@ func main() {
 	cfg := config.MustLoad()
 
 	logger := prettylog.NewLogger(slog.LevelDebug, true)
-
 	db, err := initdb.Init(cfg.GetStorageDSN())
 	if err != nil {
 		logger.Error("Failed to connect to database", sl.Err(err))
@@ -39,11 +51,11 @@ func main() {
 
 	bookService := service.NewBookService(BookRepository, logger)
 	commentService := service.NewCommentService(CommentRepository)
-	RedisService := service.NewRedisService(RedisRepository)
+	RedisService := redis_service.NewRedisService(RedisRepository)
 
 	bookHandler := handler.NewBookHandler(bookService)
 	commentHandler := handler.NewCommentHandler(commentService)
-	redisHandler := handler.NewRedisHandler(RedisService)
+	redisHandler := redis_handler.NewRedisHandler(RedisService)
 
 	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
 

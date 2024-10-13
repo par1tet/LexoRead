@@ -10,16 +10,16 @@ import (
 )
 
 const (
-	fictionBooksKey   = "fiction_books"
-	counterFictionKey = fictionBooksKey + ":id"
+	literatureBooksKey   = "literature_books"
+	counterLiteratureKey = literatureBooksKey + ":id"
 )
 
-func (r *redisRepository) AddFictionBook(ctx context.Context, book *models.Book) error {
-	newID, err := r.redisClient.Incr(ctx, counterFictionKey).Result()
+func (r *redisRepository) AddLiteratureBook(ctx context.Context, book *models.Book) error {
+	newID, err := r.redisClient.Incr(ctx, counterLiteratureKey).Result()
 	if err != nil {
 		return fmt.Errorf("could not increment ID counter: %w", err)
 	}
-	key := fmt.Sprintf("%s:%d", fictionBooksKey, newID)
+	key := fmt.Sprintf("%s:%d", literatureBooksKey, newID)
 	book.ID = int(newID)
 
 	bookJSON, err := json.Marshal(book)
@@ -27,24 +27,23 @@ func (r *redisRepository) AddFictionBook(ctx context.Context, book *models.Book)
 		return err
 	}
 
-	// Логируем добавление книги
 	log.Printf("Adding book with key %s: %+v\n", key, book)
 
 	return r.redisClient.Set(ctx, key, bookJSON, 0).Err()
 }
 
-func (r *redisRepository) GetFictionBooks(ctx context.Context) ([]*models.Book, error) {
+func (r *redisRepository) GetLiteratureBooks(ctx context.Context) ([]*models.Book, error) {
 	var books []*models.Book
 
 	// Предположим, что у нас есть шаблон для ключей, и мы знаем максимальный ID
 	// Например, мы можем использовать значение счетчика для определения максимального ID
-	maxID, err := r.redisClient.Get(ctx, counterGamesKey).Int()
+	maxID, err := r.redisClient.Get(ctx, counterLiteratureKey).Int()
 	if err != nil && err != redis.Nil {
 		return nil, fmt.Errorf("could not get max ID from counter: %w", err)
 	}
 
 	for i := 1; i <= maxID; i++ {
-		key := fmt.Sprintf("%s:%d", gamesBooksKey, i)
+		key := fmt.Sprintf("%s:%d", literatureBooksKey, i)
 		bookJSON, err := r.redisClient.Get(ctx, key).Result()
 		if err != nil {
 			if err != redis.Nil {
@@ -64,8 +63,8 @@ func (r *redisRepository) GetFictionBooks(ctx context.Context) ([]*models.Book, 
 	return books, nil
 }
 
-func (r *redisRepository) GetFictionBook(ctx context.Context, id int) (*models.Book, error) {
-	key := fmt.Sprintf("%s:%d", fictionBooksKey, id)
+func (r *redisRepository) GetLiteratureBook(ctx context.Context, id int) (*models.Book, error) {
+	key := fmt.Sprintf("%s:%d", literatureBooksKey, id)
 	bookJSON, err := r.redisClient.Get(ctx, key).Result()
 	if err != nil {
 		if err == redis.Nil {
@@ -76,13 +75,12 @@ func (r *redisRepository) GetFictionBook(ctx context.Context, id int) (*models.B
 
 	var book models.Book
 	if err := json.Unmarshal([]byte(bookJSON), &book); err != nil {
-		return nil, fmt.Errorf("could not unmarshal book JSON: %w", err)
+		return nil, err
 	}
-
 	return &book, nil
 }
 
-func (r *redisRepository) DeleteFictionBook(ctx context.Context, id int) error {
-	key := fmt.Sprintf("%s:%d", fictionBooksKey, id)
+func (r *redisRepository) DeleteLiteratureBook(ctx context.Context, id int) error {
+	key := fmt.Sprintf("%s:%d", literatureBooksKey, id)
 	return r.redisClient.Del(ctx, key).Err()
 }
