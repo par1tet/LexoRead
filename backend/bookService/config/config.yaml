@@ -12,6 +12,6 @@ redis:
   host: localhost
 
 http_server:
-  port: 8080
+  port: 8081
   timeout: 10s
   idle_timeout: 60s
