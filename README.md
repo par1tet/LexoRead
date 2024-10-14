@@ -22,6 +22,6 @@ Sequelize
 
 Postgresql
 
-Go
+Go/chi
 
 Gorm
