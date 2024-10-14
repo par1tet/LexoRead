@@ -3,7 +3,7 @@
 React js
 Mobx
 React router dom
-Tanstack query
+Tanstack query with axios
 FSD
 
 ## Backend
