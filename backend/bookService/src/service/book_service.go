@@ -24,8 +24,8 @@ func (s *BookService) GetBookByID(book *models.Book, bookID int) error {
 
 }
 
-func (s *BookService) GetBooks() ([]models.Book, error) {
-	return s.repo.GetBooks()
+func (s *BookService) GetBooks(limit int) ([]models.Book, error) {
+	return s.repo.GetBooks(limit)
 }
 
 func (s *BookService) LikeBook(book *models.Book) error {

@@ -7,6 +7,7 @@ import (
 	"bookService/src/lib/api/status"
 	"bookService/src/lib/sl"
 	"bookService/src/service"
+	"errors"
 	"log/slog"
 	"net/http"
 	"strconv"
@@ -18,6 +19,16 @@ import (
 
 type BookHandler struct {
 	bookService *service.BookService
+}
+type limit struct {
+	Limit int `json:"limit"`
+}
+
+func (s *limit) Bind(r *http.Request) error {
+	if s.Limit == 0 {
+		return errors.New("limit required")
+	}
+	return nil
 }
 
 func NewBookHandler(bookService *service.BookService) *BookHandler {
@@ -49,7 +60,12 @@ func (h *BookHandler) CreateBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *BookHandler) GetBooks(w http.ResponseWriter, r *http.Request) {
-	books, err := h.bookService.GetBooks()
+	limitStr := chi.URLParam(r, "limit")
+	limit, err := strconv.Atoi(limitStr)
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+	}
+	books, err := h.bookService.GetBooks(limit)
 	if err != nil {
 		status.Err(w, r, rs.Error(err))
 		return

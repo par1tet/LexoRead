@@ -9,7 +9,7 @@ import (
 
 type BookRepository interface {
 	CreateBook(book *models.Book) error
-	GetBooks() ([]models.Book, error)
+	GetBooks(limit int) ([]models.Book, error)
 	GetBookByID(book *models.Book, bookID int) error
 	LikeBook(book *models.Book) error
 	DislikeBook(book *models.Book) error
@@ -29,12 +29,12 @@ func (r *bookRepo) CreateBook(book *models.Book) error {
 }
 
 func (r *bookRepo) GetBookByID(book *models.Book, bookID int) error {
-	return r.db.Preload("Comments").First(&book, bookID).Error
+	return r.db.Preload("Comments").Preload("Files").First(&book, bookID).Error
 }
 
-func (r *bookRepo) GetBooks() ([]models.Book, error) {
+func (r *bookRepo) GetBooks(limit int) ([]models.Book, error) {
 	var books []models.Book
-	err := r.db.Preload("Comments").Preload("Files").Find(&books).Error
+	err := r.db.Limit(limit).Preload("Comments").Preload("Files").Find(&books).Error
 	return books, err
 }
 
