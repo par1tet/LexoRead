@@ -15,6 +15,7 @@ import (
 	"bookService/src/config"
 	"bookService/src/database/initdb"
 	"bookService/src/database/models"
+	docs2 "bookService/src/docs"
 	"bookService/src/handler"
 	"bookService/src/handler/redis"
 	"bookService/src/lib/prettylog"
@@ -56,8 +57,10 @@ func main() {
 	bookHandler := handler.NewBookHandler(bookService)
 	commentHandler := handler.NewCommentHandler(commentService)
 	redisHandler := redis_handler.NewRedisHandler(RedisService)
-
+	docs := docs2.GenDocs(bookHandler)
 	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
+
+	docs.SetupRoutes(router, docs)
 
 	server.ListenServer(router, logger, cfg)
 }

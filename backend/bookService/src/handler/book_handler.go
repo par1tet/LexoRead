@@ -7,6 +7,7 @@ import (
 	"bookService/src/lib/api/status"
 	"bookService/src/lib/sl"
 	"bookService/src/service"
+	"errors"
 	"log/slog"
 	"net/http"
 	"strconv"
@@ -19,21 +20,21 @@ import (
 type BookHandler struct {
 	bookService *service.BookService
 }
+type limit struct {
+	Limit int `json:"limit"`
+}
+
+func (s *limit) Bind(r *http.Request) error {
+	if s.Limit == 0 {
+		return errors.New("limit required")
+	}
+	return nil
+}
 
 func NewBookHandler(bookService *service.BookService) *BookHandler {
 	return &BookHandler{bookService: bookService}
 }
 
-// CreateBook добавляет новую книгу
-// @Summary Create a new book
-// @Description Add a new book to the collection
-// @Tags books
-// @Accept json
-// @Produce json
-// @Param book body models.Book true "Book Data"
-// @Success 200 {object} models.Book
-// @Failure 400 {string} string "Invalid input"
-// @Router /books/add [post]
 func (h *BookHandler) CreateBook(w http.ResponseWriter, r *http.Request) {
 	const op = "handlers.url.createbook"
 
@@ -58,18 +59,13 @@ func (h *BookHandler) CreateBook(w http.ResponseWriter, r *http.Request) {
 	status.Ok(w, r, rs.OK())
 }
 
-// CreateBook добавляет новую книгу
-// @Summary Create a new book
-// @Description Add a new book to the collection
-// @Tags books
-// @Accept json
-// @Produce json
-// @Param book body models.Book true "Book Data"
-// @Success 200 {object} models.Book
-// @Failure 400 {string} string "Invalid input"
-// @Router /books/add [post]
 func (h *BookHandler) GetBooks(w http.ResponseWriter, r *http.Request) {
-	books, err := h.bookService.GetBooks()
+	limitStr := chi.URLParam(r, "limit")
+	limit, err := strconv.Atoi(limitStr)
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+	}
+	books, err := h.bookService.GetBooks(limit)
 	if err != nil {
 		status.Err(w, r, rs.Error(err))
 		return
@@ -77,16 +73,6 @@ func (h *BookHandler) GetBooks(w http.ResponseWriter, r *http.Request) {
 	status.OkBooks(w, r, books)
 }
 
-// CreateBook добавляет новую книгу
-// @Summary Create a new book
-// @Description Add a new book to the collection
-// @Tags books
-// @Accept json
-// @Produce json
-// @Param book body models.Book true "Book Data"
-// @Success 200 {object} models.Book
-// @Failure 400 {string} string "Invalid input"
-// @Router /books/add [post]
 func (h *BookHandler) GetBookByID(w http.ResponseWriter, r *http.Request) {
 	book := models.Book{}
 	bookIDStr := chi.URLParam(r, "book_id")
@@ -104,16 +90,6 @@ func (h *BookHandler) GetBookByID(w http.ResponseWriter, r *http.Request) {
 	status.Ok(w, r, book)
 }
 
-// CreateBook добавляет новую книгу
-// @Summary Create a new book
-// @Description Add a new book to the collection
-// @Tags books
-// @Accept json
-// @Produce json
-// @Param book body models.Book true "Book Data"
-// @Success 200 {object} models.Book
-// @Failure 400 {string} string "Invalid input"
-// @Router /books/add [post]
 func (h *BookHandler) LikeBook(w http.ResponseWriter, r *http.Request) {
 	const op = "handlers.url.likebook"
 
@@ -150,16 +126,6 @@ func (h *BookHandler) LikeBook(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// CreateBook добавляет новую книгу
-// @Summary Create a new book
-// @Description Add a new book to the collection
-// @Tags books
-// @Accept json
-// @Produce json
-// @Param book body models.Book true "Book Data"
-// @Success 200 {object} models.Book
-// @Failure 400 {string} string "Invalid input"
-// @Router /books/add [post]
 func (h *BookHandler) DislikeBook(w http.ResponseWriter, r *http.Request) {
 	const op = "handlers.url.likebook"
 
@@ -196,16 +162,6 @@ func (h *BookHandler) DislikeBook(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// CreateBook добавляет новую книгу
-// @Summary Create a new book
-// @Description Add a new book to the collection
-// @Tags books
-// @Accept json
-// @Produce json
-// @Param book body models.Book true "Book Data"
-// @Success 200 {object} models.Book
-// @Failure 400 {string} string "Invalid input"
-// @Router /books/add [post]
 func (h *BookHandler) SearchByKeyword(w http.ResponseWriter, r *http.Request) {
 	const op = "handlers.url.searchByKeyword"
 

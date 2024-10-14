@@ -23,6 +23,7 @@ require (
 	github.com/go-andiamo/chioas v1.16.3 // indirect
 	github.com/go-andiamo/splitter v1.2.5 // indirect
 	github.com/go-andiamo/urit v1.2.1 // indirect
+	github.com/go-chi/cors v1.2.1 // indirect
 	github.com/go-chi/docgen v1.3.0 // indirect
 	github.com/go-openapi/jsonpointer v0.21.0 // indirect
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
