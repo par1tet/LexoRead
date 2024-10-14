@@ -1,24 +1,24 @@
-body {
-  height: 100vh;
-  display: flex;
+.containerSignIn {
+  width: 100%;
+  display: grid;
   justify-content: center;
   align-items: center;
-	font-weight: 600;
+  font-weight: 500;
+  padding-top: 200px;
 }
+
 .h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-bottom: 8%;
   font-size: 33px;
   line-height: 41.5px;
+  margin-bottom: 6%;
 }
 .h2 {
-	text-align: center;
-  display: flex;
-  padding-bottom: 4%;
+  text-align: center;
+  justify-content: center;
   font-size: 15px;
   line-height: 18.8px;
-	justify-content: center;
-	width: 100%;
+   margin-bottom: 6%;
 }

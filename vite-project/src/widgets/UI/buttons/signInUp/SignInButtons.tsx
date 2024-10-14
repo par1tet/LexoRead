@@ -6,10 +6,12 @@ interface signInProps {
 export default function SignInButtons({ children }: signInProps) {
   return (
     <>
-      <form>
-        <button className={styles.btn}>{children}</button>
-        <SignUpButton>Зарегистрироваться</SignUpButton>
-      </form>
+      <div className={styles.container}>
+        <form>
+          <button className={styles.btn}>{children}</button>
+          <SignUpButton>Зарегистрироваться</SignUpButton>
+        </form>
+      </div>
     </>
   );
 }
