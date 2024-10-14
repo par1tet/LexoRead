@@ -14,9 +14,9 @@ export declare class UsersController {
     getUser(dto: GetUserDto): Promise<User>;
     deleteBook(): Promise<void>;
     changeFavouriteBooks(): Promise<void>;
-    changeEmail(dto: ChangeEmailDto): Promise<(() => number) | [affectedCount: number]>;
+    changeEmail(dto: ChangeEmailDto): Promise<[affectedCount: number] | (() => number)>;
     unBanUser(dto: UnBanUserDto): Promise<() => number>;
-    changeName(dto: ChangeNameDto): Promise<(() => number) | [affectedCount: number]>;
-    changeDescription(dto: changeDescriptionDto): Promise<(() => number) | [affectedCount: number]>;
-    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<(() => number) | [affectedCount: number]>;
+    changeName(dto: ChangeNameDto): Promise<[affectedCount: number] | (() => number)>;
+    changeDescription(dto: changeDescriptionDto): Promise<[affectedCount: number] | (() => number)>;
+    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<[affectedCount: number] | (() => number)>;
 }
