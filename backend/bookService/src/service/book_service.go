@@ -1,4 +1,3 @@
-// src/service/book_service.go
 package service
 
 import (
@@ -25,8 +24,8 @@ func (s *BookService) GetBookByID(book *models.Book, bookID int) error {
 
 }
 
-func (s *BookService) GetBooks() ([]models.Book, error) {
-	return s.repo.GetBooks()
+func (s *BookService) GetBooks(limit int) ([]models.Book, error) {
+	return s.repo.GetBooks(limit)
 }
 
 func (s *BookService) LikeBook(book *models.Book) error {
@@ -35,4 +34,12 @@ func (s *BookService) LikeBook(book *models.Book) error {
 
 func (s *BookService) DislikeBook(book *models.Book) error {
 	return s.repo.DislikeBook(book)
+}
+
+func (s *BookService) SearchByKeyword(keyword string) ([]models.Book, error) {
+	return s.repo.SearchByKeyword(keyword)
+}
+
+func (s *BookService) DeleteBook(book *models.Book) error {
+	return nil
 }
