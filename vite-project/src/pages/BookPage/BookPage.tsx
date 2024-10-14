@@ -1,0 +1,37 @@
+import cl from './BookPage.module.css'
+import { Header } from './../../widgets/pageComponents/Header.tsx' 
+import { useSearchParams } from 'react-router-dom'
+import { getBook } from './../../shared/api/methods/getBook.ts'
+import { useState, useEffect } from 'react'
+
+export function BookPage() {
+    const [searchParams, setSearchParams] = useSearchParams()
+    const [bookData, setBookData] = useState({})
+
+    useEffect(() => {
+        getBook(searchParams.get("id"))
+        .then(r => setBookData(r))
+    }, [])
+
+    if(bookData){
+    
+        return (
+         <>
+             <Header />
+             <main className={cl['main']}>
+                <div className={cl['main__bookInfo']}>
+                    <div className={cl['main__bookInfo-cover']}>
+                        <img src='https://i.pinimg.com/564x/9f/8b/37/9f8b377f90c0919cffb31a83d0eb8f36.jpg' />
+                    </div>
+                </div>
+             </main>
+         </>
+        )
+    }else{
+        return (
+            <>
+                <main className={cl['main']}>Загрузка...</main>
+            </>
+        )
+    }
+}
