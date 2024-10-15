@@ -6,7 +6,9 @@ import (
 	rs "bookService/src/lib/api/request"
 	"bookService/src/lib/api/status"
 	"bookService/src/service"
+	"github.com/go-chi/chi/v5"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/render"
 )
@@ -33,5 +35,16 @@ func (h *CommentHandler) CreateComment(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *CommentHandler) GetCommentsByBookID(w http.ResponseWriter, r *http.Request) {
-	// Реализуйте получение комментариев по ID книги
+	bookIDStr := chi.URLParam(r, "book_id")
+	bookId, err := strconv.Atoi(bookIDStr)
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+	}
+
+	comments, err := h.commentService.GetCommentsByBookID(bookId)
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+	}
+
+	status.Ok(w, r, comments)
 }
