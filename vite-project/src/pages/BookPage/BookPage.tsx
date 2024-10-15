@@ -14,7 +14,6 @@ export function BookPage() {
     }, [])
 
     if(bookData){
-    
         return (
          <>
              <Header />
@@ -22,6 +21,22 @@ export function BookPage() {
                 <div className={cl['main__bookInfo']}>
                     <div className={cl['main__bookInfo-cover']}>
                         <img src='https://i.pinimg.com/564x/9f/8b/37/9f8b377f90c0919cffb31a83d0eb8f36.jpg' />
+                    </div>
+                    <div className={cl['main__bookInfo-ohterInfo']}>
+                        <div className={cl['main__bookInfo-author']}>
+                            <span>{bookData.author}</span>
+                        </div>
+                        <div className={cl['main__bookInfo-title']}>
+                            <span>{bookData.title}</span>
+                        </div>
+                        <div className={cl['main__bookInfo-read']}>
+                            <button>
+                                Читать
+                            </button>
+                        </div>
+                        <div className={cl['main__bookInfo-desc']}>
+                            <span>{bookData.description}</span>
+                        </div>
                     </div>
                 </div>
              </main>

@@ -20,7 +20,7 @@ export function ListBooks({coverPaths, title}: listBooksProps){
             </div>
             <div className={cl['listBooks__books']}>
                 {(createBookList(coverPaths)).map((book: IBook, index: number) =>
-                    <img src={book.coverUrl} key={index} onClick={e => navigate("/book")}/>
+                    <img src={book.coverUrl} key={index} onClick={e => navigate("/book?id=2")}/>
                 )}
             </div>
         </div>

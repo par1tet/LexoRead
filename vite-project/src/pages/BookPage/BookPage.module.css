@@ -4,8 +4,66 @@
     height: 100%;
 }
 
+.main__bookInfo {
+    display: flex;
+    width: 100%;
+    padding: 0 80px;
+    margin-top: 50px;
+
+    gap: 60px;
+}
+
+.main__bookInfo * {
+    color: white;
+}
+
 .main__bookInfo-cover > img {
     width: 340px;
     height: 450px;
     border-radius: 20px;
+}
+
+.main__bookInfo-author > span {
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.main__bookInfo-title {
+    margin-top: 14px;
+}
+
+.main__bookInfo-title > span {
+    font-weight: 600;
+    font-size: 45px;
+}
+
+.main__bookInfo-read {
+    width: 260px;
+    height: 66px;
+    margin-top: 14px;
+}
+
+.main__bookInfo-read > button {
+    width: 100%;
+    height: 100%;
+    color: black;
+    background-color: white;
+    border: 0;
+    border-radius: 25px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: scale 1s;
+}
+
+.main__bookInfo-read > button:hover{
+    scale: 1.1;
+}
+
+.main__bookInfo-desc {
+    margin-top: 28px;
+    text-align: center;
+    width: 100%;
+    padding: 0 240px;
+    box-sizing: border-box;
 }
