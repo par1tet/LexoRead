@@ -1,6 +1,6 @@
 .listBooks__books {
     display: flex;
-    gap: 12px;
+    gap: 20px;
     width: 100%;
     justify-content: center;
 

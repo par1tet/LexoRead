@@ -1,0 +1,29 @@
+.header-logo {
+	  display: flex;
+  justify-content: center;
+  padding-top: 82px;
+	justify-content: center;
+	align-items: center;
+}
+.header-logo > img {
+	width: 208px;
+  height: 208px;
+  border-radius: 50%;
+}
+.username {
+  font-size: 75px;
+  font-weight: 600;
+  text-align: center;
+	color: #D6D6D6;
+}
+.sub-title {
+	text-align: center;
+	justify-content: center;
+	display: flex;
+	font-size: 35px;
+	font-weight: 600;
+	line-height: 43.86px;
+	text-align: center;
+	color: #D6D6D6;
+	margin-bottom: 15px;
+}
