@@ -1,28 +1,25 @@
 package server
 
-import ( // Это нужно для подключения сгенерированной Swagger документации
+import (
 	"bookService/src/handler"
-	redis_handler "bookService/src/handler/redis"
+	redisHandler "bookService/src/handler/redis"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 )
 
 func SetupRouter(bookHandler *handler.BookHandler,
-	commentHandler *handler.CommentHandler, redisHandler *redis_handler.RedisHandler) *chi.Mux {
+	commentHandler *handler.CommentHandler, redisHandler *redisHandler.RedisHandler) *chi.Mux {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
-
 	r.Use(cors.Handler(cors.Options{
-		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
 		AllowedOrigins: []string{"https://*", "http://*"},
-		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders: []string{"Link"},
-		MaxAge:         300, // Maximum value not ignored by any of major browsers
+		MaxAge:         300,
 	}))
 
 	r.Route("/books", func(r chi.Router) {
@@ -32,6 +29,8 @@ func SetupRouter(bookHandler *handler.BookHandler,
 		r.Get("/search", bookHandler.SearchByKeyword)
 		r.Post("/like/{book_id}", bookHandler.LikeBook)
 		r.Post("/dislike/{book_id}", bookHandler.DislikeBook)
+		r.Delete("/{book_id}", bookHandler.DeleteBook)
+		r.Put("/", bookHandler.UpdateBook)
 	})
 
 	r.Route("/comments", func(r chi.Router) {

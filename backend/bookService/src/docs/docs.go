@@ -68,7 +68,82 @@ func GenDocs(bookHandler *handler.BookHandler) *chioas.Definition {
 					},
 				},
 			},
-			"/books/delete": chioas.Path{},
+			"/books/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodDelete: {
+						Handler:     bookHandler.DeleteBook,
+						Description: "Delete book",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book deleted",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/books": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodPut: {
+						Handler:     bookHandler.UpdateBook,
+						Description: "Update book",
+						Request: &chioas.Request{
+							Description: "Book to update",
+							SchemaRef:   "Book",
+						},
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book deleted",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/books/like/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodPost: {
+						Handler:     bookHandler.LikeBook,
+						Description: "Like book",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book like",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/books/dislike/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodPost: {
+						Handler:     bookHandler.DislikeBook,
+						Description: "Dislike book",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book dislike",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
 		},
 		Components: &chioas.Components{
 			Schemas: chioas.Schemas{

@@ -28,18 +28,22 @@ func (s *BookService) GetBooks(limit int) ([]models.Book, error) {
 	return s.repo.GetBooks(limit)
 }
 
-func (s *BookService) LikeBook(book *models.Book) error {
-	return s.repo.LikeBook(book)
+func (s *BookService) LikeBook(book_id string) error {
+	return s.repo.LikeBook(book_id)
 }
 
-func (s *BookService) DislikeBook(book *models.Book) error {
-	return s.repo.DislikeBook(book)
+func (s *BookService) DislikeBook(book_id string) error {
+	return s.repo.DislikeBook(book_id)
 }
 
 func (s *BookService) SearchByKeyword(keyword string) ([]models.Book, error) {
 	return s.repo.SearchByKeyword(keyword)
 }
 
-func (s *BookService) DeleteBook(book *models.Book) error {
-	return nil
+func (s *BookService) DeleteBook(id string) error {
+	return s.repo.DeleteBook(id)
+}
+
+func (s *BookService) UpdateBook(book *models.Book) error {
+	return s.repo.UpdateBook(book)
 }
