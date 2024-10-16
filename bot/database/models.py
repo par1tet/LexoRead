@@ -13,7 +13,7 @@ class Questions(Base):
 
     chat_id = Column(BIGINT)
 
-    admin_id: Mapped[Optional[int]] = mapped_column(ForeignKey("admins.id"))
+    admin: Mapped[Optional[BIGINT]] = mapped_column(ForeignKey("admins.id"))
 
 
 class Admins(Base):
@@ -23,4 +23,4 @@ class Admins(Base):
 
     chat_id = Column(BIGINT)
 
-    quesiton: Mapped[Optional[int]] = mapped_column(ForeignKey("questions.id"))
+    quesiton: Mapped[Optional[BIGINT]] = mapped_column(ForeignKey("questions.id"))

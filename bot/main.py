@@ -5,18 +5,23 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command, CommandStart, CommandObject, BaseFilter
 
 from config import TOKEN
-from database.core import create_tables, create_question, get_questions, leave_from_question, get_question
+from database.core import \
+    (create_tables, create_question, get_questions,
+     leave_from_question, get_question, get_admins)
+
+
+class CommandNonAdmin(BaseFilter):
+    async def __call__(self, message: types.Message):
+        if any((i in message.text for i in ("/check", "/leave", "/cancel", "/admin"))):
+            return True 
 
 
 class AdminFilter(BaseFilter):
     async def __call__(self, message: types.CallbackQuery | types.Message) -> bool:
-        admins = [1340572920] # TODO: add getting admin list from db
+        admins = await get_admins()
         if isinstance(message, types.Message):
             return message.chat.id in admins 
-        if message.message.chat.id in admins:
-            return True
-        await message.answer("Нет прав.")
-        return False
+        return message.message.chat.id in admins
 
 
 class ConnectionFilter(BaseFilter):
@@ -73,7 +78,7 @@ async def btn_handler(call: types.CallbackQuery):
 
     kb = [[
         types.InlineKeyboardButton(
-            text="Ответить", url=f"t.me/{(await bot.get_me()).username}?start={question.chat_id}")
+            text="Ответить", url=f"t.me/{(await bot.get_me()).username}?start={question.id}")
         ],[
         types.InlineKeyboardButton(
             text="Назад", callback_data=f"{page}.0")
@@ -135,8 +140,11 @@ async def check_questions(message: types.Message):
     ]
 
     markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
-
     await message.answer("Выберите вопрос:", reply_markup=markup)
+
+@dp.message(CommandNonAdmin())
+async def nonadmins(message: types.Message):
+    await message.answer("Нет прав.")
 
 
 @dp.message()
@@ -148,6 +156,7 @@ async def send_question(message: types.Message):
         return
     await message.answer("Отправьте текстовое сообщение.")
     print(f"{message.from_user.username} попытался отправить стикер, гифку, или медиа контент")
+
 
 async def main():
     await create_tables()
