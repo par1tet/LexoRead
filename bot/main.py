@@ -5,9 +5,15 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command, CommandStart, CommandObject, BaseFilter
 
 from config import TOKEN
-from database.core import \
-    (create_tables, create_question, get_questions,
-     leave_from_question, get_question, get_admins)
+from database.core import (
+    create_tables,
+    create_question,
+    get_questions,
+    leave_from_question,
+    get_question,
+    get_admins,
+    get_chat_id_questioner
+)
 
 
 class CommandNonAdmin(BaseFilter):
@@ -145,6 +151,12 @@ async def check_questions(message: types.Message):
 @dp.message(CommandNonAdmin())
 async def nonadmins(message: types.Message):
     await message.answer("Нет прав.")
+
+
+@dp.message(AdminFilter(), ConnectionFilter())
+async def send_to_question(message: types.Message):
+    chat_id = await get_chat_id_questioner(message.chat.id)
+    await bot.send_message(chat_id, message.text)
 
 
 @dp.message()

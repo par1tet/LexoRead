@@ -45,6 +45,13 @@ async def get_admins():
         return answer
 
 
+async def get_chat_id_questioner(chat_id):
+    async with async_session() as session:
+        admin = await session.execute(select(Admins).where(Admins.chat_id==chat_id))
+        question = await session.execute(select(Questions).where(Questions.admin==admin.id))
+        return question.one()[0].chat_id
+
+
 async def start_connection(question_id, admin_chat_id):
     async with async_session() as session:
         admin = await session.execute(select(Admins).where(Admins.chat_id==admin_chat_id))
