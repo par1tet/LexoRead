@@ -34,7 +34,6 @@ func main() {
 		logger.Error("Failed to migrate database", sl.Err(err))
 		os.Exit(1)
 	}
-
 	BookRepository := repository.NewBookRepository(db.DB)
 	CommentRepository := repository.NewCommentRepository(db.DB)
 	RedisRepository := redis_repo.NewRedisRepository("localhost:6379")
