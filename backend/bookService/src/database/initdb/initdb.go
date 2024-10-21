@@ -18,7 +18,7 @@ func Init(dsn string) (*DB, error) {
 }
 
 func (db *DB) Migrate(models ...interface{}) error {
-	err := db.DB.AutoMigrate(models...)
+	err := db.DB.Debug().AutoMigrate(models...)
 	if err != nil {
 		return err
 	}
