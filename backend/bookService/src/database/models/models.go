@@ -9,8 +9,8 @@ type Book struct {
 	Likes       uint   `gorm:"default:0" json:"likes,omitempty"`
 	DisLikes    uint   `gorm:"default:0" json:"dislikes,omitempty"`
 
-	Comments []Comment `gorm:"foreignKey:BookID" json:"comments,omitempty"`
-	Files    []File    `gorm:"foreignKey:ID" json:"files"`
+	Comments []Comment `gorm:"foreignKey:BookID;constraint:OnDelete:CASCADE;" json:"comments,omitempty"`
+	Files    []File    `gorm:"foreignKey:ForID;constraint:OnDelete:CASCADE;" json:"files"`
 }
 
 type File struct {

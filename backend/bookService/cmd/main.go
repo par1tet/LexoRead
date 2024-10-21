@@ -1,14 +1,3 @@
-// @title LexoRead Book Service API
-// @version 1.0
-// @description API для работы с книгами в LexoRead.
-// @termsOfService http://swagger.io/terms/
-
-// @contact.name Support Team
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @host localhost:8080
-// @BasePath /
 package main
 
 import (
@@ -17,14 +6,14 @@ import (
 	"bookService/src/database/models"
 	docs2 "bookService/src/docs"
 	"bookService/src/handler"
-	"bookService/src/handler/redis"
+	redis_handler "bookService/src/handler/redis"
 	"bookService/src/lib/prettylog"
 	"bookService/src/lib/sl"
 	"bookService/src/repository"
-	"bookService/src/repository/redis"
+	redis_repo "bookService/src/repository/redis"
 	"bookService/src/server"
 	"bookService/src/service"
-	"bookService/src/service/redis"
+	redis_service "bookService/src/service/redis"
 	"log/slog"
 	"os"
 )
@@ -45,7 +34,6 @@ func main() {
 		logger.Error("Failed to migrate database", sl.Err(err))
 		os.Exit(1)
 	}
-
 	BookRepository := repository.NewBookRepository(db.DB)
 	CommentRepository := repository.NewCommentRepository(db.DB)
 	RedisRepository := redis_repo.NewRedisRepository("localhost:6379")
@@ -57,9 +45,8 @@ func main() {
 	bookHandler := handler.NewBookHandler(bookService)
 	commentHandler := handler.NewCommentHandler(commentService)
 	redisHandler := redis_handler.NewRedisHandler(RedisService)
-	docs := docs2.GenDocs(bookHandler)
+	docs := docs2.GenDocs(bookHandler, redisHandler)
 	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
-
 	docs.SetupRoutes(router, docs)
 
 	server.ListenServer(router, logger, cfg)

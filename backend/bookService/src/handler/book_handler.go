@@ -8,6 +8,7 @@ import (
 	"bookService/src/lib/sl"
 	"bookService/src/service"
 	"errors"
+	"fmt"
 	"log/slog"
 	"net/http"
 	"strconv"
@@ -62,15 +63,14 @@ func (h *BookHandler) CreateBook(w http.ResponseWriter, r *http.Request) {
 func (h *BookHandler) GetBooks(w http.ResponseWriter, r *http.Request) {
 	limitStr := chi.URLParam(r, "limit")
 	limit, err := strconv.Atoi(limitStr)
-	if err != nil {
-		status.Err(w, r, rs.Error(err))
-	}
+	fmt.Println(limitStr)
+
 	books, err := h.bookService.GetBooks(limit)
 	if err != nil {
 		status.Err(w, r, rs.Error(err))
 		return
 	}
-	status.OkBooks(w, r, books)
+	status.Ok(w, r, books)
 }
 
 func (h *BookHandler) GetBookByID(w http.ResponseWriter, r *http.Request) {
@@ -97,32 +97,14 @@ func (h *BookHandler) LikeBook(w http.ResponseWriter, r *http.Request) {
 		slog.String("request_id", middleware.GetReqID(r.Context())),
 	)
 	bookidstr := chi.URLParam(r, "book_id")
-	bookid, err := strconv.Atoi(bookidstr)
 
-	if err != nil {
-		status.Err(w, r, rs.Error(err))
-		return
-	}
-
-	var book models.Book
-	err = h.bookService.GetBookByID(&book, bookid)
-	if err != nil {
-		log.Error("book not found:", sl.Err(err))
-		status.Err(w, r, rs.Error(err))
-		return
-	}
-
-	if err := h.bookService.LikeBook(&book); err != nil {
+	if err := h.bookService.LikeBook(bookidstr); err != nil {
 		log.Error("failed to like book:", sl.Err(err))
 		status.Err(w, r, rs.Error(err))
 		return
 	}
 
-	status.Ok(w, r, rs.StatusLikes{
-		Likes:    book.Likes,
-		DisLikes: book.DisLikes,
-		Response: rs.OK(),
-	})
+	status.Ok(w, r, rs.OK())
 
 }
 
@@ -132,33 +114,15 @@ func (h *BookHandler) DislikeBook(w http.ResponseWriter, r *http.Request) {
 	log := h.bookService.Logger.With(slog.String("op", op),
 		slog.String("request_id", middleware.GetReqID(r.Context())),
 	)
-	bookidstr := chi.URLParam(r, "book_id")
-	bookid, err := strconv.Atoi(bookidstr)
+	bookid := chi.URLParam(r, "book_id")
 
-	if err != nil {
-		status.Err(w, r, rs.Error(err))
-		return
-	}
-
-	var book models.Book
-	err = h.bookService.GetBookByID(&book, bookid)
-	if err != nil {
-		log.Error("book not found:", sl.Err(err))
-		status.Err(w, r, rs.Error(err))
-		return
-	}
-
-	if err := h.bookService.DislikeBook(&book); err != nil {
+	if err := h.bookService.DislikeBook(bookid); err != nil {
 		log.Error("failed to like book:", sl.Err(err))
 		status.Err(w, r, rs.Error(err))
 		return
 	}
 
-	status.Ok(w, r, rs.StatusLikes{
-		Likes:    book.Likes,
-		DisLikes: book.DisLikes,
-		Response: rs.OK(),
-	})
+	status.Ok(w, r, rs.OK())
 
 }
 
@@ -180,4 +144,38 @@ func (h *BookHandler) SearchByKeyword(w http.ResponseWriter, r *http.Request) {
 
 	status.Ok(w, r, books)
 
+}
+
+func (h *BookHandler) DeleteBook(w http.ResponseWriter, r *http.Request) {
+	const op = "handlers.url.deleteBook"
+
+	log := h.bookService.Logger.With(slog.String("op", op))
+	bookId := chi.URLParam(r, "book_id")
+
+	err := h.bookService.DeleteBook(bookId)
+	if err != nil {
+		log.Error("failed to delete book:", sl.Err(err))
+		status.ErrWithCode(w, r, rs.Error(err), http.StatusBadRequest)
+		return
+	}
+	status.Ok(w, r, rs.OK())
+}
+
+func (h *BookHandler) UpdateBook(w http.ResponseWriter, r *http.Request) {
+	const op = "handlers.url.updateBook"
+	log := h.bookService.Logger.With(slog.String("op", op))
+
+	var book models.Book
+	if err := render.Bind(r, &book); err != nil {
+		log.Error("failed decode json", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+
+	if err := h.bookService.UpdateBook(&book); err != nil {
+		log.Error("failed to update book:", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+	status.Ok(w, r, rs.OK())
 }

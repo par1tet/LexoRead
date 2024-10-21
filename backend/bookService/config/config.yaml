@@ -1,5 +1,3 @@
-
-
 database_config:
   host: localhost
   user: postgres

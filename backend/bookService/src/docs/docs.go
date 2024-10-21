@@ -2,12 +2,13 @@ package docs
 
 import (
 	"bookService/src/handler"
+	redis_handler "bookService/src/handler/redis"
 	"net/http"
 
 	"github.com/go-andiamo/chioas"
 )
 
-func GenDocs(bookHandler *handler.BookHandler) *chioas.Definition {
+func GenDocs(bookHandler *handler.BookHandler, redisHandler *redis_handler.RedisHandler) *chioas.Definition {
 	return &chioas.Definition{
 		DocOptions: chioas.DocOptions{
 			UIStyle:        chioas.Swagger,
@@ -68,7 +69,100 @@ func GenDocs(bookHandler *handler.BookHandler) *chioas.Definition {
 					},
 				},
 			},
-			"/books/delete": chioas.Path{},
+			"/books/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodDelete: {
+						Handler:     bookHandler.DeleteBook,
+						Description: "Delete book",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book deleted",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/books": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodPut: {
+						Handler:     bookHandler.UpdateBook,
+						Description: "Update book",
+						Request: &chioas.Request{
+							Description: "Book to update",
+							SchemaRef:   "Book",
+						},
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book deleted",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/books/like/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodPost: {
+						Handler:     bookHandler.LikeBook,
+						Description: "Like book",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book like",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/books/dislike/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodPost: {
+						Handler:     bookHandler.DislikeBook,
+						Description: "Dislike book",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Book dislike",
+								SchemaRef:   "status",
+							},
+							http.StatusBadRequest: {
+								Description: "Bad Request",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/redis/{type}/{id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodGet: {
+						Handler:     redisHandler.GetBook,
+						Description: "Add book to redis",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Ok",
+								SchemaRef:   "status",
+							},
+							http.StatusInternalServerError: {
+								Description: "Error",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
 		},
 		Components: &chioas.Components{
 			Schemas: chioas.Schemas{

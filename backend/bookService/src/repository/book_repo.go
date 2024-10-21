@@ -3,7 +3,6 @@ package repository
 import (
 	"bookService/src/database/models"
 	"errors"
-
 	"gorm.io/gorm"
 )
 
@@ -11,9 +10,11 @@ type BookRepository interface {
 	CreateBook(book *models.Book) error
 	GetBooks(limit int) ([]models.Book, error)
 	GetBookByID(book *models.Book, bookID int) error
-	LikeBook(book *models.Book) error
-	DislikeBook(book *models.Book) error
+	LikeBook(book_id string) error
+	DislikeBook(book_id string) error
 	SearchByKeyword(keyword string) ([]models.Book, error)
+	DeleteBook(id string) error
+	UpdateBook(book *models.Book) error
 }
 
 type bookRepo struct {
@@ -34,16 +35,30 @@ func (r *bookRepo) GetBookByID(book *models.Book, bookID int) error {
 
 func (r *bookRepo) GetBooks(limit int) ([]models.Book, error) {
 	var books []models.Book
-	err := r.db.Limit(limit).Preload("Comments").Preload("Files").Find(&books).Error
+	err := r.db.Limit(limit).
+		Preload("Comments").
+		Preload("Files").
+		Find(&books).Error
+
 	return books, err
 }
 
-func (r *bookRepo) LikeBook(book *models.Book) error {
-	return r.db.Model(book).Where("id = ?", book.ID).Update("likes", book.Likes+1).Error
+func (r *bookRepo) LikeBook(book_id string) error {
+	result := r.db.Model(models.Book{}).Where("id = ?",
+		book_id).UpdateColumn("likes", gorm.Expr("likes + ?", 1))
+	if result.RowsAffected == 0 {
+		return errors.New("Book not found")
+	}
+	return result.Error
 }
 
-func (r *bookRepo) DislikeBook(book *models.Book) error {
-	return r.db.Model(book).Where("id = ?", book.ID).Update("dis_likes", book.DisLikes+1).Error
+func (r *bookRepo) DislikeBook(book_id string) error {
+	result := r.db.Model(models.Book{}).Where("id = ?",
+		book_id).UpdateColumn("dis_likes", gorm.Expr("dis_likes + ?", 1))
+	if result.RowsAffected == 0 {
+		return errors.New("Book not found")
+	}
+	return result.Error
 }
 
 func (r *bookRepo) SearchByKeyword(keyword string) ([]models.Book, error) {
@@ -62,4 +77,22 @@ func (r *bookRepo) SearchByKeyword(keyword string) ([]models.Book, error) {
 	}
 
 	return books, nil
+}
+
+func (r *bookRepo) DeleteBook(id string) error {
+	if err := r.db.First(&models.Book{}, id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return errors.New("Book not found")
+		}
+		return err
+	}
+	return r.db.Delete(&models.Book{}, id).Error
+}
+
+func (r *bookRepo) UpdateBook(book *models.Book) error {
+	result := r.db.Model(book).Where("id = ?", book.ID).Updates(book)
+	if result.RowsAffected == 0 {
+		return errors.New("Book not found")
+	}
+	return result.Error
 }

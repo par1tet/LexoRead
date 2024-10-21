@@ -21,3 +21,8 @@ func Err(w http.ResponseWriter, r *http.Request, err interface{}) {
 	render.Status(r, http.StatusInternalServerError)
 	render.JSON(w, r, err)
 }
+
+func ErrWithCode(w http.ResponseWriter, r *http.Request, err interface{}, code int) {
+	render.Status(r, code)
+	render.JSON(w, r, err)
+}
