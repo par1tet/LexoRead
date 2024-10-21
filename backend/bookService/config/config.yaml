@@ -1,5 +1,5 @@
 database_config:
-  host: 127.0.0.1
+  host: localhost
   user: postgres
   password: postgres
   dbname: bookservice
