@@ -1,5 +1,5 @@
 import { ApiHeader, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { CHAR } from 'sequelize';
+import { CHAR, INTEGER } from 'sequelize';
 import { Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
 interface UserAttrs {
@@ -44,4 +44,6 @@ export class User extends Model<User, UserAttrs> {
   @ApiProperty({ example: 'Hello World', description: 'description' })
   @Column({ type: DataType.STRING(350) })
   description: string;
+  @Column({type: DataType.ARRAY(INTEGER)})
+  favBooks: number;
 }
