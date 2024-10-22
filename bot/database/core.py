@@ -17,7 +17,7 @@ async def create_question(text, chat_id):
 
 async def get_questions(page):
     async with async_session() as session:
-        questions = select(Questions).where(Questions.admin==None).limit(8).offset(page * 8 + 9)
+        questions = select(Questions).where(Questions.admin==None).limit(8).offset(page * 8 + 1)
         result = await session.execute(questions)
         return [str(i[0].id) for i in result.all()]
 

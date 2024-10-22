@@ -69,7 +69,7 @@ async def btn_handler(call: types.CallbackQuery):
             ]
         ]
         markup = types.InlineKeyboardMarkup(inline_keyboard=kb)
-        await call.message.edit_reply_markup(reply_markup=markup)
+        await call.message.edit_text(text="Выберите вопрос:", reply_markup=markup)
         return
 
 
