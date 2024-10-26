@@ -1,4 +1,3 @@
-from typing import Optional
 from sqlalchemy import ForeignKey, BIGINT, Column
 from sqlalchemy.orm import mapped_column, Mapped
 from database.database import Base
