@@ -6,6 +6,7 @@ from database.core import create_tables, log_user, reg_user
 from database.jwt_utils import generate_jwt, decode_jwt
 from models import User, UserWithEmail, JWTSecret
 
+
 app = FastAPI()
 
 
