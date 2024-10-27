@@ -10,7 +10,8 @@ import (
 )
 
 func SetupRouter(bookHandler *handler.BookHandler,
-	commentHandler *handler.CommentHandler, redisHandler *redisHandler.RedisHandler) *chi.Mux {
+	commentHandler *handler.CommentHandler, redisHandler *redisHandler.RedisHandler,
+	redisTest *handler.RedisHandler) *chi.Mux {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -38,7 +39,13 @@ func SetupRouter(bookHandler *handler.BookHandler,
 		r.Post("/add", commentHandler.CreateComment)
 		r.Get("/comments/{book_id}", commentHandler.GetCommentsByBookID)
 	})
+
 	// Здесь вся дока для редиса готова TODO: Переписать роутер так как их чето тут много
+	r.Route("/redis_test", func(r chi.Router) {
+		r.Get("/{type_book}/{id}", redisTest.GetBook)
+		r.Post("/{type_book}/add", redisTest.AddBook)
+	})
+
 	r.Route("/redis/top", func(r chi.Router) {
 		r.Get("/", redisHandler.GetTopBooks)
 		r.Post("/add", redisHandler.AddTopBook)
@@ -46,7 +53,6 @@ func SetupRouter(bookHandler *handler.BookHandler,
 	})
 
 	r.Route("/redis/default", func(r chi.Router) {
-
 		r.Get("/{id}", redisHandler.GetBook)
 		r.Post("/add", redisHandler.AddBook)
 		r.Delete("/{id}", redisHandler.DeleteBook)
