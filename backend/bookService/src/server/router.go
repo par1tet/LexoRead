@@ -39,9 +39,12 @@ func SetupRouter(bookHandler *handler.BookHandler,
 		r.Post("/add_comments", commentHandler.CreateComment)
 		r.Get("/comments/{book_id}", commentHandler.GetCommentsByBookID)
 	})
-	r.Route("/redis_test/{type_book}", func(chi.Router) {
-		r.Get("/{id}", redisTest.GetBook)
+	r.Route("/redis_test", func(r chi.Router) {
+		r.Get("/{type_book}/{id}", redisTest.GetBook)
+		r.Post("/{type_book}/add", redisTest.AddBook)
+
 	})
+
 	r.Route("/redis/top", func(r chi.Router) {
 		r.Get("/", redisHandler.GetTopBooks)
 		r.Post("/add", redisHandler.AddTopBook)
