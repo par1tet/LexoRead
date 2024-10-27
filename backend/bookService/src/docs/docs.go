@@ -8,7 +8,7 @@ import (
 	"github.com/go-andiamo/chioas"
 )
 
-func GenDocs(bookHandler *handler.BookHandler, redisHandler *redis_handler.RedisHandler) *chioas.Definition {
+func GenDocs(bookHandler *handler.BookHandler, redisHandler *redis_handler.RedisHandler, commentHandler *handler.CommentHandler) *chioas.Definition {
 	return &chioas.Definition{
 		DocOptions: chioas.DocOptions{
 			UIStyle:        chioas.Swagger,
@@ -148,12 +148,55 @@ func GenDocs(bookHandler *handler.BookHandler, redisHandler *redis_handler.Redis
 			"/redis/{type}/{id}": chioas.Path{
 				Methods: chioas.Methods{
 					http.MethodGet: {
-						Handler:     redisHandler.GetBook,
-						Description: "Add book to redis",
+						Handler: redisHandler.GetBook,
+						Description: "get book by redis type and id redis_types:top\n" +
+							"default\nbusiness\nfiction\nliterature\nnovelty\npopular\npsychology\n" +
+							"romance\nself-development",
 						Responses: chioas.Responses{
 							http.StatusOK: {
 								Description: "Ok",
 								SchemaRef:   "status",
+							},
+							http.StatusInternalServerError: {
+								Description: "Error",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/comments/add": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodGet: {
+						Handler:     commentHandler.CreateComment,
+						Description: "add comment to database",
+						Request: &chioas.Request{
+							Description: "Comment to create",
+							SchemaRef:   "Comment",
+						},
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Ok",
+								SchemaRef:   "status",
+							},
+							http.StatusInternalServerError: {
+								Description: "Error",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+			"/comments/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodGet: {
+						Handler:     commentHandler.GetCommentsByBookID,
+						Description: "get comments by book id",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								IsArray:     true,
+								Description: "list of comments",
+								SchemaRef:   "Comment",
 							},
 							http.StatusInternalServerError: {
 								Description: "Error",
@@ -257,6 +300,40 @@ func GenDocs(bookHandler *handler.BookHandler, redisHandler *redis_handler.Redis
 						},
 						{
 							Name: "user_id",
+							Type: "integer",
+						},
+						{
+							Name: "reply_comment_id",
+							Type: "integer",
+						},
+						{
+							Name:      "reply_comments",
+							Type:      "array",
+							SchemaRef: "Comment_for_reply_comments",
+						},
+					},
+				},
+				{
+					Name: "Comment_for_reply_comments",
+					Properties: chioas.Properties{
+						{
+							Name: "id",
+							Type: "integer",
+						},
+						{
+							Name: "book_id",
+							Type: "integer",
+						},
+						{
+							Name: "content",
+							Type: "string",
+						},
+						{
+							Name: "user_id",
+							Type: "integer",
+						},
+						{
+							Name: "reply_comment_id",
 							Type: "integer",
 						},
 					},

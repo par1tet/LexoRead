@@ -28,7 +28,6 @@ func main() {
 		logger.Error("Failed to connect to database", sl.Err(err))
 		os.Exit(1)
 	}
-
 	err = db.Migrate(&models.Book{}, &models.File{}, &models.Comment{})
 	if err != nil {
 		logger.Error("Failed to migrate database", sl.Err(err))
@@ -45,7 +44,7 @@ func main() {
 	bookHandler := handler.NewBookHandler(bookService)
 	commentHandler := handler.NewCommentHandler(commentService)
 	redisHandler := redis_handler.NewRedisHandler(RedisService)
-	docs := docs2.GenDocs(bookHandler, redisHandler)
+	docs := docs2.GenDocs(bookHandler, redisHandler, commentHandler)
 	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
 	docs.SetupRoutes(router, docs)
 
