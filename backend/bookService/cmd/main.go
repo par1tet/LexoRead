@@ -21,7 +21,6 @@ import (
 func main() {
 
 	cfg := config.MustLoad()
-
 	logger := prettylog.NewLogger(slog.LevelDebug, true)
 	db, err := initdb.Init(cfg.GetStorageDSN())
 	if err != nil {
@@ -33,19 +32,24 @@ func main() {
 		logger.Error("Failed to migrate database", sl.Err(err))
 		os.Exit(1)
 	}
+
 	BookRepository := repository.NewBookRepository(db.DB)
 	CommentRepository := repository.NewCommentRepository(db.DB)
 	RedisRepository := redis_repo.NewRedisRepository("localhost:6379")
+	RedisTestRepository := repository.NewRedisRepository("localhost:6379")
 
 	bookService := service.NewBookService(BookRepository, logger)
 	commentService := service.NewCommentService(CommentRepository)
 	RedisService := redis_service.NewRedisService(RedisRepository)
+	RedisTestService := service.NewRedisService(RedisTestRepository)
 
 	bookHandler := handler.NewBookHandler(bookService)
 	commentHandler := handler.NewCommentHandler(commentService)
 	redisHandler := redis_handler.NewRedisHandler(RedisService)
+	redisTestHandler := handler.NewRedisHandler(RedisTestService)
 	docs := docs2.GenDocs(bookHandler, redisHandler, commentHandler)
-	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
+	router := server.SetupRouter(bookHandler, commentHandler, redisHandler, redisTestHandler)
+
 	docs.SetupRoutes(router, docs)
 
 	server.ListenServer(router, logger, cfg)
