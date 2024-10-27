@@ -47,8 +47,9 @@ func main() {
 	commentHandler := handler.NewCommentHandler(commentService)
 	redisHandler := redis_handler.NewRedisHandler(RedisService)
 	redisTestHandler := handler.NewRedisHandler(RedisTestService)
-	docs := docs2.GenDocs(bookHandler, redisHandler)
+	docs := docs2.GenDocs(bookHandler, redisHandler, commentHandler)
 	router := server.SetupRouter(bookHandler, commentHandler, redisHandler, redisTestHandler)
+
 	docs.SetupRoutes(router, docs)
 
 	server.ListenServer(router, logger, cfg)
