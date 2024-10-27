@@ -2,6 +2,8 @@ package handler
 
 import (
 	"bookService/src/database/models"
+	rs "bookService/src/lib/api/request"
+	"bookService/src/lib/api/status"
 	"bookService/src/service"
 	"net/http"
 	"strconv"
@@ -56,6 +58,31 @@ func (h *RedisHandler) GetBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.JSON(w, r, book)
+}
+
+func (h *RedisHandler) GetBooks(w http.ResponseWriter, r *http.Request) {
+	key := chi.URLParam(r, "type_book")
+
+	books, err := h.service.GetBooks(key)
+
+	if err != nil {
+		status.Err(w, r, err)
+		return
+	}
+	status.Ok(w, r, books)
+}
+func (h *RedisHandler) UpdateBook(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	key := chi.URLParam(r, "type_book")
+
+	var book models.Book
+	if err := render.Bind(r, &book); err != nil {
+		status.Err(w, r, err)
+	}
+	if err := h.service.UpdateBook(&book, key, id); err != nil {
+		status.Err(w, r, err)
+	}
+	status.Ok(w, r, rs.OK())
 }
 
 func (h *RedisHandler) DeleteBook(w http.ResponseWriter, r *http.Request) {

@@ -133,7 +133,8 @@ func (h *BookHandler) SearchByKeyword(w http.ResponseWriter, r *http.Request) {
 	books, err := h.bookService.SearchByKeyword(keyword)
 	if err != nil {
 		log.Error("failed to search by keyword:", sl.Err(err))
-		status.Err(w, r, rs.Error(err))
+		render.Status(r, http.StatusNoContent)
+		render.JSON(w, r, rs.Error(err))
 	}
 
 	status.Ok(w, r, books)

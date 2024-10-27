@@ -1,7 +1,7 @@
 database_config:
   host: localhost
-  user: quthery
-  password: pass
+  user: postgres
+  password: postgres
   dbname: bookservice
   port: 5432
   sslmode: disable

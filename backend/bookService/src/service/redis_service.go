@@ -26,6 +26,10 @@ func (s *RedisService) DeleteBook(id int, key string) error {
 	return s.repo.DeleteBook(context.Background(), id, key)
 }
 
-func (s *RedisService) UpdateBook(book *models.Book, key string) error {
-	return s.repo.UpdateBook(context.Background(), book, key)
+func (s *RedisService) UpdateBook(book *models.Book, key string, id string) error {
+	return s.repo.UpdateBook(context.Background(), book, key, id)
+}
+
+func (s *RedisService) GetBooks(key string) ([]*models.Book, error) {
+	return s.repo.GetBooks(context.Background(), key)
 }

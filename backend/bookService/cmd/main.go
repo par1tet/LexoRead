@@ -6,14 +6,11 @@ import (
 	"bookService/src/database/models"
 	docs2 "bookService/src/docs"
 	"bookService/src/handler"
-	redis_handler "bookService/src/handler/redis"
 	"bookService/src/lib/prettylog"
 	"bookService/src/lib/sl"
 	"bookService/src/repository"
-	redis_repo "bookService/src/repository/redis"
 	"bookService/src/server"
 	"bookService/src/service"
-	redis_service "bookService/src/service/redis"
 	"log/slog"
 	"os"
 )
@@ -35,20 +32,17 @@ func main() {
 
 	BookRepository := repository.NewBookRepository(db.DB)
 	CommentRepository := repository.NewCommentRepository(db.DB)
-	RedisRepository := redis_repo.NewRedisRepository("localhost:6379")
-	RedisTestRepository := repository.NewRedisRepository("localhost:6379")
+	RedisRepository := repository.NewRedisRepository("localhost:6379")
 
 	bookService := service.NewBookService(BookRepository, logger)
 	commentService := service.NewCommentService(CommentRepository)
-	RedisService := redis_service.NewRedisService(RedisRepository)
-	RedisTestService := service.NewRedisService(RedisTestRepository)
+	redisService := service.NewRedisService(RedisRepository)
 
 	bookHandler := handler.NewBookHandler(bookService)
 	commentHandler := handler.NewCommentHandler(commentService)
-	redisHandler := redis_handler.NewRedisHandler(RedisService)
-	redisTestHandler := handler.NewRedisHandler(RedisTestService)
+	redisHandler := handler.NewRedisHandler(redisService)
 	docs := docs2.GenDocs(bookHandler, redisHandler, commentHandler)
-	router := server.SetupRouter(bookHandler, commentHandler, redisHandler, redisTestHandler)
+	router := server.SetupRouter(bookHandler, commentHandler, redisHandler)
 
 	docs.SetupRoutes(router, docs)
 
