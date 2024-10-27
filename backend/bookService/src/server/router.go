@@ -3,13 +3,15 @@ package server
 import (
 	"bookService/src/handler"
 	redisHandler "bookService/src/handler/redis"
+
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/cors"
 )
 
 func SetupRouter(bookHandler *handler.BookHandler,
-	commentHandler *handler.CommentHandler, redisHandler *redisHandler.RedisHandler) *chi.Mux {
+	commentHandler *handler.CommentHandler, redisHandler *redisHandler.RedisHandler,
+	redisTest *handler.RedisHandler) *chi.Mux {
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -37,7 +39,9 @@ func SetupRouter(bookHandler *handler.BookHandler,
 		r.Post("/add_comments", commentHandler.CreateComment)
 		r.Get("/comments/{book_id}", commentHandler.GetCommentsByBookID)
 	})
-
+	r.Route("/redis_test/{type_book}", func(chi.Router) {
+		r.Get("/{id}", redisTest.GetBook)
+	})
 	r.Route("/redis/top", func(r chi.Router) {
 		r.Get("/", redisHandler.GetTopBooks)
 		r.Post("/add", redisHandler.AddTopBook)
