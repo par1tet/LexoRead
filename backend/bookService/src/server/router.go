@@ -25,24 +25,25 @@ func SetupRouter(bookHandler *handler.BookHandler,
 	}))
 
 	r.Route("/books", func(r chi.Router) {
-		r.Post("/add", bookHandler.CreateBook)
-		r.Get("/limit={limit}", bookHandler.GetBooks)
-		r.Get("/id/{book_id}", bookHandler.GetBookByID)
-		r.Get("/search", bookHandler.SearchByKeyword)
-		r.Post("/like/{book_id}", bookHandler.LikeBook)
-		r.Post("/dislike/{book_id}", bookHandler.DislikeBook)
-		r.Delete("/{book_id}", bookHandler.DeleteBook)
-		r.Put("/", bookHandler.UpdateBook)
+		r.Post("/add", bookHandler.CreateBook)                // In docs
+		r.Get("/limit={limit}", bookHandler.GetBooks)         // In docs
+		r.Get("/id/{book_id}", bookHandler.GetBookByID)       // In docs
+		r.Get("/search/{query}", bookHandler.SearchByKeyword) // TODO: Добавить в документацию
+		r.Post("/like/{book_id}", bookHandler.LikeBook)       // In docs
+		r.Post("/dislike/{book_id}", bookHandler.DislikeBook) // In docs
+		r.Delete("/{book_id}", bookHandler.DeleteBook)        // In docs
+		r.Put("/", bookHandler.UpdateBook)                    // In docs
 	})
 
 	r.Route("/comments", func(r chi.Router) {
-		r.Post("/add_comments", commentHandler.CreateComment)
+		r.Post("/add", commentHandler.CreateComment)
 		r.Get("/comments/{book_id}", commentHandler.GetCommentsByBookID)
 	})
+
+	// Здесь вся дока для редиса готова TODO: Переписать роутер так как их чето тут много
 	r.Route("/redis_test", func(r chi.Router) {
 		r.Get("/{type_book}/{id}", redisTest.GetBook)
 		r.Post("/{type_book}/add", redisTest.AddBook)
-
 	})
 
 	r.Route("/redis/top", func(r chi.Router) {
@@ -52,7 +53,6 @@ func SetupRouter(bookHandler *handler.BookHandler,
 	})
 
 	r.Route("/redis/default", func(r chi.Router) {
-
 		r.Get("/{id}", redisHandler.GetBook)
 		r.Post("/add", redisHandler.AddBook)
 		r.Delete("/{id}", redisHandler.DeleteBook)
