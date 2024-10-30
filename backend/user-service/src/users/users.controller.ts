@@ -1,4 +1,11 @@
-import { Body, Controller, Delete, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { BanUserDto } from './dto/banUser.dto';
 import { UnBanUserDto } from './dto/unBanUser.dto';
@@ -11,20 +18,15 @@ import {
   ApiBody,
   ApiCreatedResponse,
   ApiOperation,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './user.model';
-
+import { Response } from 'express';
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-
-  @ApiCreatedResponse({
-    description: 'The record has been successfully created.',
-    type: User,
-    status: 200,
-  })
   @Put('banUser')
   @ApiOperation({ summary: 'забанить пользователя' })
   async banUser(@Body() dto: BanUserDto) {
@@ -32,8 +34,10 @@ export class UsersController {
   }
   @Post('getUser')
   @ApiOperation({ summary: 'получить пользователя' })
-  async getUser(@Body() dto: GetUserDto) {
-    return await this.usersService.getUser(dto);
+  @ApiResponse({ status: 200, description: 'get all', type: User })
+  async getUser(@Body() dto: GetUserDto, @Res() response: Response) {
+    const user = await this.usersService.getUser(dto);
+    return response.status(201).json(user);
   }
   @Delete('deleteBook')
   @ApiOperation({ summary: 'удалить книгу пользователя' })
@@ -41,15 +45,11 @@ export class UsersController {
   @Put('changeFavBooks')
   @ApiOperation({ summary: 'изменить любимые книги пользователя' })
   async changeFavouriteBooks() {}
-  @ApiCreatedResponse({
-    description: 'The record has been successfully created.',
-    type: User,
-    status: 200,
-  })
   @Put('changeEmail')
   @ApiOperation({ summary: 'изменить почту пользователя' })
-  async changeEmail(@Body() dto: ChangeEmailDto) {
-    return await this.usersService.changeEmail(dto);
+  async changeEmail(@Body() dto: ChangeEmailDto, @Res() response: Response) {
+    const email = await this.usersService.changeEmail(dto);
+    return response.status(201).json(email)
   }
   @Put('unBanUser')
   @ApiOperation({ summary: 'разбанить пользователя' })

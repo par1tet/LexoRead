@@ -1,5 +1,5 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class GetUserDto {
-	username: string;
-	isBanned: boolean;
-	avatarFileUrl: string;
+	jwtToken: string
 }

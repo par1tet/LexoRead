@@ -3,6 +3,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './users/user.model';
+import { FavBooks } from './users/favBooks.model';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { User } from './users/user.model';
       username: process.env.PG_USERNAME,
       password: process.env.PG_PASSWORD,
       database: process.env.PG_DB,
-      models: [User],
+      models: [User, FavBooks],
       synchronize: true,
       autoLoadModels: true
     }),

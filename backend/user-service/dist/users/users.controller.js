@@ -31,13 +31,19 @@ let UsersController = class UsersController {
     async banUser(dto) {
         return await this.usersService.banUser(dto);
     }
-    async getUser(dto) {
-        return await this.usersService.getUser(dto);
+    async getUser(dto, response) {
+        const user = await this.usersService.getUser(dto);
+        console.log(user);
+        if (!user) {
+            return response.status(404).json({ message: 'User not found' });
+        }
+        return response.status(201).json(user);
     }
     async deleteBook() { }
     async changeFavouriteBooks() { }
-    async changeEmail(dto) {
-        return await this.usersService.changeEmail(dto);
+    async changeEmail(dto, response) {
+        const email = await this.usersService.changeEmail(dto);
+        return response.status(201).json(email);
     }
     async unBanUser(dto) {
         return await this.usersService.unBanUser(dto);
@@ -54,11 +60,6 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
-    (0, swagger_1.ApiCreatedResponse)({
-        description: 'The record has been successfully created.',
-        type: user_model_1.User,
-        status: 200,
-    }),
     (0, common_1.Put)('banUser'),
     (0, swagger_1.ApiOperation)({ summary: 'забанить пользователя' }),
     __param(0, (0, common_1.Body)()),
@@ -69,9 +70,11 @@ __decorate([
 __decorate([
     (0, common_1.Post)('getUser'),
     (0, swagger_1.ApiOperation)({ summary: 'получить пользователя' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'get all', type: user_model_1.User }),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [getUser_dto_1.GetUserDto]),
+    __metadata("design:paramtypes", [getUser_dto_1.GetUserDto, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUser", null);
 __decorate([
@@ -89,16 +92,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changeFavouriteBooks", null);
 __decorate([
-    (0, swagger_1.ApiCreatedResponse)({
-        description: 'The record has been successfully created.',
-        type: user_model_1.User,
-        status: 200,
-    }),
     (0, common_1.Put)('changeEmail'),
     (0, swagger_1.ApiOperation)({ summary: 'изменить почту пользователя' }),
     __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [changeEmail_dto_1.ChangeEmailDto]),
+    __metadata("design:paramtypes", [changeEmail_dto_1.ChangeEmailDto, Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changeEmail", null);
 __decorate([

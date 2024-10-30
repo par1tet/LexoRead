@@ -1,4 +1,4 @@
-import { Body, Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException, Res } from '@nestjs/common';
 import { User } from './user.model';
 import { BanUserDto } from './dto/banUser.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -8,6 +8,7 @@ import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
+import { Response } from 'express';
 
 @Injectable()
 export class UsersService {
@@ -24,7 +25,7 @@ export class UsersService {
       },
     );
     if (banUser[dto.id] == 0) {
-      return new NotFoundException(`User with ${dto.id} not found`).getStatus
+      return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
   }
   async unBanUser(@Body() dto: UnBanUserDto) {
@@ -39,17 +40,17 @@ export class UsersService {
       },
     );
     if (unBanUser[dto.id] == 0) {
-      return new NotFoundException(`User with ${dto.id} not found`).getStatus
+      return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
   }
   async getUser(@Body() dto: GetUserDto) {
-    return await this.userRepo.findOne({
+    const user =  await this.userRepo.findOne({
       where: {
-        avatarFileUrl: dto.avatarFileUrl,
-        isBanned: dto.isBanned,
-        username: dto.username,
+        jwtToken: dto.jwtToken,
       },
     });
+    console.log();
+    
   }
   async changeEmail(@Body() dto: ChangeEmailDto) {
     const email = await this.userRepo.update(
@@ -63,7 +64,8 @@ export class UsersService {
       },
     );
     if (email[dto.userId] == 0) {
-      return new NotFoundException(`User with ${dto.userId} not found`).getStatus
+      return new NotFoundException(`User with ${dto.userId} not found`)
+        .getStatus;
     }
     return email;
   }
@@ -80,7 +82,8 @@ export class UsersService {
       },
     );
     if (username[dto.userId] == 0) {
-      return new NotFoundException(`User with ${dto.userId} not found`).getStatus
+      return new NotFoundException(`User with ${dto.userId} not found`)
+        .getStatus;
     }
     return username;
   }
@@ -96,7 +99,7 @@ export class UsersService {
       },
     );
     if (AvatarUrl[dto.id] == 0) {
-      return new NotFoundException(`User with ${dto.id} not found`).getStatus
+      return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
     return AvatarUrl;
   }
@@ -112,7 +115,8 @@ export class UsersService {
       },
     );
     if (description[dto.userId] == 0) {
-      return new NotFoundException(`User with ${dto.userId} not found`).getStatus
+      return new NotFoundException(`User with ${dto.userId} not found`)
+        .getStatus;
     }
     return description;
   }

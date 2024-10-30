@@ -1,7 +1,8 @@
 import { ApiHeader, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { CHAR, INTEGER } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { HasMany, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
+import { FavBooks } from './favBooks.model';
 interface UserAttrs {
   isBanned: boolean;
   username: string;
@@ -28,11 +29,14 @@ export class User extends Model<User, UserAttrs> {
   @ApiProperty({ example: 'smallgigached@gmail.com', description: 'email' })
   @Column({ type: DataType.STRING, unique: true })
   email: string;
+  @ApiProperty({example: 'sdfsdfsdgfdf', description: 'JWT TOKEN User'})
+  @Column({type: DataType.TEXT, allowNull: true})
+  jwtToken: string
   @ApiProperty({
     example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
     description: 'HashPassword',
   })
-  @Column({ type: DataType.STRING, allowNull: true })
+  @Column({ type: DataType.TEXT, allowNull: true })
   hashPassword: string;
   @ApiProperty({
     example:
@@ -44,6 +48,6 @@ export class User extends Model<User, UserAttrs> {
   @ApiProperty({ example: 'Hello World', description: 'description' })
   @Column({ type: DataType.STRING(350) })
   description: string;
-  @Column({type: DataType.ARRAY(INTEGER)})
-  favBooks: number;
+  @HasMany(() => FavBooks)
+  favBooks_Id: FavBooks[]
 }

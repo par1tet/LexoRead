@@ -52,13 +52,13 @@ let UsersService = class UsersService {
         }
     }
     async getUser(dto) {
-        return await this.userRepo.findOne({
+        const user = await this.userRepo.findOne({
             where: {
-                avatarFileUrl: dto.avatarFileUrl,
-                isBanned: dto.isBanned,
-                username: dto.username,
+                jwtToken: dto.jwtToken,
             },
         });
+        console.log(user);
+        return user;
     }
     async changeEmail(dto) {
         const email = await this.userRepo.update({
@@ -69,7 +69,8 @@ let UsersService = class UsersService {
             },
         });
         if (email[dto.userId] == 0) {
-            return new common_1.NotFoundException(`User with ${dto.userId} not found`).getStatus;
+            return new common_1.NotFoundException(`User with ${dto.userId} not found`)
+                .getStatus;
         }
         return email;
     }
@@ -82,7 +83,8 @@ let UsersService = class UsersService {
             },
         });
         if (username[dto.userId] == 0) {
-            return new common_1.NotFoundException(`User with ${dto.userId} not found`).getStatus;
+            return new common_1.NotFoundException(`User with ${dto.userId} not found`)
+                .getStatus;
         }
         return username;
     }
@@ -108,7 +110,8 @@ let UsersService = class UsersService {
             },
         });
         if (description[dto.userId] == 0) {
-            return new common_1.NotFoundException(`User with ${dto.userId} not found`).getStatus;
+            return new common_1.NotFoundException(`User with ${dto.userId} not found`)
+                .getStatus;
         }
         return description;
     }

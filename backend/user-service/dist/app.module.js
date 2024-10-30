@@ -12,6 +12,7 @@ const users_module_1 = require("./users/users.module");
 const config_1 = require("@nestjs/config");
 const sequelize_1 = require("@nestjs/sequelize");
 const user_model_1 = require("./users/user.model");
+const favBooks_model_1 = require("./users/favBooks.model");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -28,7 +29,7 @@ exports.AppModule = AppModule = __decorate([
                 username: process.env.PG_USERNAME,
                 password: process.env.PG_PASSWORD,
                 database: process.env.PG_DB,
-                models: [user_model_1.User],
+                models: [user_model_1.User, favBooks_model_1.FavBooks],
                 synchronize: true,
                 autoLoadModels: true
             }),

@@ -13,6 +13,7 @@ exports.User = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const sequelize_typescript_2 = require("sequelize-typescript");
+const favBooks_model_1 = require("./favBooks.model");
 let User = class User extends sequelize_typescript_1.Model {
 };
 exports.User = User;
@@ -42,11 +43,16 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'sdfsdfsdgfdf', description: 'JWT TOKEN User' }),
+    (0, sequelize_typescript_2.Column)({ type: sequelize_typescript_2.DataType.TEXT, allowNull: true }),
+    __metadata("design:type", String)
+], User.prototype, "jwtToken", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({
         example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
         description: 'HashPassword',
     }),
-    (0, sequelize_typescript_2.Column)({ type: sequelize_typescript_2.DataType.STRING, allowNull: true }),
+    (0, sequelize_typescript_2.Column)({ type: sequelize_typescript_2.DataType.TEXT, allowNull: true }),
     __metadata("design:type", String)
 ], User.prototype, "hashPassword", void 0);
 __decorate([
@@ -62,6 +68,10 @@ __decorate([
     (0, sequelize_typescript_2.Column)({ type: sequelize_typescript_2.DataType.STRING(350) }),
     __metadata("design:type", String)
 ], User.prototype, "description", void 0);
+__decorate([
+    (0, sequelize_typescript_1.HasMany)(() => favBooks_model_1.FavBooks),
+    __metadata("design:type", Array)
+], User.prototype, "favBooks_Id", void 0);
 exports.User = User = __decorate([
     (0, sequelize_typescript_2.Table)({ tableName: 'users' })
 ], User);
