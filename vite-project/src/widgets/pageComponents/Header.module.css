@@ -2,16 +2,22 @@
   display: flex;
 
   width: 100%;
-  height: 99px;
-  background-color: #191818;
+  height: 80px;
+  background-color: #FFEBDE;
 
-  border-bottom: 1px #7a6868 solid;
+  border-bottom: 2px #6F4C3E solid;
 
   justify-content: space-between;
   padding: 0 50px;
   box-sizing: border-box;
 
   align-items: center;
+}
+
+.header__logo {
+    position: absolute;
+
+    right: 30px;
 }
 
 .header__logo > img {
@@ -21,8 +27,11 @@
 
 .header__links {
   display: flex;
+  position: absolute;
 
-  justify-position: column;
+  left: 50%;
+  transform: translate(-50%, 0);
+
   gap: 60px;
 }
 
@@ -31,11 +40,17 @@
   align-items: center;
 }
 
-.header__links-lexoRead * {
+.header__links-link > a {
+    color: black;
+    font-size: 25px;
+}
+
+.header__links-lexoRead > a {
   font-size: 45px;
   font-weight: 600;
+  text-decoration: underline;
 }
+
 .about_us {
 	text-decoration: underline; 
-  color: #fff; 
 }
