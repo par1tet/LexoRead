@@ -1,6 +1,6 @@
 import { ApiHeader, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { CHAR } from 'sequelize';
-import { Model } from 'sequelize-typescript';
+import { CHAR, INTEGER } from 'sequelize';
+import { BelongsToMany, ForeignKey, HasMany, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
 interface UserAttrs {
   isBanned: boolean;

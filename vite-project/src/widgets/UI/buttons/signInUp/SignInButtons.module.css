@@ -1,23 +1,16 @@
-
 .btn {
-	text-align: center;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 15px 10px;
-	border-radius: 100px;
-	margin-bottom: 6%;
-	color:  #322B2B;
-	background: #fff 	75%;
-	border: 2px solid #DCCBCB80;
-	font-size: 15px;
+  padding: 12px 90px;
+  border-radius: 38px;
+  color: #101010;
+  background: #FFFFFF;
+  border: 1px solid #dccbcb80;
+  font-size: 17px;
   font-weight: 600;
-	line-height: 18px;
-	width: 100%;
-	cursor: pointer;
+  text-align: center;  
+  cursor: pointer;
 }
 .btn:hover {
-	transition: 0.4s all ease-out;
-	background: #dbd5d5 	75%;
-	cursor: pointer;
+  transition: 0.4s all ease-out;
+  background: #dbd5d5 75%;
+  cursor: pointer;
 }
