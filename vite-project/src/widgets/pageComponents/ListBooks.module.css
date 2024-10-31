@@ -1,6 +1,6 @@
 .listBooks__books {
     display: flex;
-    gap: 12px;
+    gap: 25px;
     width: 100%;
     justify-content: center;
 
@@ -10,7 +10,6 @@
 .listBooks__books > img {
     width: 340px;
     height: 450px;
-    border-radius: 12px;
 }
 
 .listBooks__title {
@@ -20,9 +19,12 @@
     align-items: center;
     justify-content: center;
 
-    font-weigth: 600;
-    font-size: 35px;
+    font-size: 75px;
 
     margin-top: 46px;
 }
 
+.listBooks__title > span {
+    color: #6F4C3E;
+    font-weight: 600;
+}
