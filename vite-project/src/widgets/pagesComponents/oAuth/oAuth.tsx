@@ -6,18 +6,23 @@ export default function OAuth() {
   return (
     <>
       <p className={styles.subTitle}>Войти с помощью</p>
-      <div className={styles.container}>
-        <a href="#">
-          {" "}
-          <img src={GoogleImg} className={styles.googleImg} alt="googleAuth" />
-        </a>
+      <div className={styles["container"]}>
+        <div className={styles['grids']}>
+          <a href="#">
+            <img
+              src={GoogleImg}
+              className={styles.googleImg}
+              alt="googleAuth"
+            />
+          </a>
 
-        <a href="#">
-          <img src={vk} alt="vkAuth" className={styles.vkImg} />
-        </a>
-        <a href="#">
-          <img src={gitHub} alt="" className={styles.gitHubImg} />
-        </a>
+          <a href="#">
+            <img src={vk} alt="vkAuth" className={styles.vkImg} />
+          </a>
+          <a href="#">
+            <img src={gitHub} alt="gitHub" className={styles.gitHubImg} />
+          </a>
+        </div>
       </div>
     </>
   );

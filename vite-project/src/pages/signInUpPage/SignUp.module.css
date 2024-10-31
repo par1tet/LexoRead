@@ -1,26 +1,48 @@
-.containerSignUp {
-  display: grid;
+.background-image {
+  height: 100vh;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-weight: 500;
-  padding-top: 180px;
+  text-align: center;
+  background-image: url("../../assets/img/SignInUp/Fon.png");
+  background-color: #191818;
+}
+.containerSignUp {
+  max-width: 475px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #101010;
+  border-radius: 38px;
+  padding-left: 82px;
+  padding-right: 82px;
+  padding-bottom: 32px;
+  padding-top: 32px;
+  box-shadow: 1px 1px 5px 0px #101010;
+
 }
 .h1 {
-  text-align: center;
-  padding-bottom: 8%;
-  font-size: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  font-weight: 600;
   line-height: 41.5px;
+  margin-bottom: 16px;
 }
 .h2 {
   text-align: center;
-  padding-bottom: 4%;
-  font-size: 15px;
-  line-height: 18.8px;
   justify-content: center;
-  width: 100%;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 18.8px;
+   margin-bottom: 6%;
 }
 .backToAuth {
+  margin-top: 10px;
   display: flex;
   text-align: center;
   justify-content: center;
