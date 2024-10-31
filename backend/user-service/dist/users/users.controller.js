@@ -35,7 +35,8 @@ let UsersController = class UsersController {
         return await this.usersService.getUser(dto);
     }
     async deleteBook() { }
-    async changeFavouriteBooks() { }
+    async changeFavouriteBooks() {
+    }
     async changeEmail(dto) {
         return await this.usersService.changeEmail(dto);
     }
@@ -67,6 +68,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "banUser", null);
 __decorate([
+    (0, swagger_1.ApiCreatedResponse)({
+        description: 'The record has been successfully created.',
+        type: user_model_1.User,
+        status: 200,
+    }),
     (0, common_1.Post)('getUser'),
     (0, swagger_1.ApiOperation)({ summary: 'получить пользователя' }),
     __param(0, (0, common_1.Body)()),

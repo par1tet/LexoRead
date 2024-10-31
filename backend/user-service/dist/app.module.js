@@ -12,7 +12,13 @@ const users_module_1 = require("./users/users.module");
 const config_1 = require("@nestjs/config");
 const sequelize_1 = require("@nestjs/sequelize");
 const user_model_1 = require("./users/user.model");
+const userMiddleWare_1 = require("./users/userMiddleWare");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(userMiddleWare_1.UserMiddleware)
+            .forRoutes({ path: '*', method: common_1.RequestMethod.ALL });
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -30,7 +36,7 @@ exports.AppModule = AppModule = __decorate([
                 database: process.env.PG_DB,
                 models: [user_model_1.User],
                 synchronize: true,
-                autoLoadModels: true
+                autoLoadModels: true,
             }),
             users_module_1.UsersModule,
         ],

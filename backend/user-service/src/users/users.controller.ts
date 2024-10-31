@@ -14,7 +14,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { User } from './user.model';
-
 @Controller('users')
 @ApiTags('users')
 export class UsersController {
@@ -30,6 +29,11 @@ export class UsersController {
   async banUser(@Body() dto: BanUserDto) {
     return await this.usersService.banUser(dto);
   }
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: User,
+    status: 200,
+  })
   @Post('getUser')
   @ApiOperation({ summary: 'получить пользователя' })
   async getUser(@Body() dto: GetUserDto) {
@@ -40,7 +44,9 @@ export class UsersController {
   async deleteBook() {}
   @Put('changeFavBooks')
   @ApiOperation({ summary: 'изменить любимые книги пользователя' })
-  async changeFavouriteBooks() {}
+  async changeFavouriteBooks() {
+    
+  }
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: User,

@@ -8,7 +8,7 @@ import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
-
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User) private userRepo: typeof User) {}
@@ -24,7 +24,7 @@ export class UsersService {
       },
     );
     if (banUser[dto.id] == 0) {
-      return new NotFoundException(`User with ${dto.id} not found`).getStatus
+      return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
   }
   async unBanUser(@Body() dto: UnBanUserDto) {
@@ -39,17 +39,18 @@ export class UsersService {
       },
     );
     if (unBanUser[dto.id] == 0) {
-      return new NotFoundException(`User with ${dto.id} not found`).getStatus
+      return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
   }
   async getUser(@Body() dto: GetUserDto) {
-    return await this.userRepo.findOne({
-      where: {
-        avatarFileUrl: dto.avatarFileUrl,
-        isBanned: dto.isBanned,
-        username: dto.username,
-      },
-    });
+    try {
+      const token = dto.jwtToken;
+      console.log(token);
+      const decoded = jwtDecode<JwtPayload>(token, {header: true});
+      return decoded
+    } catch (err) {
+      console.log(`ошибка: ${err}`);
+    }
   }
   async changeEmail(@Body() dto: ChangeEmailDto) {
     const email = await this.userRepo.update(
@@ -63,7 +64,8 @@ export class UsersService {
       },
     );
     if (email[dto.userId] == 0) {
-      return new NotFoundException(`User with ${dto.userId} not found`).getStatus
+      return new NotFoundException(`User with ${dto.userId} not found`)
+        .getStatus;
     }
     return email;
   }
@@ -80,7 +82,8 @@ export class UsersService {
       },
     );
     if (username[dto.userId] == 0) {
-      return new NotFoundException(`User with ${dto.userId} not found`).getStatus
+      return new NotFoundException(`User with ${dto.userId} not found`)
+        .getStatus;
     }
     return username;
   }
@@ -96,7 +99,7 @@ export class UsersService {
       },
     );
     if (AvatarUrl[dto.id] == 0) {
-      return new NotFoundException(`User with ${dto.id} not found`).getStatus
+      return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
     return AvatarUrl;
   }
@@ -112,7 +115,8 @@ export class UsersService {
       },
     );
     if (description[dto.userId] == 0) {
-      return new NotFoundException(`User with ${dto.userId} not found`).getStatus
+      return new NotFoundException(`User with ${dto.userId} not found`)
+        .getStatus;
     }
     return description;
   }

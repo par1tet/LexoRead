@@ -1,8 +1,15 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from './users/user.model';
+import { UserMiddleware } from './users/userMiddleWare';
+import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
@@ -18,11 +25,17 @@ import { User } from './users/user.model';
       database: process.env.PG_DB,
       models: [User],
       synchronize: true,
-      autoLoadModels: true
+      autoLoadModels: true,
     }),
     UsersModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(UserMiddleware)
+      .forRoutes({path: '*', method: RequestMethod.ALL})
+  }
+}

@@ -63,6 +63,6 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "description", void 0);
 exports.User = User = __decorate([
-    (0, sequelize_typescript_2.Table)({ tableName: 'users' })
+    (0, sequelize_typescript_2.Table)({ tableName: 'users', createdAt: false, updatedAt: false })
 ], User);
 //# sourceMappingURL=user.model.js.map

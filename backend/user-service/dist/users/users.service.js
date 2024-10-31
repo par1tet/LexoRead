@@ -23,6 +23,7 @@ const changeEmail_dto_1 = require("./dto/changeEmail.dto");
 const changeName_dto_1 = require("./dto/changeName.dto");
 const changeAvatarUrl_dto_1 = require("./dto/changeAvatarUrl.dto");
 const changeDescription_dto_1 = require("./dto/changeDescription.dto");
+const jwt_decode_1 = require("jwt-decode");
 let UsersService = class UsersService {
     constructor(userRepo) {
         this.userRepo = userRepo;
@@ -52,13 +53,15 @@ let UsersService = class UsersService {
         }
     }
     async getUser(dto) {
-        return await this.userRepo.findOne({
-            where: {
-                avatarFileUrl: dto.avatarFileUrl,
-                isBanned: dto.isBanned,
-                username: dto.username,
-            },
-        });
+        try {
+            const token = dto.jwtToken;
+            console.log(token);
+            const decoded = (0, jwt_decode_1.jwtDecode)(token, { header: true });
+            return decoded;
+        }
+        catch (err) {
+            console.log(`ошибка: ${err}`);
+        }
     }
     async changeEmail(dto) {
         const email = await this.userRepo.update({
@@ -69,7 +72,8 @@ let UsersService = class UsersService {
             },
         });
         if (email[dto.userId] == 0) {
-            return new common_1.NotFoundException(`User with ${dto.userId} not found`).getStatus;
+            return new common_1.NotFoundException(`User with ${dto.userId} not found`)
+                .getStatus;
         }
         return email;
     }
@@ -82,7 +86,8 @@ let UsersService = class UsersService {
             },
         });
         if (username[dto.userId] == 0) {
-            return new common_1.NotFoundException(`User with ${dto.userId} not found`).getStatus;
+            return new common_1.NotFoundException(`User with ${dto.userId} not found`)
+                .getStatus;
         }
         return username;
     }
@@ -108,7 +113,8 @@ let UsersService = class UsersService {
             },
         });
         if (description[dto.userId] == 0) {
-            return new common_1.NotFoundException(`User with ${dto.userId} not found`).getStatus;
+            return new common_1.NotFoundException(`User with ${dto.userId} not found`)
+                .getStatus;
         }
         return description;
     }

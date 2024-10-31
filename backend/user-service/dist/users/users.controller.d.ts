@@ -6,12 +6,11 @@ import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
-import { User } from './user.model';
 export declare class UsersController {
     private readonly usersService;
     constructor(usersService: UsersService);
     banUser(dto: BanUserDto): Promise<() => number>;
-    getUser(dto: GetUserDto): Promise<User>;
+    getUser(dto: GetUserDto): Promise<import("jwt-decode").JwtPayload>;
     deleteBook(): Promise<void>;
     changeFavouriteBooks(): Promise<void>;
     changeEmail(dto: ChangeEmailDto): Promise<[affectedCount: number] | (() => number)>;
