@@ -22,7 +22,6 @@ export class UsersController {
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: User,
-    status: 200,
   })
   @Put('banUser')
   @ApiOperation({ summary: 'забанить пользователя' })
@@ -31,8 +30,7 @@ export class UsersController {
   }
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
-    type: User,
-    status: 200,
+    type: User
   })
   @Post('getUser')
   @ApiOperation({ summary: 'получить пользователя' })
@@ -49,12 +47,11 @@ export class UsersController {
   }
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
-    type: User,
-    status: 200,
+    type: User
   })
   @Put('changeEmail')
   @ApiOperation({ summary: 'изменить почту пользователя' })
-  async changeEmail(@Body() dto: ChangeEmailDto) {
+  async changeEmail(@Body() dto: ChangeEmailDto): Promise<(() => number) | [affectedCount: number]> {
     return await this.usersService.changeEmail(dto);
   }
   @Put('unBanUser')
@@ -75,7 +72,6 @@ export class UsersController {
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: User,
-    status: 200,
   })
   @Put('changeAvatarUrl')
   @ApiOperation({ summary: 'изменить аватарку пользователя' })

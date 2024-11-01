@@ -13,7 +13,7 @@ export declare class UsersController {
     getUser(dto: GetUserDto): Promise<import("jwt-decode").JwtPayload>;
     deleteBook(): Promise<void>;
     changeFavouriteBooks(): Promise<void>;
-    changeEmail(dto: ChangeEmailDto): Promise<[affectedCount: number] | (() => number)>;
+    changeEmail(dto: ChangeEmailDto): Promise<(() => number) | [affectedCount: number]>;
     unBanUser(dto: UnBanUserDto): Promise<() => number>;
     changeName(dto: ChangeNameDto): Promise<[affectedCount: number] | (() => number)>;
     changeDescription(dto: changeDescriptionDto): Promise<[affectedCount: number] | (() => number)>;

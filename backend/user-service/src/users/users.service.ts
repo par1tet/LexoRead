@@ -45,7 +45,6 @@ export class UsersService {
   async getUser(@Body() dto: GetUserDto) {
     try {
       const token = dto.jwtToken;
-      console.log(token);
       const decoded = jwtDecode<JwtPayload>(token, {header: true});
       return decoded
     } catch (err) {

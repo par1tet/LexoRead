@@ -55,7 +55,6 @@ let UsersService = class UsersService {
     async getUser(dto) {
         try {
             const token = dto.jwtToken;
-            console.log(token);
             const decoded = (0, jwt_decode_1.jwtDecode)(token, { header: true });
             return decoded;
         }

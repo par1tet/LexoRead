@@ -58,7 +58,6 @@ __decorate([
     (0, swagger_1.ApiCreatedResponse)({
         description: 'The record has been successfully created.',
         type: user_model_1.User,
-        status: 200,
     }),
     (0, common_1.Put)('banUser'),
     (0, swagger_1.ApiOperation)({ summary: 'забанить пользователя' }),
@@ -70,8 +69,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiCreatedResponse)({
         description: 'The record has been successfully created.',
-        type: user_model_1.User,
-        status: 200,
+        type: user_model_1.User
     }),
     (0, common_1.Post)('getUser'),
     (0, swagger_1.ApiOperation)({ summary: 'получить пользователя' }),
@@ -97,8 +95,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiCreatedResponse)({
         description: 'The record has been successfully created.',
-        type: user_model_1.User,
-        status: 200,
+        type: user_model_1.User
     }),
     (0, common_1.Put)('changeEmail'),
     (0, swagger_1.ApiOperation)({ summary: 'изменить почту пользователя' }),
@@ -135,7 +132,6 @@ __decorate([
     (0, swagger_1.ApiCreatedResponse)({
         description: 'The record has been successfully created.',
         type: user_model_1.User,
-        status: 200,
     }),
     (0, common_1.Put)('changeAvatarUrl'),
     (0, swagger_1.ApiOperation)({ summary: 'изменить аватарку пользователя' }),
