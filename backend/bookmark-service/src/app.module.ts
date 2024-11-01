@@ -1,8 +1,8 @@
-import { Module } from "@nestjs/common";
-import { BookmarkModule } from './bookmark/bookmark.module';
-import { SequelizeModule } from "@nestjs/sequelize";
-import { ConfigModule } from "@nestjs/config";
-
+import { Module } from '@nestjs/common'
+import { BookmarkModule } from './bookmark/bookmark.module'
+import { SequelizeModule } from '@nestjs/sequelize'
+import { ConfigModule } from '@nestjs/config'
+import { Bookmark } from './bookmark/bookmark.model'
 
 @Module({
 	controllers: [],
@@ -20,7 +20,7 @@ import { ConfigModule } from "@nestjs/config";
 			database: process.env.POSTGRES_DB,
 			autoLoadModels: true,
 			synchronize: true,
-			models: [],
+			models: [Bookmark],
 		}),
 	],
 })

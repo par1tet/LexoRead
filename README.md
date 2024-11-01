@@ -1,15 +1,27 @@
 # Technology Stack
 ## Frontend
 React js
+
 Mobx
+
 React router dom
-Tanstack query
+
+Axios
+
 FSD
+
 
 ## Backend
 Nest js
+
 Fastapi
+
 Sqlalchemy
+
 Sequelize
+
 Postgresql
-Go
+
+Go/chi
+
+Gorm

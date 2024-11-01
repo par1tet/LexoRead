@@ -1,3 +1,3 @@
 export class DeleteBookmarkDto {
-  readonly id: number;
+	readonly id: number
 }
