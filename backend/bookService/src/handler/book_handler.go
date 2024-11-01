@@ -95,6 +95,7 @@ func (h *BookHandler) LikeBook(w http.ResponseWriter, r *http.Request) {
 	log := h.bookService.Logger.With(slog.String("op", op),
 		slog.String("request_id", middleware.GetReqID(r.Context())),
 	)
+
 	bookidstr := chi.URLParam(r, "book_id")
 
 	if err := h.bookService.LikeBook(bookidstr); err != nil {

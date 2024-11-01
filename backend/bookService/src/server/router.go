@@ -36,7 +36,8 @@ func SetupRouter(bookHandler *handler.BookHandler,
 
 	r.Route("/comments", func(r chi.Router) {
 		r.Post("/add", commentHandler.CreateComment)
-		r.Get("/comments/{book_id}", commentHandler.GetCommentsByBookID)
+		r.Get("/comments/book_id={book_id}", commentHandler.GetCommentsByBookID)
+		r.Get("/comment/{id}", commentHandler.GetCommentByID)
 	})
 
 	r.Route("/redis_test", func(r chi.Router) {

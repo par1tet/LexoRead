@@ -1,4 +1,3 @@
-// src/handler/comment_handler.go
 package handler
 
 import (
@@ -6,9 +5,10 @@ import (
 	rs "bookService/src/lib/api/request"
 	"bookService/src/lib/api/status"
 	"bookService/src/service"
-	"github.com/go-chi/chi/v5"
 	"net/http"
 	"strconv"
+
+	"github.com/go-chi/chi/v5"
 
 	"github.com/go-chi/render"
 )
@@ -47,4 +47,20 @@ func (h *CommentHandler) GetCommentsByBookID(w http.ResponseWriter, r *http.Requ
 	}
 
 	status.Ok(w, r, comments)
+}
+
+func (h *CommentHandler) GetCommentByID(w http.ResponseWriter, r *http.Request) {
+	idStr := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+	comment, err := h.commentService.GetCommentByID(id)
+	if err != nil {
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+	status.Ok(w, r, comment)
+
 }

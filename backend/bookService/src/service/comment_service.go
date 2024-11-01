@@ -20,3 +20,7 @@ func (s *CommentService) CreateComment(comment *models.Comment) error {
 func (s *CommentService) GetCommentsByBookID(bookID int) ([]models.Comment, error) {
 	return s.repo.GetCommentsByBookID(bookID)
 }
+
+func (s *CommentService) GetCommentByID(id int) (*models.Comment, error) {
+	return s.repo.GetCommentByID(id)
+}

@@ -18,6 +18,12 @@ func (b *Book) Bind(r *http.Request) error {
 	if b.Files == nil {
 		return errors.New("files is required")
 	}
+	if b.Description == "" {
+		return errors.New("description is required")
+	}
+	if b.Genre == "" {
+		return errors.New("genre is required")
+	}
 
 	return nil
 }

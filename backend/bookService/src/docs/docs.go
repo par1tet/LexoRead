@@ -286,7 +286,7 @@ func GenDocs(bookHandler *handler.BookHandler, redisHandler *handler.RedisHandle
 					},
 				},
 			},
-			"/comments/{book_id}": chioas.Path{
+			"/comments/book_id={book_id}": chioas.Path{
 				Methods: chioas.Methods{
 					http.MethodGet: {
 						Handler:     commentHandler.GetCommentsByBookID,
@@ -296,6 +296,26 @@ func GenDocs(bookHandler *handler.BookHandler, redisHandler *handler.RedisHandle
 								IsArray:     true,
 								Description: "list of comments",
 								SchemaRef:   "Comment",
+							},
+							http.StatusInternalServerError: {
+								Description: "Error",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
+
+			"/comments/{id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodGet: {
+						Handler:     commentHandler.GetCommentsByBookID,
+						Description: "get comments by id",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								IsArray:     true,
+								Description: "list of comments",
+								 SchemaRef:   "Comment",
 							},
 							http.StatusInternalServerError: {
 								Description: "Error",

@@ -9,6 +9,7 @@ import (
 type CommentRepository interface {
 	CreateComment(comment *models.Comment) error
 	GetCommentsByBookID(bookID int) ([]models.Comment, error)
+	GetCommentByID(id int) (*models.Comment, error)
 }
 
 type commentRepo struct {
@@ -27,4 +28,10 @@ func (r *commentRepo) GetCommentsByBookID(bookID int) ([]models.Comment, error) 
 	var comments []models.Comment
 	err := r.db.Where("book_id = ?", bookID).Find(&comments).Error
 	return comments, err
+}
+
+func (r *commentRepo) GetCommentByID(id int) (*models.Comment, error) {
+	var comment models.Comment
+	err := r.db.Where("id = ?", id).First(&comment).Error
+	return &comment, err
 }
