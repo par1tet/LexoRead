@@ -1,15 +1,14 @@
 from jwt import encode, decode
 from config import JWT_SECRET
-from database.core import log_user
 
 
-def generate_jwt(id, username, email, password):
+def generate_jwt(id, username, email, hashPassword):
     return encode(
         payload={
             "id": id,
             "username": username,
             "email": email,
-            "password": password
+            "hashPassword": hashPassword
         },
         key=JWT_SECRET,
         algorithm="HS256"

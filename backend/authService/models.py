@@ -6,7 +6,7 @@ class User(BaseModel):
     password: str
 
 
-class UserWithEmail(User):
+class UserForReg(User):
     email: str
 
 

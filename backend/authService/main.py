@@ -4,24 +4,21 @@ from fastapi import FastAPI
 from uvicorn import Server, Config
 from database.core import create_tables, log_user, reg_user
 from database.jwt_utils import generate_jwt, decode_jwt
-from models import User, UserWithEmail, JWTSecret
+from models import User, UserForReg, JWTSecret
 
 
 app = FastAPI()
 
 
 @app.post("/reg")
-async def registration(user: UserWithEmail):
-    user = await reg_user(user.username, user.email, user.password)
-    return generate_jwt(user.id, user.username, user.email, user.password)
+async def registration(user: UserForReg):
+    return await reg_user(user.username, user.email, user.password)
 
 
 @app.post("/log")
 async def login(user: User):
-    user = await log_user(user.username, user.password)
-    if user:
-        return generate_jwt(user.id, user.username, user.email, user.password)
-    return False
+    jwt_string = await log_user(user.username, user.password)
+    return jwt_string or False
 
 
 @app.post("/is_auth")
