@@ -1,0 +1,16 @@
+.button {
+    width: 310px;
+    height: 63px;
+    border-radius: 38px;
+}
+
+.button > span {
+    color: black;
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+}
+
+.button:hover {
+
+}

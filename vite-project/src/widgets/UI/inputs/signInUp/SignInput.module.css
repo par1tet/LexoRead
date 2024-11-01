@@ -3,14 +3,18 @@
 	display: flex;
 	padding: 12px 10px;
 	border-radius: 38px;
-	margin-bottom: 15px;
+	margin-top: 22px;
 	background: #101010;
 	border: 1px solid #FFE9DA;
 	font-size: 15px;
   font-weight: 600;
+  width: 310px;
+  height: 63px;
+  box-sizing: border-box;
 }
-::placeholder {
+.input::placeholder {
 	color: #FFE9DA;
 	font-weight: 500;
-	font-size: 18px;
+	font-size: 20px;
+    font-family: "Inter", sans-serif;
 }
