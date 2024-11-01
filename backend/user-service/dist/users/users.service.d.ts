@@ -11,9 +11,9 @@ export declare class UsersService {
     constructor(userRepo: typeof User);
     banUser(dto: BanUserDto): Promise<() => number>;
     unBanUser(dto: UnBanUserDto): Promise<() => number>;
-    getUser(dto: GetUserDto): Promise<User>;
-    changeEmail(dto: ChangeEmailDto): Promise<(() => number) | [affectedCount: number]>;
-    changeName(dto: ChangeNameDto): Promise<(() => number) | [affectedCount: number]>;
-    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<(() => number) | [affectedCount: number]>;
-    changeDescription(dto: changeDescriptionDto): Promise<(() => number) | [affectedCount: number]>;
+    getUser(dto: GetUserDto): Promise<void>;
+    changeEmail(dto: ChangeEmailDto): Promise<[affectedCount: number] | (() => number)>;
+    changeName(dto: ChangeNameDto): Promise<[affectedCount: number] | (() => number)>;
+    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<[affectedCount: number] | (() => number)>;
+    changeDescription(dto: changeDescriptionDto): Promise<[affectedCount: number] | (() => number)>;
 }

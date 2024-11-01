@@ -33,10 +33,6 @@ let UsersController = class UsersController {
     }
     async getUser(dto, response) {
         const user = await this.usersService.getUser(dto);
-        console.log(user);
-        if (!user) {
-            return response.status(404).json({ message: 'User not found' });
-        }
         return response.status(201).json(user);
     }
     async deleteBook() { }
@@ -128,7 +124,6 @@ __decorate([
     (0, swagger_1.ApiCreatedResponse)({
         description: 'The record has been successfully created.',
         type: user_model_1.User,
-        status: 200,
     }),
     (0, common_1.Put)('changeAvatarUrl'),
     (0, swagger_1.ApiOperation)({ summary: 'изменить аватарку пользователя' }),

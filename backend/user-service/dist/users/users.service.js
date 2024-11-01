@@ -57,8 +57,7 @@ let UsersService = class UsersService {
                 jwtToken: dto.jwtToken,
             },
         });
-        console.log(user);
-        return user;
+        console.log();
     }
     async changeEmail(dto) {
         const email = await this.userRepo.update({
