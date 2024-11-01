@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 export function BookPage() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [bookData, setBookData] = useState({})
+    console.log(bookData)
 
     useEffect(() => {
         getBook(searchParams.get("id"))
@@ -27,7 +28,7 @@ export function BookPage() {
                             <span>{bookData.author}</span>
                         </div>
                         <div className={cl['main__bookInfo-title']}>
-                            <span>{bookData.title}</span>
+                            <span>“{bookData.title}”</span>
                         </div>
                         <div className={cl['main__bookInfo-read']}>
                             <button>
@@ -35,7 +36,8 @@ export function BookPage() {
                             </button>
                         </div>
                         <div className={cl['main__bookInfo-desc']}>
-                            <span>{bookData.description}</span>
+                            <span>Описание</span>
+                            <span>“{bookData.description}”</span>
                         </div>
                     </div>
                 </div>
