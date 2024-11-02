@@ -9,24 +9,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserMiddleware = void 0;
 const common_1 = require("@nestjs/common");
 const jwt = require("jsonwebtoken");
+require("core-js/stable/atob");
 let UserMiddleware = class UserMiddleware {
     use(req, res, next) {
-        const secret = process.env.JWT_SECRET_KEY;
-        console.log(secret);
-        if (req.method == 'OPTIONS') {
-            return next();
+        try {
+            const secret = process.env.JWT_SECRET_KEY;
+            if (req.method === 'OPTIONS') {
+                return next();
+            }
+            const authHeader = req.headers.authorization;
+            if (!authHeader) {
+                return res.status(403).send({ msg: 'пользователь не авторизован' });
+            }
+            const token = authHeader.split(' ')[1];
+            const decodedData = jwt.verify(token, secret, { algorithms: ['HS256'] });
+            next();
+            req.user = decodedData;
         }
-        const token = jwt.sign({ userId: 1 }, process.env.JWT_SECRET_KEY, { expiresIn: '5m' });
-        if (!token) {
-            res.status(403).send({ msg: 'пользователь не авторизован' });
+        catch (err) {
+            console.log(err);
         }
-        console.log(token);
-        const decodedData = jwt.verify(token, secret);
-        if (!decodedData) {
-            res.status(403).send({ msg: 'не валидный' });
-        }
-        req.body.user = decodedData;
-        next();
     }
 };
 exports.UserMiddleware = UserMiddleware;

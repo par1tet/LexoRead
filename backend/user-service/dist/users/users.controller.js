@@ -17,13 +17,13 @@ const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
 const banUser_dto_1 = require("./dto/banUser.dto");
 const unBanUser_dto_1 = require("./dto/unBanUser.dto");
-const getUser_dto_1 = require("./dto/getUser.dto");
 const changeEmail_dto_1 = require("./dto/changeEmail.dto");
 const changeName_dto_1 = require("./dto/changeName.dto");
 const changeAvatarUrl_dto_1 = require("./dto/changeAvatarUrl.dto");
 const changeDescription_dto_1 = require("./dto/changeDescription.dto");
 const swagger_1 = require("@nestjs/swagger");
 const user_model_1 = require("./user.model");
+const jwt_decode_1 = require("jwt-decode");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -31,12 +31,16 @@ let UsersController = class UsersController {
     async banUser(dto) {
         return await this.usersService.banUser(dto);
     }
-    async getUser(dto) {
-        return await this.usersService.getUser(dto);
+    async getUser(req) {
+        const authHeader = req.headers.authorization;
+        if (authHeader) {
+            const token = authHeader.split(' ')[1];
+            const decoded = (0, jwt_decode_1.jwtDecode)(token);
+            return this.usersService.getUser(decoded);
+        }
     }
     async deleteBook() { }
-    async changeFavouriteBooks() {
-    }
+    async changeFavouriteBooks() { }
     async changeEmail(dto) {
         return await this.usersService.changeEmail(dto);
     }
@@ -55,10 +59,6 @@ let UsersController = class UsersController {
 };
 exports.UsersController = UsersController;
 __decorate([
-    (0, swagger_1.ApiCreatedResponse)({
-        description: 'The record has been successfully created.',
-        type: user_model_1.User,
-    }),
     (0, common_1.Put)('banUser'),
     (0, swagger_1.ApiOperation)({ summary: 'забанить пользователя' }),
     __param(0, (0, common_1.Body)()),
@@ -67,15 +67,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "banUser", null);
 __decorate([
-    (0, swagger_1.ApiCreatedResponse)({
-        description: 'The record has been successfully created.',
-        type: user_model_1.User
-    }),
     (0, common_1.Post)('getUser'),
     (0, swagger_1.ApiOperation)({ summary: 'получить пользователя' }),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [getUser_dto_1.GetUserDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUser", null);
 __decorate([
@@ -95,7 +91,7 @@ __decorate([
 __decorate([
     (0, swagger_1.ApiCreatedResponse)({
         description: 'The record has been successfully created.',
-        type: user_model_1.User
+        type: user_model_1.User,
     }),
     (0, common_1.Put)('changeEmail'),
     (0, swagger_1.ApiOperation)({ summary: 'изменить почту пользователя' }),
@@ -141,6 +137,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changeAvatarUrl", null);
 exports.UsersController = UsersController = __decorate([
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('users'),
     (0, swagger_1.ApiTags)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

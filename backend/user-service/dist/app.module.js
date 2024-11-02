@@ -13,11 +13,13 @@ const config_1 = require("@nestjs/config");
 const sequelize_1 = require("@nestjs/sequelize");
 const user_model_1 = require("./users/user.model");
 const userMiddleWare_1 = require("./users/userMiddleWare");
+const users_controller_1 = require("./users/users.controller");
 let AppModule = class AppModule {
     configure(consumer) {
-        consumer
-            .apply(userMiddleWare_1.UserMiddleware)
-            .forRoutes({ path: '*', method: common_1.RequestMethod.ALL });
+        consumer.apply(userMiddleWare_1.UserMiddleware).exclude({
+            path: 'getUser',
+            method: common_1.RequestMethod.POST,
+        }).forRoutes(users_controller_1.UsersController);
     }
 };
 exports.AppModule = AppModule;

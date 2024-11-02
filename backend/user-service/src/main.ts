@@ -29,9 +29,12 @@ async function bootstrap() {
   );
   const config = new DocumentBuilder()
     .setTitle('Users')
+    .addBearerAuth()
+    .addSecurityRequirements('Bearer')
     .setDescription('The Users Api Documentation')
     .setVersion('1.0')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('LexoRead', app, document);
   const PORT = process.env.PORT;

@@ -35,8 +35,9 @@ import path from 'path';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(UserMiddleware)
-      .forRoutes({path: '*', method: RequestMethod.ALL})
+    consumer.apply(UserMiddleware).exclude({
+      path: 'getUser',
+      method: RequestMethod.POST,
+    }).forRoutes(UsersController)
   }
 }

@@ -25,6 +25,8 @@
     "@nestjs/platform-express": "^10.4.6",
     "@nestjs/sequelize": "^10.0.1",
     "@nestjs/swagger": "^8.0.1",
+    "base-64": "^1.0.0",
+    "core-js": "^3.39.0",
     "express": "^4.21.1",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
@@ -34,6 +36,7 @@
     "sequelize-typescript": "^2.1.6"
   },
   "devDependencies": {
+    "@types/base-64": "^1.0.2",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7"
   }

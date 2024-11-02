@@ -1,4 +1,4 @@
-import { Body, Injectable, NotFoundException } from '@nestjs/common';
+import { Body, Injectable, NotFoundException, Request } from '@nestjs/common';
 import { User } from './user.model';
 import { BanUserDto } from './dto/banUser.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -8,7 +8,8 @@ import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import { request } from 'express';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User) private userRepo: typeof User) {}
@@ -26,6 +27,7 @@ export class UsersService {
     if (banUser[dto.id] == 0) {
       return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
+    return { msg: `User with ID ${dto.id} has been unbanned` };
   }
   async unBanUser(@Body() dto: UnBanUserDto) {
     const unBanUser = await this.userRepo.update(
@@ -41,12 +43,14 @@ export class UsersService {
     if (unBanUser[dto.id] == 0) {
       return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
+    return { msg: `User with ID ${dto.id} has been unbanned` };
   }
-  async getUser(@Body() dto: GetUserDto) {
+  async getUser(
+    @Body()
+    decoded: any,
+  ) {
     try {
-      const token = dto.jwtToken;
-      const decoded = jwtDecode<JwtPayload>(token, {header: true});
-      return decoded
+      return { decoded };
     } catch (err) {
       console.log(`ошибка: ${err}`);
     }

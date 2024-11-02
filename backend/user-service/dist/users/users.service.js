@@ -18,12 +18,10 @@ const user_model_1 = require("./user.model");
 const banUser_dto_1 = require("./dto/banUser.dto");
 const sequelize_1 = require("@nestjs/sequelize");
 const unBanUser_dto_1 = require("./dto/unBanUser.dto");
-const getUser_dto_1 = require("./dto/getUser.dto");
 const changeEmail_dto_1 = require("./dto/changeEmail.dto");
 const changeName_dto_1 = require("./dto/changeName.dto");
 const changeAvatarUrl_dto_1 = require("./dto/changeAvatarUrl.dto");
 const changeDescription_dto_1 = require("./dto/changeDescription.dto");
-const jwt_decode_1 = require("jwt-decode");
 let UsersService = class UsersService {
     constructor(userRepo) {
         this.userRepo = userRepo;
@@ -39,6 +37,7 @@ let UsersService = class UsersService {
         if (banUser[dto.id] == 0) {
             return new common_1.NotFoundException(`User with ${dto.id} not found`).getStatus;
         }
+        return { msg: `User with ID ${dto.id} has been unbanned` };
     }
     async unBanUser(dto) {
         const unBanUser = await this.userRepo.update({
@@ -51,12 +50,11 @@ let UsersService = class UsersService {
         if (unBanUser[dto.id] == 0) {
             return new common_1.NotFoundException(`User with ${dto.id} not found`).getStatus;
         }
+        return { msg: `User with ID ${dto.id} has been unbanned` };
     }
-    async getUser(dto) {
+    async getUser(decoded) {
         try {
-            const token = dto.jwtToken;
-            const decoded = (0, jwt_decode_1.jwtDecode)(token, { header: true });
-            return decoded;
+            return { decoded };
         }
         catch (err) {
             console.log(`ошибка: ${err}`);
@@ -134,7 +132,7 @@ __decorate([
 __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [getUser_dto_1.GetUserDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], UsersService.prototype, "getUser", null);
 __decorate([

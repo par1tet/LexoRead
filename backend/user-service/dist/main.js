@@ -29,6 +29,8 @@ async function bootstrap() {
     }));
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Users')
+        .addBearerAuth()
+        .addSecurityRequirements('Bearer')
         .setDescription('The Users Api Documentation')
         .setVersion('1.0')
         .build();
