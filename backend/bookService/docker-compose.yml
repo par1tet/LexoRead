@@ -1,18 +1,18 @@
 version: '3.9'
 services:
-  app:
-    container_name: golang_container
-    tty: true
-    build: .
-    ports:
-      - 8080:8080
-    restart: on-failure
-    volumes:
-      - .:/app
-    depends_on:
-      - postgresdb
-    networks:
-      - deploy
+  # app:
+  #   container_name: golang_container
+  #   tty: true
+  #   build: .
+  #   ports:
+  #     - 8081:8080
+  #   restart: on-failure
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - postgresdb
+  #   networks:
+  #     - deploy
 
   postgresdb:
     image: postgres:latest
@@ -22,18 +22,14 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=bookservice
     ports:
-      - '1234:5432'
+      - '5431:5432'
     volumes:
       - ./pg_data:/var/lib/postgresql/data
-    networks:
-      - deploy
-
-
+    # networks:
+    #   - deploy
 
 volumes:
   pg_data:
-
-
-networks:
-  deploy:
-    driver: bridge
+# networks:
+#   deploy:
+#     driver: bridge

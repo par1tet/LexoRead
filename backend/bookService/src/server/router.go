@@ -28,6 +28,7 @@ func SetupRouter(bookHandler *handler.BookHandler,
 		r.Get("/limit={limit}", bookHandler.GetBooks)         // In docs
 		r.Get("/id/{book_id}", bookHandler.GetBookByID)       // In docs
 		r.Get("/search/{query}", bookHandler.SearchByKeyword) // In docs
+		r.Get("/similar/{book_id}", bookHandler.SimilarBooks) // In docs
 		r.Post("/like/{book_id}", bookHandler.LikeBook)       // In docs
 		r.Post("/dislike/{book_id}", bookHandler.DislikeBook) // In docs
 		r.Delete("/{book_id}", bookHandler.DeleteBook)        // In docs
@@ -36,7 +37,8 @@ func SetupRouter(bookHandler *handler.BookHandler,
 
 	r.Route("/comments", func(r chi.Router) {
 		r.Post("/add", commentHandler.CreateComment)
-		r.Get("/comments/{book_id}", commentHandler.GetCommentsByBookID)
+		r.Get("/comments/book_id={book_id}", commentHandler.GetCommentsByBookID)
+		r.Get("/comment/{id}", commentHandler.GetCommentByID)
 	})
 
 	r.Route("/redis_test", func(r chi.Router) {
