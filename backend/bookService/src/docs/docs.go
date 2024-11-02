@@ -46,6 +46,30 @@ func GenDocs(bookHandler *handler.BookHandler, redisHandler *handler.RedisHandle
 					},
 				},
 			},
+
+			"/books/similar/{book_id}": chioas.Path{
+				Methods: chioas.Methods{
+					http.MethodGet: {
+						Handler:     bookHandler.SimilarBooks,
+						Description: "Get similar books by book	id",
+						Responses: chioas.Responses{
+							http.StatusOK: {
+								Description: "Returning list of similar books",
+								IsArray:     true,
+								SchemaRef:   "Book",
+							},
+							http.StatusNoContent: {
+								Description: "Ничего не найдено",
+								SchemaRef:   "error",
+							},
+							http.StatusInternalServerError: {
+								Description: "Ошибка на сервере",
+								SchemaRef:   "error",
+							},
+						},
+					},
+				},
+			},
 			"/books/search/{query}": chioas.Path{
 				Methods: chioas.Methods{
 					http.MethodGet: {
@@ -53,12 +77,16 @@ func GenDocs(bookHandler *handler.BookHandler, redisHandler *handler.RedisHandle
 						Description: "Search book",
 						Responses: chioas.Responses{
 							http.StatusOK: {
-								Description: "Book deleted",
+								Description: "List of books",
 								IsArray:     true,
 								SchemaRef:   "Book",
 							},
 							http.StatusNoContent: {
 								Description: "Ничего не найдено",
+								SchemaRef:   "error",
+							},
+							http.StatusInternalServerError: {
+								Description: "Ошибка на сервере",
 								SchemaRef:   "error",
 							},
 						},
@@ -315,7 +343,7 @@ func GenDocs(bookHandler *handler.BookHandler, redisHandler *handler.RedisHandle
 							http.StatusOK: {
 								IsArray:     true,
 								Description: "list of comments",
-								 SchemaRef:   "Comment",
+								SchemaRef:   "Comment",
 							},
 							http.StatusInternalServerError: {
 								Description: "Error",

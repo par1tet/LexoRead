@@ -18,7 +18,9 @@ func NewBookService(repo repository.BookRepository, logger *slog.Logger) *BookSe
 func (s *BookService) CreateBook(book *models.Book) error {
 	return s.repo.CreateBook(book)
 }
-
+func (s *BookService) SimilarBooks(book_id string) ([]models.Book, error) {
+	return s.repo.SimilarBooks(book_id)
+}
 func (s *BookService) GetBookByID(book *models.Book, bookID int) error {
 	return s.repo.GetBookByID(book, bookID)
 

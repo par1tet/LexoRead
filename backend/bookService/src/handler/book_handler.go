@@ -175,3 +175,17 @@ func (h *BookHandler) UpdateBook(w http.ResponseWriter, r *http.Request) {
 	}
 	status.Ok(w, r, rs.OK())
 }
+
+func (h *BookHandler) SimilarBooks(w http.ResponseWriter, r *http.Request) {
+	const op = "handlers.url.similarBooks"
+	log := h.bookService.Logger.With(slog.String("op", op))
+	bookId := chi.URLParam(r, "book_id")
+	books, err := h.bookService.SimilarBooks(bookId)
+	if err != nil {
+		log.Error("failed to get similar books:", sl.Err(err))
+		status.Err(w, r, rs.Error(err))
+		return
+	}
+	status.Ok(w, r, books)
+
+}
