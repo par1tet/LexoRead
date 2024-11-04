@@ -45,12 +45,13 @@ export class UsersService {
     }
     return { msg: `User with ID ${dto.id} has been unbanned` };
   }
-  async getUser(
-    @Body()
-    decoded: any,
-  ) {
+  async getUser(@Body() payload: any) {
     try {
-      return { decoded };
+        console.log(payload)
+        const user = (await this.userRepo.findOne({
+            where: {id: payload.id}
+        }))
+      return user;
     } catch (err) {
       console.log(`ошибка: ${err}`);
     }

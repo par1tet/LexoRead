@@ -29,7 +29,7 @@ export class UsersController {
   async banUser(@Body() dto: BanUserDto) {
     return await this.usersService.banUser(dto);
   }
-  @Post('getUser')
+  @Get('getUser')
   @ApiOperation({ summary: 'получить пользователя' })
   async getUser(@Req() req: Request) {
     const authHeader = req.headers.authorization;

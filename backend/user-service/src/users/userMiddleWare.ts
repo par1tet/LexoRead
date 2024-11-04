@@ -17,12 +17,10 @@ export class UserMiddleware implements NestMiddleware {
       if (req.method === 'OPTIONS') {
         return next();
       }
-
       const authHeader = req.headers.authorization;
       if (!authHeader) {
         return res.status(403).send({ msg: 'пользователь не авторизован' });
       }
-
       const token = authHeader.split(' ')[1];
       const decodedData = jwt.verify(token, secret, { algorithms: ['HS256'] });
       next();

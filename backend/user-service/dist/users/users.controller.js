@@ -67,7 +67,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "banUser", null);
 __decorate([
-    (0, common_1.Post)('getUser'),
+    (0, common_1.Get)('getUser'),
     (0, swagger_1.ApiOperation)({ summary: 'получить пользователя' }),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),

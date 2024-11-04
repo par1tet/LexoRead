@@ -5,6 +5,7 @@ import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
+import { User } from './user.model';
 import { Request } from 'express';
 export declare class UsersController {
     private readonly usersService;
@@ -12,9 +13,7 @@ export declare class UsersController {
     banUser(dto: BanUserDto): Promise<(() => number) | {
         msg: string;
     }>;
-    getUser(req: Request): Promise<{
-        decoded: any;
-    }>;
+    getUser(req: Request): Promise<User>;
     deleteBook(): Promise<void>;
     changeFavouriteBooks(): Promise<void>;
     changeEmail(dto: ChangeEmailDto): Promise<(() => number) | [affectedCount: number]>;

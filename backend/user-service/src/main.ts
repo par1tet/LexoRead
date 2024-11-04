@@ -38,6 +38,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('LexoRead', app, document);
   const PORT = process.env.PORT;
+  console.log(PORT)
   if (!app) {
     return new NotFoundException('NOT FOUND').getStatus();
   }
