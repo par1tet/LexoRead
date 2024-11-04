@@ -25,11 +25,8 @@
 }
 .container__description {
   display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-	color: #6f4c3e;
+  justify-content: center;
+  color: #6f4c3e;
 }
 .description__input {
   background: #ffebde80;
@@ -40,18 +37,31 @@
   border: 2px solid #6f4c3e;
   width: 640px;
   height: 208px;
-	color: #6f4c3e;
-	padding: 10px;
-font-size: 25px;
+  color: #6f4c3e;
+  padding: 10px;
+  font-size: 25px;
 }
 .container__description-link {
-	color: #6f4c3e;
-	width: 400px;
-	font-weight: 400;
-	font-size: 30px;
-	display: flex;
-	justify-content: center;
-	text-align: center;
-	align-items: center;
-	line-height: 38.4px;
+  color: #6f4c3e;
+  width: 400px;
+  font-weight: 400;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  line-height: 38.4px;
+}
+.container__Books {
+  padding-bottom: 60px;
+  margin: 0;
+}
+.container__Books-title-recommendations {
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 35px;
+  line-height: 38.4px;
+  color: #6f4c3e;
+  padding-top: 12px;
 }

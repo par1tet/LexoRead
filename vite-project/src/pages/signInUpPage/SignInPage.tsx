@@ -20,7 +20,7 @@ export function SignInPage() {
           </h2>
         <div className={cl['contanerSign__inputs']}>
           <SignInput type="text" placeholder="Логин или email"></SignInput>
-          <SignInput type="text" placeholder="Пароль"></SignInput>
+          <SignInput type="password" placeholder="Пароль"></SignInput>
         </div>
         <div className={clsx(cl['contanerSign__sign'], cl['contanerSign__sign-signin'])}>
           <SignButton onClick={() => console.log('hi')}>Войти</SignButton>
