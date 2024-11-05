@@ -18,6 +18,7 @@ import {
 import { User } from './user.model';
 import { jwtDecode } from 'jwt-decode';
 import { Request } from 'express';
+import { AddAndDeleteFavBooks } from './dto/addAndDeleteBook.dto';
 @ApiBearerAuth()
 @Controller('users')
 @ApiTags('users')
@@ -35,16 +36,15 @@ export class UsersController {
     const authHeader = req.headers.authorization;
     if (authHeader) {
       const token = authHeader.split(' ')[1];
-      const decoded = jwtDecode(token);  
-      return this.usersService.getUser(decoded)
+      return this.usersService.getUser(jwtDecode(token));
     }
   }
-  @Delete('deleteBook')
-  @ApiOperation({ summary: 'удалить книгу пользователя' })
-  async deleteBook() {}
   @Put('changeFavBooks')
   @ApiOperation({ summary: 'изменить любимые книги пользователя' })
-  async changeFavouriteBooks() {}
+  async changeFavouriteBooks(@Body() dto: AddAndDeleteFavBooks) {
+    return this.usersService.changeFavouriteBooks(dto);
+  }
+
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: User,

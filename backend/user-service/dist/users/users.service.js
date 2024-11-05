@@ -22,6 +22,7 @@ const changeEmail_dto_1 = require("./dto/changeEmail.dto");
 const changeName_dto_1 = require("./dto/changeName.dto");
 const changeAvatarUrl_dto_1 = require("./dto/changeAvatarUrl.dto");
 const changeDescription_dto_1 = require("./dto/changeDescription.dto");
+const addAndDeleteBook_dto_1 = require("./dto/addAndDeleteBook.dto");
 let UsersService = class UsersService {
     constructor(userRepo) {
         this.userRepo = userRepo;
@@ -37,7 +38,7 @@ let UsersService = class UsersService {
         if (banUser[dto.id] == 0) {
             return new common_1.NotFoundException(`User with ${dto.id} not found`).getStatus;
         }
-        return { msg: `User with ID ${dto.id} has been unbanned` };
+        return { msg: `User with ID ${dto.id} has been banned` };
     }
     async unBanUser(dto) {
         const unBanUser = await this.userRepo.update({
@@ -52,9 +53,14 @@ let UsersService = class UsersService {
         }
         return { msg: `User with ID ${dto.id} has been unbanned` };
     }
-    async getUser(decoded) {
+    async getUser(payload) {
         try {
-            return { decoded };
+            const user = await this.userRepo.findOne({
+                where: {
+                    id: payload.id,
+                },
+            });
+            return user;
         }
         catch (err) {
             console.log(`ошибка: ${err}`);
@@ -115,6 +121,16 @@ let UsersService = class UsersService {
         }
         return description;
     }
+    async addFavBooks(dto) {
+        const addBooks = await this.userRepo.update({
+            ListBook: dto.ListBooks,
+        }, {
+            where: {
+                id: dto.id,
+            },
+        });
+        return addBooks;
+    }
 };
 exports.UsersService = UsersService;
 __decorate([
@@ -159,6 +175,12 @@ __decorate([
     __metadata("design:paramtypes", [changeDescription_dto_1.changeDescriptionDto]),
     __metadata("design:returntype", Promise)
 ], UsersService.prototype, "changeDescription", null);
+__decorate([
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [addAndDeleteBook_dto_1.AddAndDeleteFavBooks]),
+    __metadata("design:returntype", Promise)
+], UsersService.prototype, "addFavBooks", null);
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(user_model_1.User)),

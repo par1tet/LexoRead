@@ -11,7 +11,6 @@ import { User } from './users/user.model';
 import { UserMiddleware } from './users/userMiddleWare';
 import { UsersController } from './users/users.controller';
 import path from 'path';
-
 @Module({
   imports: [
     ConfigModule.forRoot({

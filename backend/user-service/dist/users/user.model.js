@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const swagger_1 = require("@nestjs/swagger");
+const sequelize_1 = require("sequelize");
 const sequelize_typescript_1 = require("sequelize-typescript");
 const sequelize_typescript_2 = require("sequelize-typescript");
 let User = class User extends sequelize_typescript_1.Model {
@@ -62,6 +63,10 @@ __decorate([
     (0, sequelize_typescript_2.Column)({ type: sequelize_typescript_2.DataType.STRING(350) }),
     __metadata("design:type", String)
 ], User.prototype, "description", void 0);
+__decorate([
+    (0, sequelize_typescript_2.Column)({ type: sequelize_typescript_2.DataType.ARRAY(sequelize_1.INTEGER) }),
+    __metadata("design:type", Array)
+], User.prototype, "ListBook", void 0);
 exports.User = User = __decorate([
     (0, sequelize_typescript_2.Table)({ tableName: 'users', createdAt: false, updatedAt: false })
 ], User);

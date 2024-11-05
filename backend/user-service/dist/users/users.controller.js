@@ -24,6 +24,7 @@ const changeDescription_dto_1 = require("./dto/changeDescription.dto");
 const swagger_1 = require("@nestjs/swagger");
 const user_model_1 = require("./user.model");
 const jwt_decode_1 = require("jwt-decode");
+const addAndDeleteBook_dto_1 = require("./dto/addAndDeleteBook.dto");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -35,11 +36,12 @@ let UsersController = class UsersController {
         const authHeader = req.headers.authorization;
         if (authHeader) {
             const token = authHeader.split(' ')[1];
-            const decoded = (0, jwt_decode_1.jwtDecode)(token);
-            return this.usersService.getUser(decoded);
+            return this.usersService.getUser((0, jwt_decode_1.jwtDecode)(token));
         }
     }
-    async deleteBook() { }
+    async addFavBooks(dto) {
+        return this.usersService.addFavBooks(dto);
+    }
     async changeFavouriteBooks() { }
     async changeEmail(dto) {
         return await this.usersService.changeEmail(dto);
@@ -75,12 +77,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUser", null);
 __decorate([
-    (0, common_1.Delete)('deleteBook'),
-    (0, swagger_1.ApiOperation)({ summary: 'удалить книгу пользователя' }),
+    (0, common_1.Put)('addFavBooks'),
+    (0, swagger_1.ApiOperation)({ summary: 'добавить любимую книгу пользователя' }),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [addAndDeleteBook_dto_1.AddAndDeleteFavBooks]),
     __metadata("design:returntype", Promise)
-], UsersController.prototype, "deleteBook", null);
+], UsersController.prototype, "addFavBooks", null);
 __decorate([
     (0, common_1.Put)('changeFavBooks'),
     (0, swagger_1.ApiOperation)({ summary: 'изменить любимые книги пользователя' }),

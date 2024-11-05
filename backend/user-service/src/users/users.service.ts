@@ -10,6 +10,7 @@ import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
 import { jwtDecode } from 'jwt-decode';
 import { request } from 'express';
+import { AddAndDeleteFavBooks } from './dto/addAndDeleteBook.dto';
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User) private userRepo: typeof User) {}
@@ -27,7 +28,7 @@ export class UsersService {
     if (banUser[dto.id] == 0) {
       return new NotFoundException(`User with ${dto.id} not found`).getStatus;
     }
-    return { msg: `User with ID ${dto.id} has been unbanned` };
+    return { msg: `User with ID ${dto.id} has been banned` };
   }
   async unBanUser(@Body() dto: UnBanUserDto) {
     const unBanUser = await this.userRepo.update(
@@ -47,10 +48,15 @@ export class UsersService {
   }
   async getUser(
     @Body()
-    decoded: any,
+    payload: any,
   ) {
     try {
-      return { decoded };
+      const user = await this.userRepo.findOne({
+        where: {
+          id: payload.id,
+        },
+      });
+      return user;
     } catch (err) {
       console.log(`ошибка: ${err}`);
     }
@@ -122,5 +128,18 @@ export class UsersService {
         .getStatus;
     }
     return description;
+  }
+  async changeFavouriteBooks(@Body() dto: AddAndDeleteFavBooks) {
+    const addBooks = await this.userRepo.update(
+      {
+        ListBook: dto.ListBooks,
+      },
+      {
+        where: {
+          id: dto.id,
+        },
+      },
+    );
+    return addBooks;
   }
 }

@@ -1,6 +1,6 @@
-import { ApiHeader, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { CHAR, INTEGER } from 'sequelize';
-import { BelongsToMany, ForeignKey, HasMany, Model } from 'sequelize-typescript';
+import { ApiProperty } from '@nestjs/swagger';
+import { INTEGER } from 'sequelize';
+import {  AllowNull, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
 interface UserAttrs {
   isBanned: boolean;
@@ -8,6 +8,7 @@ interface UserAttrs {
   email: string;
   hashPassword: string;
   avatarFileUrl: string;
+  ListBook: number[]
 }
 @Table({ tableName: 'users', createdAt: false, updatedAt: false })
 export class User extends Model<User, UserAttrs> {
@@ -44,4 +45,7 @@ export class User extends Model<User, UserAttrs> {
   @ApiProperty({ example: 'Hello World', description: 'description' })
   @Column({ type: DataType.STRING(350) })
   description: string;
+  @Column({type: DataType.ARRAY(INTEGER)})
+  ListBook: number[]
+
 }

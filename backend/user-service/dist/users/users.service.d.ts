@@ -5,6 +5,7 @@ import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
+import { AddAndDeleteFavBooks } from './dto/addAndDeleteBook.dto';
 export declare class UsersService {
     private userRepo;
     constructor(userRepo: typeof User);
@@ -14,11 +15,10 @@ export declare class UsersService {
     unBanUser(dto: UnBanUserDto): Promise<(() => number) | {
         msg: string;
     }>;
-    getUser(decoded: any): Promise<{
-        decoded: any;
-    }>;
+    getUser(payload: any): Promise<User>;
     changeEmail(dto: ChangeEmailDto): Promise<[affectedCount: number] | (() => number)>;
     changeName(dto: ChangeNameDto): Promise<[affectedCount: number] | (() => number)>;
     changeAvatarUrl(dto: changeAvatarUrlDto): Promise<[affectedCount: number] | (() => number)>;
     changeDescription(dto: changeDescriptionDto): Promise<[affectedCount: number] | (() => number)>;
+    addFavBooks(dto: AddAndDeleteFavBooks): Promise<[affectedCount: number]>;
 }
