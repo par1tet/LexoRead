@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import cl from "./SignInUp.module.css";
 
 export function SignUpPage() {
+
   return (
     <>
         <div className={cl['background']}></div>
