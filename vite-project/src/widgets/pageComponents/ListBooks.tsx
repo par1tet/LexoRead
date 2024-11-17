@@ -3,7 +3,6 @@ import { createBookList } from './../../features/createBookList.ts'
 import cl from './ListBooks.module.css'
 import { getBook } from './../../shared/api/methods/getBook.ts'
 import { useNavigate } from 'react-router-dom'
-
 type listBooksProps = {
     coverPaths: string[]
     title: string

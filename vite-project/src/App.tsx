@@ -6,6 +6,7 @@ import { BookPage } from "./pages/BookPage/BookPage.tsx";
 import { AboutUs } from "./pages/AboutUsPage/AboutUs.tsx";
 import Profile from "./pages/ProfilePage/Profile.tsx";
 import MyFavourite from "./pages/ProfilePage/pagesComponents/MyFavourite/MyFavourite.tsx";
+import MyFriends from "./pages/ProfilePage/pagesComponents/Friends/MyFriends.tsx";
 export default function App() {
   return (
     <Routes>
@@ -16,6 +17,7 @@ export default function App() {
       <Route path="/aboutUs" element={<AboutUs />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route  path='/myfavourite' element={<MyFavourite/>}></Route>
+      <Route path="/myfriends" element={<MyFriends/>}></Route>
     </Routes>
   );
 }

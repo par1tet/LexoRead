@@ -1,0 +1,25 @@
+.ListFriends_friends {
+    display: grid;
+    grid-template-columns: 31% 35% 31%;
+}
+
+.friends {
+    display: flex;
+    align-items: center;
+    margin-left: 179px;
+}
+
+.avatarImg {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 26px;
+    cursor: pointer;
+}
+
+.nickname {
+    color: #6F4C3E;
+    font-size: 35px;
+    text-align: center;
+    margin-left: 100px;
+}
