@@ -35,8 +35,10 @@ let UsersController = class UsersController {
         const user = await this.usersService.getUser(dto);
         return response.status(201).json(user);
     }
-    async deleteBook() { }
-    async changeFavouriteBooks() { }
+    async deleteBook() {
+    }
+    async changeFavouriteBooks() {
+    }
     async changeEmail(dto, response) {
         const email = await this.usersService.changeEmail(dto);
         return response.status(201).json(email);
@@ -124,6 +126,7 @@ __decorate([
     (0, swagger_1.ApiCreatedResponse)({
         description: 'The record has been successfully created.',
         type: user_model_1.User,
+        status: 200,
     }),
     (0, common_1.Put)('changeAvatarUrl'),
     (0, swagger_1.ApiOperation)({ summary: 'изменить аватарку пользователя' }),
