@@ -15,7 +15,7 @@ export default function App() {
       <Route path="/" element={<MainPage />} />
       <Route path="/book" element={<BookPage />} />
       <Route path="/aboutUs" element={<AboutUs />}></Route>
-      <Route path="/profile" element={<Profile />}></Route>
+      <Route path="/user" element={<Profile />}></Route>
       <Route  path='/myfavourite' element={<MyFavourite/>}></Route>
       <Route path="/myfriends" element={<MyFriends/>}></Route>
     </Routes>

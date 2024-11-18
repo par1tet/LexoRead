@@ -17,7 +17,7 @@ const FriendsList = ({users}: listFriendsProps) => {
                         <div key={index} className={cl['friends']}>
                             <img src={user.coverPath} key={index} className={cl['avatarImg']}
                                  onClick={() => {
-                                     navigate("/friend?id=2");
+                                     navigate("/user?id=1");
                                  }}/>
                             <span className={cl['nickname']}>{user.username}</span>
                         </div>

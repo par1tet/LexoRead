@@ -19,6 +19,11 @@
 
     right: 30px;
 }
+.background-img {
+  position: absolute;
+  right: 160px;
+  cursor: pointer;
+}
 
 .header__logo > img {
   width: 65px;

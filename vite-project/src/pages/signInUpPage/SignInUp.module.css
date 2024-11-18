@@ -3,6 +3,7 @@
     background-color: black;
     width: 100vw;
     height: 100vh;
+
 }
 
 .containerSign {
@@ -24,6 +25,7 @@
   border-radius: 38px;
   box-shadow: 1px 1px 5px 0px #101010;
     box-sizing: border-box;
+    color: #FFE9DA;
 }
 
 .containerSign__title {
@@ -62,6 +64,7 @@
 
 .containerSign__link {
     margin-top: 16px;
+    color: #FFE9DA;
     text-decoration: underline;
 }
 
@@ -75,4 +78,5 @@
     margin: 0 auto;
     margin-top: 24px;
     width: 240px;
+
 }

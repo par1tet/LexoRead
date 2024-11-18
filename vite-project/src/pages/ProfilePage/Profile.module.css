@@ -2,7 +2,6 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  background: #ffebde;
   height: 100vh;
 }
 .container__description {
@@ -44,6 +43,5 @@
   font-weight: 500;
   font-size: 35px;
   line-height: 38.4px;
-  color: #6f4c3e;
   padding-top: 12px;
 }

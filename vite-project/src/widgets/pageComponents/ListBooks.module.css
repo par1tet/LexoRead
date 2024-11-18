@@ -5,11 +5,18 @@
     justify-content: center;
 
     margin-top: 20px;
+    color: #6F4C3E;
 }
 
 .listBooks__books > img {
     width: 340px;
     height: 450px;
+    box-shadow: 6px 3px 4px #ADA2A2;
+}
+.listBooks__books > img:hover {
+    scale: 1.1;
+    transition: 0.45s ease-in-out;
+    box-shadow: none;
 }
 
 .listBooks__title {
@@ -25,6 +32,6 @@
 }
 
 .listBooks__title > span {
-    color: #6F4C3E;
+
     font-weight: 600;
 }

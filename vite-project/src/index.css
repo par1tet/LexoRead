@@ -1,11 +1,8 @@
 html {
-    background-image: none;
+  background-image: none;
 }
-
 * {
-  padding: 0px;
-  margin: 0px;
-  color: #ffe9da;
-  font-family: "Lora", serif;
-  text-decoration: none;
+  margin: 0;
+  padding: 0;
+
 }
