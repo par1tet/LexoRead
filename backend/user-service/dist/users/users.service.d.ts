@@ -16,9 +16,9 @@ export declare class UsersService {
         msg: string;
     }>;
     getUser(payload: any): Promise<any>;
-    changeEmail(dto: ChangeEmailDto): Promise<any>;
-    changeName(dto: ChangeNameDto): Promise<any>;
-    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<any>;
-    changeDescription(dto: changeDescriptionDto): Promise<any>;
-    changeFavouriteBooks(dto: AddAndDeleteFavBooks): Promise<any>;
+    changeEmail(dto: ChangeEmailDto): Promise<[affectedCount: number] | (() => number)>;
+    changeName(dto: ChangeNameDto): Promise<[affectedCount: number] | (() => number)>;
+    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<[affectedCount: number] | (() => number)>;
+    changeDescription(dto: changeDescriptionDto): Promise<[affectedCount: number] | (() => number)>;
+    changeFavouriteBooks(dto: AddAndDeleteFavBooks): Promise<[affectedCount: number]>;
 }

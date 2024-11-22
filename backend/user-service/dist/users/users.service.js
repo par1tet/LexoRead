@@ -55,12 +55,7 @@ let UsersService = class UsersService {
     }
     async getUser(payload) {
         try {
-            const user = await this.userRepo.findOne({
-                where: {
-                    id: payload.id,
-                },
-            });
-            return user;
+            return payload;
         }
         catch (err) {
             console.log(`ошибка: ${err}`);

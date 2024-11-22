@@ -1,4 +1,4 @@
-import { Body, Injectable, NotFoundException, Request } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { User } from './user.model';
 import { BanUserDto } from './dto/banUser.dto';
 import { InjectModel } from '@nestjs/sequelize';
@@ -8,6 +8,7 @@ import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
 import { AddAndDeleteFavBooks } from './dto/addAndDeleteBook.dto';
+
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User) private readonly userRepo: typeof User) {}
@@ -48,12 +49,7 @@ export class UsersService {
     payload: any,
   ) {
     try {
-      const user = await this.userRepo.findOne({
-        where: {
-          id: payload.id,
-        },
-      });
-      return user;
+      return payload
     } catch (err) {
       console.log(`ошибка: ${err}`);
     }

@@ -14,12 +14,12 @@ export declare class UsersController {
         msg: string;
     }>;
     getUser(req: Request): Promise<any>;
-    changeFavouriteBooks(dto: AddAndDeleteFavBooks): Promise<any>;
+    changeFavouriteBooks(dto: AddAndDeleteFavBooks): Promise<[affectedCount: number]>;
     changeEmail(dto: ChangeEmailDto): Promise<(() => number) | [affectedCount: number]>;
     unBanUser(dto: UnBanUserDto): Promise<(() => number) | {
         msg: string;
     }>;
-    changeName(dto: ChangeNameDto): Promise<any>;
-    changeDescription(dto: changeDescriptionDto): Promise<any>;
-    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<any>;
+    changeName(dto: ChangeNameDto): Promise<[affectedCount: number] | (() => number)>;
+    changeDescription(dto: changeDescriptionDto): Promise<[affectedCount: number] | (() => number)>;
+    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<[affectedCount: number] | (() => number)>;
 }
