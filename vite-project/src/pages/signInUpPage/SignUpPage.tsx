@@ -2,7 +2,6 @@ import SignButton from "../../widgets/UI/buttons/signInUp/SignButton.tsx";
 import SignInput from "../../widgets/UI/inputs/signInUp/SignInput.tsx";
 import { Link } from "react-router-dom";
 import cl from "./SignInUp.module.css";
-
 export function SignUpPage() {
   return (
     <>

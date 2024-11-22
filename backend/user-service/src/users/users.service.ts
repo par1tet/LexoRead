@@ -3,7 +3,7 @@ import { User } from './user.model';
 import { BanUserDto } from './dto/banUser.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { UnBanUserDto } from './dto/unBanUser.dto';
-import { GetUserDto } from './dto/getUser.dto';
+
 import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';

@@ -1,0 +1,38 @@
+.container-modalWindow {
+    font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    width: 224px;
+    height: 328px;
+    background-color: #FFF8F3;
+    border: 1px solid #6F4C3E;
+    color: #000;
+    position: fixed;
+    border-radius: 15px;
+    padding-left: 25px;
+    transform: translateX(-65%);
+}
+.container-modalWindow_nickname {
+    margin-bottom: 23px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.container-modalWindow_links {
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.container-modalWindow_links__title {
+    text-decoration: none;
+    color: #000000;
+}
+.container-modalWindow_exit {
+    margin-top: 111px;
+}
+.container-modalWindow_links__title__exit {
+    font-size: 20px;
+    text-decoration: none;
+    color: #000000;
+    font-weight: 400;
+}

@@ -5,6 +5,7 @@ import backgroundLigth from "./../../assets/img/changeBackground/icons8-day-and-
 import backgroundDark from "./../../assets/img/changeBackground/icons8-день-и-ночь-50.png"
 import clsx from 'clsx'
 import {useEffect, useState} from "react";
+import ModalWindow from '../UI/ModalWindow/ModalWindow.tsx';
 
 export function Header() {
     let [backgroundFon, setBackgroundFon] = useState(() => {
@@ -12,6 +13,7 @@ export function Header() {
         const initialValue = JSON.parse(saved);
         return initialValue || false;
     })
+  const [isModalVisible, setModalVisible] = useState(false)
     const changeBackground = () => {
         setBackgroundFon(!backgroundFon);
     }
@@ -64,7 +66,8 @@ export function Header() {
                 }
             </div>
             <div className={cl["header__logo"]}>
-                <img src={avatar}/>
+                <img src={avatar} onMouseOver={() => setModalVisible(true)}  />
+              {isModalVisible && <ModalWindow></ModalWindow>}
             </div>
         </header>
     );

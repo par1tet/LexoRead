@@ -3,10 +3,10 @@ import {userService} from "../serviceLinks.ts";
 import {User} from "../../../entities/classes/user.ts";
 export async function getUser(userId: number | null): Promise<User> {
     console.log(userId)
-    let userData = []
+    let userData: any[] = []
 
     await axios.get(userService(`user/id/${userId}`)).then((response) => {
-        userData = response.data;
+            userData = response.data;
     })
-    return userData;
+     return userData;
 }

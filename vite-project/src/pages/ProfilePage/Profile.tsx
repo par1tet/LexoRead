@@ -5,21 +5,15 @@ import cl from "../ProfilePage/Profile.module.css";
 import {NavLink, useSearchParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {getUser} from "../../shared/api/methods/getUser.ts";
+import { changeDescription } from '../../shared/api/methods/changeDescription.ts';
 
 export default function Profile() {
-    const [description, setDescription] = useState(() => {
-        const saved: string | null = localStorage.getItem("description");
-        const initialValue = JSON.parse(saved);
-        return initialValue || "";
-    });
     const [searchParams, setSearchParams] = useSearchParams();
     const [userData, setUserData] = useState({})
+  const [description, setDesctiption] = useState('')
     useEffect(() => {
         getUser(searchParams.get('id')).then(r => setUserData(r))
     }, []);
-    useEffect(() => {
-        localStorage.setItem('description', JSON.stringify(description));
-    }, [description]);
     if (userData) {
         return (
             <>
@@ -31,12 +25,18 @@ export default function Profile() {
                             to={"/myfavourite"}
                             className={cl["container__description-link"]}
                         >
-                            Любимые <br/>и прочитанные
+                            Любимые
                         </NavLink>
                         <textarea
                             className={cl["description__input"]}
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={(e) => setDesctiption(e.target.value)}
                             value={description}
+                            onMouseOut={(e) => {
+                              if(e.type == 'mouseout') {
+                                changeDescription(searchParams.get('id')).then(r => {
+                                  setDesctiption(r)
+                                })
+                            }}}
                         />
                         <NavLink
                             to={"/myfriends"}
