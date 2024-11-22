@@ -39,10 +39,9 @@ let UsersController = class UsersController {
             return this.usersService.getUser((0, jwt_decode_1.jwtDecode)(token));
         }
     }
-    async addFavBooks(dto) {
-        return this.usersService.addFavBooks(dto);
+    async changeFavouriteBooks(dto) {
+        return this.usersService.changeFavouriteBooks(dto);
     }
-    async changeFavouriteBooks() { }
     async changeEmail(dto) {
         return await this.usersService.changeEmail(dto);
     }
@@ -77,18 +76,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "getUser", null);
 __decorate([
-    (0, common_1.Put)('addFavBooks'),
-    (0, swagger_1.ApiOperation)({ summary: 'добавить любимую книгу пользователя' }),
+    (0, common_1.Put)('changeFavBooks'),
+    (0, swagger_1.ApiOperation)({ summary: 'изменить любимые книги пользователя' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [addAndDeleteBook_dto_1.AddAndDeleteFavBooks]),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "addFavBooks", null);
-__decorate([
-    (0, common_1.Put)('changeFavBooks'),
-    (0, swagger_1.ApiOperation)({ summary: 'изменить любимые книги пользователя' }),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "changeFavouriteBooks", null);
 __decorate([

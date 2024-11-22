@@ -3,17 +3,14 @@ import { User } from './user.model';
 import { BanUserDto } from './dto/banUser.dto';
 import { InjectModel } from '@nestjs/sequelize';
 import { UnBanUserDto } from './dto/unBanUser.dto';
-import { GetUserDto } from './dto/getUser.dto';
 import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
-import { jwtDecode } from 'jwt-decode';
-import { request } from 'express';
 import { AddAndDeleteFavBooks } from './dto/addAndDeleteBook.dto';
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User) private userRepo: typeof User) {}
+  constructor(@InjectModel(User) private readonly userRepo: typeof User) {}
   async banUser(@Body() dto: BanUserDto) {
     const banUser = await this.userRepo.update(
       {

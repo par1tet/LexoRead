@@ -5,7 +5,6 @@ import { ChangeEmailDto } from './dto/changeEmail.dto';
 import { ChangeNameDto } from './dto/changeName.dto';
 import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
-import { User } from './user.model';
 import { Request } from 'express';
 import { AddAndDeleteFavBooks } from './dto/addAndDeleteBook.dto';
 export declare class UsersController {
@@ -14,14 +13,13 @@ export declare class UsersController {
     banUser(dto: BanUserDto): Promise<(() => number) | {
         msg: string;
     }>;
-    getUser(req: Request): Promise<User>;
-    addFavBooks(dto: AddAndDeleteFavBooks): Promise<[affectedCount: number]>;
-    changeFavouriteBooks(): Promise<void>;
+    getUser(req: Request): Promise<any>;
+    changeFavouriteBooks(dto: AddAndDeleteFavBooks): Promise<any>;
     changeEmail(dto: ChangeEmailDto): Promise<(() => number) | [affectedCount: number]>;
     unBanUser(dto: UnBanUserDto): Promise<(() => number) | {
         msg: string;
     }>;
-    changeName(dto: ChangeNameDto): Promise<(() => number) | [affectedCount: number]>;
-    changeDescription(dto: changeDescriptionDto): Promise<(() => number) | [affectedCount: number]>;
-    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<(() => number) | [affectedCount: number]>;
+    changeName(dto: ChangeNameDto): Promise<any>;
+    changeDescription(dto: changeDescriptionDto): Promise<any>;
+    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<any>;
 }

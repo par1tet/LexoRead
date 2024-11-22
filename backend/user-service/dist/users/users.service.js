@@ -121,7 +121,7 @@ let UsersService = class UsersService {
         }
         return description;
     }
-    async addFavBooks(dto) {
+    async changeFavouriteBooks(dto) {
         const addBooks = await this.userRepo.update({
             ListBook: dto.ListBooks,
         }, {
@@ -180,7 +180,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [addAndDeleteBook_dto_1.AddAndDeleteFavBooks]),
     __metadata("design:returntype", Promise)
-], UsersService.prototype, "addFavBooks", null);
+], UsersService.prototype, "changeFavouriteBooks", null);
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, sequelize_1.InjectModel)(user_model_1.User)),

@@ -1,16 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { INTEGER } from 'sequelize';
-import {  AllowNull, Model } from 'sequelize-typescript';
-import { Column, DataType, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table } from 'sequelize-typescript';
+
 interface UserAttrs {
   isBanned: boolean;
   username: string;
   email: string;
   hashPassword: string;
   avatarFileUrl: string;
-  ListBook: number[]
+  ListBook: number[];
+
 }
-@Table({ tableName: 'users', createdAt: false, updatedAt: false })
+
+@Table({ modelName: 'users'})
 export class User extends Model<User, UserAttrs> {
   @ApiProperty({ example: 1, description: 'Уникальный индификатор' })
   @Column({
@@ -21,7 +23,7 @@ export class User extends Model<User, UserAttrs> {
   })
   id: number;
   @ApiProperty({ example: true, description: 'забанен' })
-  @Column({ type: DataType.BOOLEAN, defaultValue: false, allowNull: true })
+  @Column({ type: DataType.BOOLEAN, defaultValue: false})
   isBanned: boolean;
   @ApiProperty({ example: 'Artem', description: 'username' })
   @Column({ type: DataType.STRING, allowNull: true })
@@ -45,7 +47,7 @@ export class User extends Model<User, UserAttrs> {
   @ApiProperty({ example: 'Hello World', description: 'description' })
   @Column({ type: DataType.STRING(350) })
   description: string;
-  @Column({type: DataType.ARRAY(INTEGER)})
-  ListBook: number[]
-
+  @Column({ type: DataType.ARRAY(INTEGER) })
+  ListBook: number[];
+  
 }

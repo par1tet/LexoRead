@@ -7,7 +7,7 @@ import { changeAvatarUrlDto } from './dto/changeAvatarUrl.dto';
 import { changeDescriptionDto } from './dto/changeDescription.dto';
 import { AddAndDeleteFavBooks } from './dto/addAndDeleteBook.dto';
 export declare class UsersService {
-    private userRepo;
+    private readonly userRepo;
     constructor(userRepo: typeof User);
     banUser(dto: BanUserDto): Promise<(() => number) | {
         msg: string;
@@ -15,10 +15,10 @@ export declare class UsersService {
     unBanUser(dto: UnBanUserDto): Promise<(() => number) | {
         msg: string;
     }>;
-    getUser(payload: any): Promise<User>;
-    changeEmail(dto: ChangeEmailDto): Promise<[affectedCount: number] | (() => number)>;
-    changeName(dto: ChangeNameDto): Promise<[affectedCount: number] | (() => number)>;
-    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<[affectedCount: number] | (() => number)>;
-    changeDescription(dto: changeDescriptionDto): Promise<[affectedCount: number] | (() => number)>;
-    addFavBooks(dto: AddAndDeleteFavBooks): Promise<[affectedCount: number]>;
+    getUser(payload: any): Promise<any>;
+    changeEmail(dto: ChangeEmailDto): Promise<any>;
+    changeName(dto: ChangeNameDto): Promise<any>;
+    changeAvatarUrl(dto: changeAvatarUrlDto): Promise<any>;
+    changeDescription(dto: changeDescriptionDto): Promise<any>;
+    changeFavouriteBooks(dto: AddAndDeleteFavBooks): Promise<any>;
 }
