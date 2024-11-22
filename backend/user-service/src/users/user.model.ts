@@ -1,5 +1,4 @@
-import { ApiHeader, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { CHAR, INTEGER } from 'sequelize';
+import { ApiProperty } from '@nestjs/swagger';
 import { HasMany, Model } from 'sequelize-typescript';
 import { Column, DataType, Table } from 'sequelize-typescript';
 import { FavBooks } from './favBooks.model';
